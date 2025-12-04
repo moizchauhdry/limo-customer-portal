@@ -1,7 +1,7 @@
 <script setup>
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
-import axios from "@/axios"; // adjust path if needed
+import axios from "@/axios"; 
 import { useToast } from "vue-toastification";
 
 const router = useRouter();

@@ -1,3 +1,14 @@
+<script setup>
+import { defineProps } from "vue";
+//  defining the prope comes from the Rides parent component
+defineProps({
+  rides: {
+    type: Array,
+    default: () => [],
+  },
+});
+</script>
+
 <template>
   <!-- MAIN CONTENT -->
   <div data-aos="fade-up" data-aos-duration="1000">
@@ -64,7 +75,11 @@
       <!-- LEFT COLUMN -->
       <div class="flex-1 space-y-6">
         <div class="px-2 sm:px-0">
-          <div class="bg-white border border-[#DBDBDB] rounded-xl shadow">
+          <div
+            v-for="(ride, index) in rides"
+            :key="index"
+            class="bg-white border border-[#DBDBDB] rounded-xl shadow mb-6"
+          >
             <!-- ========== HEADER ========== -->
             <div
               class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 border-b p-3"
@@ -87,7 +102,7 @@
             </div>
             <!-- header -->
             <div class="flex items-center justify-between px-4 mt-2">
-              <h3 class="text-lg text-[#414141]">Ride ID: TR:7643R</h3>
+              <h3 class="text-lg text-[#414141]">Ride ID: TR{{ ride.id }}</h3>
               <div
                 class="flex items-center gap-2 border border-[#D8D8D8] text-xs text-[#17171A] px-2 py-1 rounded-lg shadow-[0_0_6px_#D8D8D8]"
               >
@@ -96,13 +111,13 @@
                   class="h-3"
                   alt="date"
                 />
-                <span> 15.96 km / 9.92 mi</span>
+                <span>{{ ride.pickup_date }}</span>
                 <img
                   src="../../../assets/icons/dashboard/mini-clock.svg"
                   class="h-4"
                   alt="date"
                 />
-                <span> 0h 17m</span>
+                <span>{{ ride.pickup_time }}</span>
               </div>
             </div>
             <!-- ========== ROUTE BLOCK ========== -->
@@ -116,9 +131,9 @@
                     class="h-4"
                     alt="start"
                   />
-                  <span class="text-xs sm:text-sm"
-                    >LaGuardia Airport (LGA), East USA</span
-                  >
+                  <span class="text-xs sm:text-sm">{{
+                    ride.pickup_location
+                  }}</span>
                 </div>
                 <!-- Vertical Route Icon -->
                 <img
@@ -133,7 +148,9 @@
                     class="h-4"
                     alt="end"
                   />
-                  <span class="text-xs sm:text-sm">JFK Airport</span>
+                  <span class="text-xs sm:text-sm">{{
+                    ride.drop_location
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -147,10 +164,14 @@
                 class="flex flex-col items-start sm:w-[50%] gap-2 rounded-lg px-1 text-md text-[#17171A]"
               >
                 <div class="items-center gap-1">
-                  <span class="text-[#414141]">Distance: 15.98 km</span>
+                  <span class="text-[#414141]"
+                    >Distance: {{ ride.total_distance }}</span
+                  >
                 </div>
                 <div class="items-center gap-1">
-                  <span class="text-[#414141]">Duration: 1h, 29 min</span>
+                  <span class="text-[#414141]"
+                    >Duration: {{ ride.total_time }}</span
+                  >
                 </div>
               </div>
 
@@ -163,7 +184,9 @@
                     alt="Fare"
                   />
                   <p class="text-sm sm:text-lg text-[#000]">Final Fare:</p>
-                  <p class="text-sm sm:text-lg font-medium text-[#000]">$120</p>
+                  <p class="text-sm sm:text-lg font-medium text-[#000]">
+                    ${{ ride.payments_total }}
+                  </p>
                 </div>
 
                 <button
@@ -178,10 +201,13 @@
             <div class="border-t border-dashed border-[#B4B4B4] p-4 space-y-4">
               <div class="flex justify-between items-center">
                 <h3 class="text-[#414141] text-lg">Driver Details</h3>
-                <p class="text-sm font-medium text-[#414141]">03028724983</p>
               </div>
 
-              <div class="grid grid-cols-[auto_1fr_auto] items-center gap-4">
+              <div
+                v-for="(d, dIdx) in ride.driver_bookings"
+                :key="dIdx"
+                class="grid grid-cols-[auto_1fr_auto] items-center gap-4"
+              >
                 <img
                   src="../../../assets/icons/navbar/profile.svg"
                   class="h-12 w-12 rounded-full"
@@ -189,9 +215,9 @@
                 />
 
                 <div class="text-sm text-[#414141]">
-                  <p class="font-semibold">John P.</p>
+                  <p class="font-semibold">{{ d.driver_name }}</p>
                   <p class="text-xs sm:text-sm">
-                    Car: Black Mercedes S-Class Plate # ABC 123
+                    Car: {{ d.vehicle_name }} Plate # ABC 123
                   </p>
                 </div>
 

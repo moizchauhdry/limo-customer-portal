@@ -2,7 +2,7 @@
 import { onMounted, ref } from "vue";
 import axios from "@/axios";
 import { useToast } from "vue-toastification";
-import { VCalendar } from 'v-calendar';
+import RideDistanceBar from "@/components/RideDistanceBar.vue";
 
 const scheduledDates = ref(["2025-12-14", "2025-12-17", "2025-12-31"]);
 const completedDates = ref(["2025-12-21", "2025-12-25"]);
@@ -11,6 +11,36 @@ const toast = useToast();
 const dashboardData = ref({});
 
 const loading = ref(true);
+const sending = ref(false);
+
+/*  map label → icon path  */
+const iconMap = {
+  Excellent: new URL("../assets/icons/dashboard/excellent.svg", import.meta.url)
+    .href,
+  Good: new URL("../assets/icons/dashboard/good.svg", import.meta.url).href,
+  Average: new URL("../assets/icons/dashboard/average.svg", import.meta.url)
+    .href,
+  Bad: new URL("../assets/icons/dashboard/bad.svg", import.meta.url).href,
+};
+const getIcon = (label) => iconMap[label];
+
+/*  submit rating  */
+async function submitRating(label) {
+  if (sending.value) return;
+  sending.value = true;
+
+  try {
+    await axios.post("/customer/bookings/reviews/create", {
+      rating_label: label.toLowerCase(),
+    });
+    toast.success("Thank you for your feedback!");
+  } catch (e) {
+    console.error("Rating submission error:", e);
+    toast.error("Failed to submit rating. Please try again.");
+  } finally {
+    sending.value = false;
+  }
+}
 
 const fetchDashboard = async () => {
   loading.value = true;
@@ -390,7 +420,7 @@ const attributes = ref([
             </div>
 
             <!-- Calendar Grid -->
-            <VCalendar :attributes="attributes" borderless color="gray" />
+            <VCalendar :attributes="attributes" margin="auto" borderless color="yellow" />
 
             <!-- Calendar Footer Legend -->
             <div
@@ -408,16 +438,12 @@ const attributes = ref([
           </div>
 
           <!-- DISTANCE GRAPH -->
-          <div class="rounded-xl">
+          <div class="rounded-xl border">
             <!-- Graph Image -->
             <div
               class="rounded-lg overflow-hidden flex items-center justify-center"
             >
-              <img
-                src="../assets/icons/dashboard/card-body.svg"
-                alt="Ride Distance Graph"
-                class="w-full h-full object-contain"
-              />
+              <RideDistanceBar class="w-full h-48" />
             </div>
           </div>
 
@@ -428,47 +454,21 @@ const attributes = ref([
             </p>
             <p class="text-sm text-[#000000] mb-4">Review Rating:</p>
 
+            <!-- grid -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <!-- Excellent -->
-              <button class="flex flex-col items-center py-4">
+              <button
+                v-for="item in ['Excellent', 'Good', 'Average', 'Bad']"
+                :key="item"
+                :disabled="sending"
+                class="group flex flex-col items-center py-4 rounded-lg outline-none transition-all duration-300 ease-out"
+                @click="submitRating(item)"
+              >
                 <img
-                  src="../assets/icons/dashboard/excellent.svg"
-                  class="h-10 mb-2"
-                  alt="Excellent"
+                  :src="getIcon(item)"
+                  class="h-10 mb-2 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110"
+                  :alt="item"
                 />
-                <span class="text-[#000000] font-medium text-sm"
-                  >Excellent</span
-                >
-              </button>
-
-              <!-- Good -->
-              <button class="flex flex-col items-center py-4">
-                <img
-                  src="../assets/icons/dashboard/good.svg"
-                  class="h-10 mb-2"
-                  alt="Good"
-                />
-                <span class="text-[#000000] font-medium text-sm">Good</span>
-              </button>
-
-              <!-- Average -->
-              <button class="flex flex-col items-center py-4">
-                <img
-                  src="../assets/icons/dashboard/average.svg"
-                  class="h-10 mb-2"
-                  alt="Average"
-                />
-                <span class="text-[#000000] font-medium text-sm">Average</span>
-              </button>
-
-              <!-- Bad -->
-              <button class="flex flex-col items-center py-4">
-                <img
-                  src="../assets/icons/dashboard/bad.svg"
-                  class="h-10 mb-2"
-                  alt="Bad"
-                />
-                <span class="text-[#000000] font-medium text-sm">Bad</span>
+                <span class="text-black font-medium text-sm">{{ item }}</span>
               </button>
             </div>
           </div>
@@ -485,4 +485,19 @@ const attributes = ref([
   color: white !important;
   font-size: 12px !important;
 }
+.vc-day-content {
+  margin: 4px !important;          /* space between numbers */
+  padding: 8px !important;         /* better touch area */
+ 
+}
+/* Center the calendar body */
+.vc-pane-container,
+.vc-weeks,
+.vc-weeks > div {
+
+  margin-left: 5px !important;
+}
+
+
+
 </style>

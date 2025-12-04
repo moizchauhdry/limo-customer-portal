@@ -1,13 +1,27 @@
+<script setup>
+import { defineProps } from "vue";
+//  defining the prope comes from the Rides parent component
+defineProps({
+  rides: {
+    type: Array,
+    default: () => [],
+  },
+});
+</script>
+
 <template>
   <!-- MAIN CONTENT -->
-
-  <!-- =============== MAIN SECTION WRAPPER =============== -->
   <div data-aos="fade-up" data-aos-duration="1000">
     <section class="mt-6 flex flex-col xl:flex-row gap-6 items-start">
       <!-- LEFT COLUMN -->
       <div class="flex-1 space-y-6">
         <div class="px-2 sm:px-0">
-          <div class="bg-white border border-[#DBDBDB] rounded-xl shadow">
+          <!--  SINGLE v-for  -->
+          <div
+            v-for="(ride, idx) in rides"
+            :key="ride.id ?? idx"
+            class="bg-white border border-[#DBDBDB] rounded-xl shadow mb-6"
+          >
             <!-- ========== HEADER ========== -->
             <div
               class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 border-b p-3"
@@ -18,14 +32,14 @@
                   class="h-3"
                   alt="date"
                 />
-                <span>Oct 17, 2025</span>
+                <span>{{ ride.pickup_date }}</span>
 
                 <img
                   src="../../../assets/icons/dashboard/time.svg"
                   class="h-3"
                   alt="time"
                 />
-                <span>12:00PM</span>
+                <span>{{ ride.pickup_time }}</span>
               </div>
 
               <h3
@@ -46,7 +60,6 @@
             <div
               class="flex gap-3 items-start text-sm text-[#414141] px-4 pt-3 pb-2"
             >
-              <!-- Vertical Route Icon -->
               <img
                 src="../../../assets/icons/dashboard/location-line.svg"
                 class="h-10 sm:h-12 pt-1"
@@ -60,9 +73,9 @@
                     class="h-4"
                     alt="start"
                   />
-                  <span class="text-xs sm:text-sm"
-                    >LaGuardia Airport (LGA), East USA</span
-                  >
+                  <span class="text-xs sm:text-sm">{{
+                    ride.pickup_location
+                  }}</span>
                 </div>
 
                 <div class="flex items-center gap-2">
@@ -71,7 +84,9 @@
                     class="h-4"
                     alt="end"
                   />
-                  <span class="text-xs sm:text-sm">JFK Airport</span>
+                  <span class="text-xs sm:text-sm">{{
+                    ride.drop_location
+                  }}</span>
                 </div>
               </div>
             </div>
@@ -80,7 +95,6 @@
             <div
               class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-[#414141] px-4 pb-3"
             >
-              <!-- Distance & Time -->
               <div
                 class="flex items-center sm:w-[50%] gap-3 border border-[#D8D8D8] rounded-lg py-1 px-3 text-xs text-[#17171A]"
               >
@@ -90,7 +104,7 @@
                     class="h-3"
                     alt="Distance"
                   />
-                  <span>15.96 km / 9.92 mi</span>
+                  <span>{{ ride.total_distance }}</span>
                 </div>
                 <div class="flex items-center gap-1">
                   <img
@@ -98,11 +112,10 @@
                     class="h-3"
                     alt="Time"
                   />
-                  <span>0h 17m</span>
+                  <span>{{ ride.total_time }}</span>
                 </div>
               </div>
 
-              <!-- Fare & Status -->
               <div class="flex flex-col items-end gap-2">
                 <div class="flex items-center gap-2">
                   <img
@@ -111,7 +124,9 @@
                     alt="Fare"
                   />
                   <p class="text-sm text-[#000]">Total Fare:</p>
-                  <p class="text-sm font-medium text-[#000]">$120</p>
+                  <p class="text-sm font-medium text-[#000]">
+                    ${{ ride.payments_total }}
+                  </p>
                 </div>
 
                 <span
@@ -124,35 +139,44 @@
 
             <!-- ========== DRIVER DETAILS ========== -->
             <div class="border-t border-dashed border-[#B4B4B4] p-4 space-y-4">
-              <div class="flex justify-between items-center">
-                <h3 class="text-[#414141] text-lg">Driver Details</h3>
-                <p class="text-sm font-medium text-[#414141]">03028724983</p>
-              </div>
+              <h3 class="text-[#414141] text-lg">Driver Details</h3>
 
-              <div class="grid grid-cols-[auto_1fr_auto] items-center gap-4">
-                <img
-                  src="../../../assets/icons/navbar/profile.svg"
-                  class="h-12 w-12 rounded-full"
-                  alt="Driver"
-                />
-
-                <div class="text-sm text-[#414141]">
-                  <p class="font-semibold">John P.</p>
-                  <p class="text-xs sm:text-sm">
-                    Car: Black Mercedes S-Class Plate # ABC 123
+              <div
+                v-for="(d, dIdx) in ride.driver_bookings"
+                :key="dIdx"
+                class="space-y-2"
+              >
+                <div class="flex justify-end">
+                  <p class="text-sm font-medium text-[#414141]">
+                    {{ d.driver_phone }}
                   </p>
                 </div>
 
-                <button
-                  class="bg-[#0072EF] text-white text-sm px-3 py-1 rounded-lg hover:bg-blue-700 transition flex items-center gap-2"
-                >
+                <div class="grid grid-cols-[auto_1fr_auto] items-center gap-4">
                   <img
-                    src="../../../assets/icons/dashboard/call.svg"
-                    class="h-4"
-                    alt="phone"
+                    src="../../../assets/icons/navbar/profile.svg"
+                    class="h-12 w-12 rounded-full"
+                    alt="Driver"
                   />
-                  Call Driver
-                </button>
+
+                  <div class="text-sm text-[#414141]">
+                    <p class="font-semibold">{{ d.driver_name }}</p>
+                    <p class="text-xs sm:text-sm">
+                      Car: {{ d.vehicle_name }} Plate # ABC 123
+                    </p>
+                  </div>
+
+                  <button
+                    class="bg-[#0072EF] text-white text-sm px-3 py-1 rounded-lg hover:bg-blue-700 transition flex items-center gap-2"
+                  >
+                    <img
+                      src="../../../assets/icons/dashboard/call.svg"
+                      class="h-4"
+                      alt="phone"
+                    />
+                    Call Driver
+                  </button>
+                </div>
               </div>
             </div>
           </div>

@@ -1,10 +1,49 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch, onMounted } from "vue";
+import axios from "@/axios";
+
 import RidesComing from "./rides/components/RidesComing.vue";
 import RidesCompleted from "./rides/components/RidesCompleted.vue";
 import RidesCancelled from "./rides/components/RidesCancelled.vue";
 
 const activeTab = ref("coming");
+
+// API data variable
+const bookings = ref([]);
+const totalBookings = ref(0);
+const cancelledBookings = ref(0);
+
+// API call function
+const fetchBookings = async () => {
+  try {
+    let filter = "";
+
+    if (activeTab.value === "coming") filter = "upcoming";
+    if (activeTab.value === "completed") filter = "completed";
+    if (activeTab.value === "cancelled") filter = "cancelled";
+
+    const res = await axios.get(`/customer/bookings`, {
+      params: { filter },
+    });
+
+    const data = res.data.data;
+    bookings.value = data.bookings;
+    totalBookings.value = data.total_bookings_count;
+    cancelledBookings.value = data.cancelled_bookings_count;
+  } catch (err) {
+    console.error("Error fetching bookings:", err);
+  }
+  console.log("Bookings data:", bookings.value);
+};
+// Call API on mount
+onMounted(() => {
+  fetchBookings();
+});
+
+// Watch for tab changes to refetch data
+watch(activeTab, () => {
+  fetchBookings();
+});
 </script>
 
 <template>
@@ -26,7 +65,9 @@ const activeTab = ref("coming");
           <p class="text-[#878787] text-sm sm:text-md font-medium">
             Total Trips
           </p>
-          <h1 class="text-[#0072EF] text-3xl sm:text-4xl font-semibold">12</h1>
+          <h1 class="text-[#0072EF] text-3xl sm:text-4xl font-semibold">
+            {{ totalBookings }}
+          </h1>
         </div>
 
         <!-- Canceled Rides -->
@@ -36,7 +77,9 @@ const activeTab = ref("coming");
           <p class="text-[#878787] text-sm sm:text-md font-medium">
             Canceled Rides
           </p>
-          <h1 class="text-[#0072EF] text-3xl sm:text-4xl font-semibold">05</h1>
+          <h1 class="text-[#0072EF] text-3xl sm:text-4xl font-semibold">
+            {{ cancelledBookings }}
+          </h1>
         </div>
       </div>
 
@@ -84,9 +127,9 @@ const activeTab = ref("coming");
         </button>
       </div>
 
-      <RidesComing v-if="activeTab === 'coming'" />
-      <RidesCompleted v-if="activeTab === 'completed'" />
-      <RidesCancelled v-if="activeTab === 'cancelled'" />
+      <RidesComing v-if="activeTab === 'coming'" :rides="bookings" />
+      <RidesCompleted v-if="activeTab === 'completed'" :rides="bookings" />
+      <RidesCancelled v-if="activeTab === 'cancelled'" :rides="bookings" />
     </div>
   </main>
 </template>
