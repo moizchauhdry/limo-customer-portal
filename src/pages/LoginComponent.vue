@@ -107,9 +107,9 @@ const loginHandler = async () => {
         <!-- Remember me + Forgot -->
         <div class="flex items-center justify-between text-sm">
           <label
-            class="flex items-center gap-2 text-[#414141] ml-4 font-poppins"
+            class="flex items-center gap-2 text-[#414141] font-poppins"
           >
-            <input type="checkbox" checked class="rounded text-blue-600" />
+            <input type="checkbox" class="rounded text-blue-600" v-model="form.remember" />
             <span>Remember me</span>
           </label>
           <a
@@ -124,8 +124,7 @@ const loginHandler = async () => {
           :disabled="loading"
           class="w-full bg-[#0072EF] text-white py-2 rounded-lg font-semibold hover:bg-black transition"
         >
-          <span v-if="!loading">Login Account</span>
-          <span v-else>Loging...</span>
+          <span>{{ loading ? 'Processing...' : 'Login' }}</span>
         </button>
 
         <!-- Google Sign In -->
