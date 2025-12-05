@@ -45,9 +45,10 @@ const routes = [
       { path: "settings", name: "settings", component: SettingsComponent },
       { path: "booking", name: "booking", component: BookingComponent },
       {
-        path: "view-booking",
+        path: "view-booking/:id",
         name: "view-booking",
         component: ViewBookingComponent,
+        props: true,
       },
     ],
   },

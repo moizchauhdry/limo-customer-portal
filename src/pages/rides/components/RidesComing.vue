@@ -49,7 +49,7 @@ defineProps({
               </h3>
 
               <RouterLink
-                to="/view-booking"
+                :to="`/view-booking/${ride.id}`"
                 class="bg-[#329EE7] px-6 sm:px-12 py-1 rounded-full text-white text-sm hover:bg-blue-700 transition"
               >
                 View

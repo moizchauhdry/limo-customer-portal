@@ -1,3 +1,29 @@
+<script setup>
+import { onMounted , ref} from "vue";
+import axios from "@/axios";
+
+const bookingHistory = ref(null);
+
+const BookingHistory = async () => {
+  try {
+    const response = await axios.get('/customer/bookings');
+
+    bookingHistory.value = response.data.data.bookings;
+  } catch (error) {
+    console.error("Failed to load booking details:", error);
+  }
+
+  console.log("Booking Details:", bookingHistory.value);
+};
+
+// Run on mount
+onMounted(() => {
+  BookingHistory();
+});
+</script>
+
+
+
 <template>
   <!-- MAIN CONTENT -->
   <main
@@ -74,8 +100,11 @@
       <!-- first card completed status -->
       <section class="mt-6 flex flex-col xl:flex-row gap-6 items-start">
         <div class="flex-1 space-y-6">
-          <div class="px-2 sm:px-0">
-            <div class="bg-white border border-[#DBDBDB] rounded-xl shadow">
+          <div class="px-2 sm:px-0 ">
+            <div
+            v-for="history in bookingHistory"
+            :key="history.id"
+            class="bg-white border border-[#DBDBDB] rounded-xl shadow mb-6">
               <!-- ========== HEADER ========== -->
               <div
                 class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 border-b p-3"
@@ -101,7 +130,7 @@
               </div>
               <!-- header -->
               <div class="flex items-center justify-between px-4 mt-2">
-                <h3 class="text-lg text-[#414141]">Ride ID: TR:7643R</h3>
+                <h3 class="text-lg text-[#414141]">Ride ID: TR:{{ history.id }}</h3>
                 <div class="flex items-center gap-2">
                   <img
                     src="../assets/icons/rides/total-fare.svg"
@@ -109,7 +138,7 @@
                     alt="Fare"
                   />
                   <p class="text-sm sm:text-lg text-[#000]">Final Fare:</p>
-                  <p class="text-sm sm:text-lg font-medium text-[#000]">$120</p>
+                  <p class="text-sm sm:text-lg font-medium text-[#000]">${{ history.payments_total }}</p>
                 </div>
               </div>
               <!-- ========== ROUTE BLOCK ========== -->
@@ -128,7 +157,7 @@
                       alt="start"
                     />
                     <span class="text-xs sm:text-sm">
-                      LaGuardia Airport (LGA), East USA
+                      {{history.pickup_location}}
                     </span>
                   </div>
 
@@ -146,7 +175,7 @@
                       class="h-4"
                       alt="end"
                     />
-                    <span class="text-xs sm:text-sm">JFK Airport</span>
+                    <span class="text-xs sm:text-sm">{{ history.drop_location }}</span>
                   </div>
                 </div>
               </div>
@@ -159,13 +188,13 @@
                 <div
                   class="flex flex-col items-start sm:items-start gap-1 rounded-lg px-1 text-md text-[#17171A]"
                 >
-                  <span class="text-[#414141] text-lg">Distance: 15.98 km</span>
+                  <span class="text-[#414141] text-lg">Distance: {{history.total_distance}}</span>
                 </div>
 
                 <!-- Duration -->
                 <div class="flex flex-col items-start sm:items-end gap-1">
                   <span class="text-[#414141] text-lg"
-                    >Duration: 1h, 29 min</span
+                    >Duration: {{history.total_time}}</span
                   >
                 </div>
               </div>
@@ -174,7 +203,10 @@
               <div
                 class="border-t border-dashed border-[#B4B4B4] p-4 space-y-4"
               >
-                <div class="grid grid-cols-[auto_1fr_auto] items-center gap-4">
+                <div 
+                 v-for="d in history.driver_bookings"
+                  :key="d.id"
+                class="grid grid-cols-[auto_1fr_auto] items-center gap-4">
                   <img
                     src="../assets/icons/navbar/profile.svg"
                     class="h-12 w-12 rounded-full"
@@ -182,9 +214,9 @@
                   />
 
                   <div class="text-sm text-[#414141]">
-                    <p class="font-semibold">John P.</p>
+                    <p class="font-semibold">{{d.driver_name}}</p>
                     <p class="text-xs sm:text-sm">
-                      Car: Black Mercedes S-Class Plate # ABC 123
+                      Car: {{d.vehicle_name}} Plate # ABC 123
                     </p>
                   </div>
 
@@ -220,7 +252,7 @@
                   <h3
                     class="text-md sm:text-lg lg:text-xl font-normal text-[#414141]"
                   >
-                    Completed
+                  Cancelled
                   </h3>
                 </div>
                 <button
