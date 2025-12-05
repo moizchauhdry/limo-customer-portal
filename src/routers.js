@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import GuestLayout from "./layouts/GuestLayout.vue";
 import AuthLayout from "./layouts/AuthLayout.vue";
+import WebLayout from "./layouts/WebLayout.vue";
 
 import DashboardComponent from "./pages/DashboardComponent.vue";
 import RidesComponent from "./pages/RidesComponent.vue";
@@ -15,6 +16,7 @@ import SignupComponent from "./pages/SignupComponent.vue";
 import BookingComponent from "./components/BookingComponent.vue";
 import ViewBookingComponent from "./components/ViewBookingComponent.vue";
 import VerifyOtpComponent from "./pages/VerifyOtpComponent.vue";
+import HomeComponent from "./pages/website/HomeComponent.vue";
 
 const routes = [
   {
@@ -24,6 +26,13 @@ const routes = [
       { path: "login", name: "login", component: LoginComponent },
       { path: "signup", name: "signup", component: SignupComponent },
       { path: "verify-otp", name: "verify-otp", component: VerifyOtpComponent },
+    ],
+  },
+  {
+    path: "/",
+    component: WebLayout,
+    children: [
+      { path: "test", name: "test", component: HomeComponent },
     ],
   },
 
