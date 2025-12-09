@@ -26,6 +26,16 @@ body {
   height: 4px;
   border-radius: 10px;
 }
+/* Hide scrollbar for Chrome, Edge, Safari */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for Firefox */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
 
 /* Track */
 ::-webkit-scrollbar-track {

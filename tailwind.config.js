@@ -35,6 +35,7 @@ module.exports = {
         nexa: ["Nexa", "sans-serif"],
         rubik: ["Rubik", "sans-serif"],
         roboto: ["Roboto", "sans-serif"],
+        rethink: ['"Rethink Sans"', 'sans-serif'],
       },
     },
   },

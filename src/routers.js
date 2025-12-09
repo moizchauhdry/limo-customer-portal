@@ -32,7 +32,7 @@ const routes = [
     path: "/",
     component: WebLayout,
     children: [
-      { path: "test", name: "test", component: HomeComponent },
+      { path: "", name: "home", component: HomeComponent },
     ],
   },
 

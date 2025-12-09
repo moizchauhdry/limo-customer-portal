@@ -1,8 +1,10 @@
 <script setup>
-import WebNavComponent from '@/components/WebNavComponent.vue';
+import WebFooter from "@/components/WebFooter.vue";
+import WebNavComponent from "@/components/WebNavComponent.vue";
 </script>
 
 <template>
-    <WebNavComponent />
-      <router-view />
+  <WebNavComponent />
+  <router-view />
+  <WebFooter />
 </template>
