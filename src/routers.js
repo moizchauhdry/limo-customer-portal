@@ -13,7 +13,7 @@ import ComplaintsComponent from "./pages/ComplaintsComponent.vue";
 import SettingsComponent from "./pages/SettingsComponent.vue";
 import LoginComponent from "./pages/LoginComponent.vue";
 import SignupComponent from "./pages/SignupComponent.vue";
-import BookingComponent from "./components/BookingComponent.vue";
+import RideCreateComponent from "./pages/RideCreateComponent.vue";
 import ViewBookingComponent from "./components/ViewBookingComponent.vue";
 import VerifyOtpComponent from "./pages/VerifyOtpComponent.vue";
 import HomeComponent from "./pages/website/HomeComponent.vue";
@@ -43,6 +43,7 @@ const routes = [
       { path: "", redirect: "/dashboard" },
       { path: "dashboard", name: "dashboard", component: DashboardComponent },
       { path: "rides", name: "rides", component: RidesComponent },
+      { path: "rides/create", name: "rides-create", component: RideCreateComponent },
       { path: "history", name: "history", component: HistoryComponent },
       { path: "wallet", name: "wallet", component: WalletComponent },
       { path: "reports", name: "reports", component: ReportsComponent },
@@ -52,7 +53,6 @@ const routes = [
         component: ComplaintsComponent,
       },
       { path: "settings", name: "settings", component: SettingsComponent },
-      { path: "booking", name: "booking", component: BookingComponent },
       {
         path: "view-booking/:id",
         name: "view-booking",

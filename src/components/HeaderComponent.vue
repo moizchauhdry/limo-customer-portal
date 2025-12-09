@@ -30,7 +30,7 @@
       <img src="../assets/icons/navbar/profile.svg" class="h-9 rounded-full" />
 
       <RouterLink
-        to="/booking"
+        to="/rides/create"
         class="bg-[#369FFF]  hover:bg-[#095193] text-white px-3 py-3 rounded-lg flex items-center gap-2 hover:shadow-xl transition-shadow duration-300 "
       >
         <img src="../assets/icons/navbar/booking1.svg" class="h-4" />
