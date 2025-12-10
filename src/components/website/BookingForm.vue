@@ -1,4 +1,31 @@
-<script setup></script>
+<script setup>
+import { reactive } from "vue";
+import FloatInput from "./FloatInput.vue";
+import FloatTimePicker from "./FloatTimePicker.vue";
+import FloatSelect from "./FloatSelect.vue";
+
+const fleetOptions = [
+  { label: "Black Sedan", value: "Black Sedan" },
+  { label: "SUV", value: "SUV" },
+  { label: "Luxury Van", value: "Luxury Van" },
+  { label: "Limousine", value: "Limousine" },
+];
+
+const form = reactive({
+  name: "",
+  email: "",
+  pick_up: "",
+  destination: "",
+  number: "",
+  no_of_passengers: "",
+  no_of_lugguage: "",
+  time: "",
+  date: "",
+  fleet: "",
+  service: "",
+  travel: "",
+});
+</script>
 
 <template>
   <section
@@ -23,103 +50,19 @@
     </div>
 
     <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <div
-        class="flex items-center justify-between w-full max-w-sm px-3 py-3 border border-[#CCCCCC] rounded-2xl shadow bg-white"
-      >
-        <label class="font-semibold text-[#7C7C7C]">Name</label>
-        <span class="text-xs mr-3 text-[#404040]">Jack</span>
-      </div>
+      <FloatInput v-model="form.name" label="Name" />
+      <FloatInput v-model="form.email" label="Email" />
+      <FloatInput v-model="form.date" type="date" />
+      <FloatTimePicker v-model="form.time" label="Time" />
+      <FloatInput v-model="form.pick_up" label="Pick Up" />
+      <FloatInput v-model="form.destination" label="Destination" />
+      <FloatInput v-model="form.number" label="Number" />
+      <FloatSelect v-model="form.fleet" label="Fleet" :options="fleetOptions" />
 
-      <div
-        class="flex items-center justify-between w-full max-w-sm px-3 py-3 border border-[#CCCCCC] rounded-2xl shadow bg-white"
-      >
-        <label class="font-semibold text-[#7C7C7C]">Email</label>
-        <span class="text-xs mr-3 text-[#404040]">example@gmail.com</span>
-      </div>
-      <div
-        class="flex items-center justify-between w-full max-w-sm px-3 py-3 border border-[#CCCCCC] rounded-2xl shadow bg-white"
-      >
-        <label class="font-semibold text-[#7C7C7C]">Date</label>
-        <span class="text-xs mr-3 text-[#404040]">Apr 19, 2025</span>
-      </div>
-      <div
-        class="flex items-center justify-between w-full max-w-sm px-3 py-3 border border-[#CCCCCC] rounded-2xl shadow bg-white"
-      >
-        <label class="font-semibold text-[#7C7C7C]">Time</label>
-        <span class="text-xs mr-3 text-[#404040]">08:00 pm</span>
-      </div>
-      <div
-        class="flex items-center justify-between w-full max-w-sm px-3 py-3 border border-[#CCCCCC] rounded-2xl shadow bg-white"
-      >
-        <label class="font-semibold text-[#7C7C7C]">Pick Up</label>
-        <span class="text-xs mr-3 text-[#404040]"
-          >From: Airport, Hotel ...</span
-        >
-      </div>
-      <div
-        class="flex items-center justify-between w-full max-w-sm px-3 py-3 border border-[#CCCCCC] rounded-2xl shadow bg-white"
-      >
-        <label class="font-semibold text-[#7C7C7C]">Destination</label>
-        <span class="text-xs mr-3 text-[#404040]">To: Airport, Hotel ...</span>
-      </div>
-      <div
-        class="flex items-center justify-between w-full max-w-sm px-3 py-3 border border-[#CCCCCC] rounded-2xl shadow bg-white"
-      >
-        <label class="font-semibold text-[#7C7C7C]">Number</label>
-        <span class="text-xs mr-3 text-[#404040]">(XXX) XXX-XXXX</span>
-      </div>
-      <div
-        class="flex items-center justify-between w-full max-w-sm px-3 py-3 border border-[#CCCCCC] rounded-2xl shadow bg-white"
-      >
-        <label class="font-semibold text-[#7C7C7C]">Fleet</label>
-        <div class="flex items-center gap-1">
-          <span class="text-xs text-[#404040]">Black Sedan</span>
-          <img
-            src="@/assets/icons/wesbsite/hero/dropdown-arrow.svg"
-            alt="dropdown arrow"
-            class="w-2 h-2 object-contain"
-          />
-        </div>
-      </div>
-
-      <div
-        class="flex items-center justify-between w-full max-w-sm px-3 py-3 border border-[#CCCCCC] rounded-2xl shadow bg-white"
-      >
-        <label class="font-semibold text-[#7C7C7C]">Passengers</label>
-        <span class="text-xs mr-3 text-[#404040]">04</span>
-      </div>
-      <div
-        class="flex items-center justify-between w-full max-w-sm px-3 py-3 border border-[#CCCCCC] rounded-2xl shadow bg-white"
-      >
-        <label class="font-semibold text-[#7C7C7C]">Luggage</label>
-        <span class="text-xs mr-3 text-[#404040]">03</span>
-      </div>
-      <div
-        class="flex items-center justify-between w-full max-w-sm px-3 py-3 border border-[#CCCCCC] rounded-2xl shadow bg-white"
-      >
-        <label class="font-semibold text-[#7C7C7C]">Service</label>
-        <div class="flex items-center gap-1">
-          <span class="text-xs text-[#404040]">AirPort Pick-up</span>
-          <img
-            src="@/assets/icons/wesbsite/hero/dropdown-arrow.svg"
-            alt="dropdown arrow"
-            class="w-2 h-2 object-contain"
-          />
-        </div>
-      </div>
-      <div
-        class="flex items-center justify-between w-full max-w-sm px-3 py-3 border border-[#CCCCCC] rounded-2xl shadow bg-white"
-      >
-        <label class="font-semibold text-[#7C7C7C]">Travel</label>
-        <div class="flex items-center gap-1">
-          <span class="text-xs text-[#404040]">One Way </span>
-          <img
-            src="@/assets/icons/wesbsite/hero/dropdown-arrow.svg"
-            alt="dropdown arrow"
-            class="w-2 h-2 object-contain"
-          />
-        </div>
-      </div>
+      <FloatInput v-model="form.no_of_passengers" label="Passengers" />
+      <FloatInput v-model="form.no_of_lugguage" label="Lugguage" /><FloatSelect v-model="form.service" label="Service" :options="fleetOptions" />
+      
+      <FloatSelect v-model="form.travel" label="Travel" :options="fleetOptions" />
       <div class="md:col-span-2 mx-auto">
         <button
           type="submit"
