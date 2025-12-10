@@ -4,11 +4,7 @@ import Form from "vform";
 import { useRouter } from "vue-router";
 
 // Determine base URL in a way that works for Vue CLI and Vite
-const baseURL =
-  (typeof process !== "undefined" &&
-    process.env &&
-    process.env.VUE_APP_API_URL) ||
-  "https://polliwog-internal-fawn.ngrok-free.app/api";
+const baseURL = (typeof process.env !== "undefined" && process.env && process.env.VUE_APP_API_URL) || "";
 
 const instance = axios.create({
   baseURL,
