@@ -32,11 +32,11 @@ const slidePrev = () => {
 </script>
 
 <template>
-  <section class="px-4 py-12 md:px-10 lg:px-10 bg-[#FFFFFF] mb-10">
+  <section class="px-4 md:px-10 lg:px-10 bg-[#FFFFFF] mb-10 mt-5">
     <div class="max-w-7xl mx-auto flex flex-col">
-      <div class="text-black space-y-4 text-center mb-8 sm:mb-0">
+      <div class="text-black space-y-4 text-center sm:mb-0">
         <h2
-          class="text-[28px] text-[#010101] md:text-[36px] lg:text-[52px] font-bold leading-tight capitalize"
+          class="text-[34px] text-[#010101] md:text-[36px] lg:text-[52px] font-bold leading-tight capitalize"
         >
           top destination
         </h2>
@@ -46,7 +46,7 @@ const slidePrev = () => {
           >
             From coast to coast — premium rides, no matter the city.
           </p>
-          <div class="flex items-center gap-4 mr-8">
+          <div class="flex items-center gap-4 sm:mr-8">
             <button
               @click="slidePrev"
               class="w-10 h-10 flex items-center justify-center rounded-full border bg-gray-500 border-gray-300 hover:bg-gray-900 transition"

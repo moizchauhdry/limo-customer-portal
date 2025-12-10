@@ -27,54 +27,54 @@ const reviews = [
 
 <template>
   <!-- MAIN SECTION -->
-  <section class="bg-white py-16 px-6 lg:px-10 max-w-7xl w-full mx-auto">
+  <section class="bg-white py-8 px-6 lg:px-10 max-w-7xl w-full mx-auto">
     <!-- TOP TEXT -->
-    <div class="text-center mb-6">
-      <h2 class="text-xl md:text-4xl font-medium">Read Reviews</h2>
-      <h3 class="text-3xl md:text-4xl font-semibold mt-2">
+    <div class="text-center mb-6 mx-auto flex flex-col space-y-0 sm:space-y-2">
+      <h2 class="text-[28px] md:text-4xl font-medium">Read Reviews</h2>
+      <h3 class="text-[28px] md:text-4xl font-semibold mt-2 whitespace-nowrap">
         Ride With Confidence
       </h3>
 
       <!-- Rating Row -->
-      <div class="flex items-center justify-center gap-5 mt-5 text-gray-700">
-        <p class="text-lg font-medium">4.2/5</p>
+      <div class="flex items-center justify-center gap-4 sm:gap-5 mt-5 text-gray-700 sm:mt-4">
+        <p class="text-sm sm:text-lg font-medium">4.2/5</p>
 
         <img
           src="@/assets/icons/wesbsite/hero/review2.svg"
-          class="w-10 h-10"
+          class="w-7 h-7 sm:w-10 sm:h-10"
           alt="Google Rating"
         />
 
         <img
           src="@/assets/icons/wesbsite/hero/review3.svg"
-          class="w-10 h-10"
+          class="w-7 h-7 sm:w-10 sm:h-10"
           alt="Star Icon"
         />
 
-        <p class="text-lg font-medium">Based on 5210 reviews</p>
+        <p class="text-sm sm:text-lg font-medium">Based on 5210 reviews</p>
       </div>
     </div>
 
     <!-- MAIN FLEX WRAPPER -->
     <div class="grid grid-cols-1 lg:grid-cols-5">
       <!-- LEFT SIDE QUOTE -->
-      <div class="flex flex-col justify-start items-start gap-6">
+      <div class="flex flex-col justify-start items-start gap-6 sm:mx-0">
         <img
           src="@/assets/icons/wesbsite/hero/review1.svg"
           alt="quote"
-          class="w-20 h-14"
+          class="w-20 h-14 mx-auto sm:mx-0"
         />
 
         <p
-          class="text-2xl font-semibold text-[#000001] leading-snug font-inter"
+          class="text-2xl font-semibold text-[#000001] leading-snug font-inter mx-auto sm:mx-0 text-center sm:text-start mb-5 sm:mb-0"
         >
-          What Our<br />Customers Are<br />Saying
+          What Our Customers Are<br />Saying
         </p>
         
         <!-- Arrows + Progress Bar Row -->
-        <div class="flex items-center mb-4">
+        <div class="hidden sm:flex items-center mb-4">
           <!-- Left Arrow -->
-          <button class="p-1.5 rounded-full">
+          <button class=" p-1.5 rounded-full">
             <img
               src="@/assets/icons/wesbsite/hero/left-arrow.svg"
               class="w-4"

@@ -38,20 +38,20 @@ const services = [
 <template>
   <section class="w-full px-6 md:px-12 lg:px-10  max-w-7xl mx-auto">
     <!-- TEXT HEADING -->
-    <div class="flex justify-between items-center mb-4">
+    <div class="flex justify-between items-center sm:mb-4">
       <div>
-        <h2 class="text-3xl md:text-4xl" style="color: rgba(1, 1, 1, 1)">
+        <h2 class="text-4xl md:text-4xl text-center sm:text-start sm:mx-0 font-medium" style="color: rgba(1, 1, 1, 1)">
           Our Services
         </h2>
 
-        <p class="mt-2 text-lg text-[#46464D] font-medium font-inter" >
+        <p class="mt-2 text-lg text-[#46464D] font-medium font-inter text-center sm:text-start" >
           From airport rides to city travel, we’ve got every trip covered with
           comfort and style.
         </p>
       </div>
 
       <!-- ARROW BUTTONS -->
-      <div class="flex items-center gap-4">
+      <div class="hidden sm:flex items-center gap-4">
         <button
           class="w-10 h-10 flex items-center justify-center rounded-full border bg-gray-500 border-gray-300 hover:bg-gray-100 transition"
         >

@@ -47,7 +47,7 @@ const faqs = ref([
         </div>
 
         <!-- ACCORDION -->
-        <div class="space-y-4 ">
+        <div class="space-y-4">
           <div
             v-for="(faq, idx) in faqs"
             :key="idx"
@@ -82,7 +82,7 @@ const faqs = ref([
       </div>
 
       <!-- RIGHT : PICTURE -->
-      <div class="w-full h-auto rounded-2xl overflow-hidden mt-10 lg:mt-10">
+     <div class="col-span-1 w-screen sm:w-auto -mx-3 px-3 sm:px-0 sm:mx-0 h-auto rounded-2xl overflow-hidden lg:mt-10">
         <img
           src="@/assets/icons/wesbsite/hero/faq.svg"
           alt="FAQ car"
