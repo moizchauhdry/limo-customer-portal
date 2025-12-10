@@ -1,14 +1,13 @@
 <script setup>
 import { reactive } from "vue";
 import FloatInput from "./FloatInput.vue";
-import FloatTimePicker from "./FloatTimePicker.vue";
 import FloatSelect from "./FloatSelect.vue";
 
 const fleetOptions = [
-  { label: "Black Sedan", value: "Black Sedan" },
-  { label: "SUV", value: "SUV" },
-  { label: "Luxury Van", value: "Luxury Van" },
-  { label: "Limousine", value: "Limousine" },
+  { label: "Black Sedan", value: "1" },
+  { label: "SUV", value: "2" },
+  { label: "Luxury Van", value: "3" },
+  { label: "Limousine", value: "4" },
 ];
 
 const form = reactive({
@@ -25,26 +24,61 @@ const form = reactive({
   service: "",
   travel: "",
 });
+
+// const loadGoogleMaps = () => {
+//   return new Promise(resolve => {
+//     if (window.google && window.google.maps) {
+//       resolve();
+//       return;
+//     }
+//     const script = document.createElement("script");
+//     script.src = `https://maps.googleapis.com/maps/api/js?key=${createRideData.value?.google_map_api_key}&libraries=places`;
+//     script.async = true;
+//     script.onload = resolve;
+//     document.head.appendChild(script);
+//   });
+// };
+
+// const setupAutocomplete = () => {
+//   const originInput = document.getElementById("origin-input");
+//   const destinationInput = document.getElementById("destination-input");
+
+//   const originAuto = new google.maps.places.Autocomplete(originInput, { fields: ["place_id", "formatted_address", "name"] });
+//   const destAuto = new google.maps.places.Autocomplete(destinationInput, { fields: ["place_id", "formatted_address", "name"] });
+
+//   originAuto.addListener("place_changed", () => {
+
+//     const place = originAuto.getPlace();
+//     if (place.place_id) {
+//       originPlaceId.value = place.place_id;
+//       route();
+
+//       form.pickup_location = originInput.value;
+//     }
+//   });
+
+//   destAuto.addListener("place_changed", () => {
+//     const place = destAuto.getPlace();
+//     if (place.place_id) {
+//       destinationPlaceId.value = place.place_id;
+//       route();
+
+//       form.drop_location = destinationInput.value;
+//     }
+//   });
+// };
 </script>
 
 <template>
-  <section
-    class="bg-white shadow-xl p-6 rounded-xl max-w-xl sm:ml-auto sm:mt-[-26rem] z-10 relative sm:mr-[2rem]"
-  >
-    <div
-      class="flex gap-2 bg-white rounded-xl w-full border-2 border-[#111111] mb-6 justify-between"
-    >
+  <section class="bg-white shadow-xl p-6 rounded-xl max-w-xl sm:ml-auto sm:mt-[-26rem] z-10 relative sm:mr-[2rem]">
+    <div class="flex gap-2 bg-white rounded-xl w-full border-2 border-[#111111] mb-6 justify-between">
       <!-- Selected Tab -->
-      <button
-        class="w-[50%] bg-black text-white font-semibold rounded-lg transition-colors text-lg"
-      >
+      <button class="w-[50%] bg-black text-white font-semibold rounded-lg transition-colors text-lg">
         Distance
       </button>
 
       <!-- Unselected Tab -->
-      <button
-        class="px-6 py-2 bg-white text-black font-semibold rounded-full transition-colors mx-auto text-lg"
-      >
+      <button class="px-6 py-2 bg-white text-black font-semibold rounded-full transition-colors mx-auto text-lg">
         Hourly
       </button>
     </div>
@@ -52,24 +86,21 @@ const form = reactive({
     <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
       <FloatInput v-model="form.name" label="Name" placeholder="Jack" />
       <FloatInput v-model="form.email" label="Email" placeholder="example@gmail.com" />
-      <FloatInput v-model="form.date" label="Date" type="date" placeholder="Apr 19, 2025" />
-      <!-- <FloatInput v-model="form.time" type="time" /> -->
-      <FloatTimePicker v-model="form.time" label="Time" placeholder="08:00 pm" />
-      <FloatInput v-model="form.pick_up" label="Pick Up" placeholder="From: Airport, Hotel ..."/>
-      <FloatInput v-model="form.destination" label="Destination" placeholder="From: Airport, Hotel ..." />
+      <FloatInput v-model="form.date" label="Date" customType="date" placeholder="Apr 19, 2025" />
+      <FloatInput v-model="form.time" label="Time" customType="time" placeholder="08:00 pm" />
+      <FloatInput v-model="form.pick_up" label="Pick Up" placeholder="From: Airport, Hotel ..." id="origin-input" />
+      <FloatInput v-model="form.destination" label="Destination" placeholder="From: Airport, Hotel ..."
+        id="destination-input" />
       <FloatInput v-model="form.number" label="Number" placeholder="(XXX) XXX-XXXX" />
-      <FloatSelect v-model="form.fleet" label="Fleet" :options="fleetOptions" />
-
-      <FloatInput v-model="form.no_of_passengers" label="Passengers" placeholder="04"/>
-      <FloatInput v-model="form.no_of_lugguage" label="Lugguage" placeholder="03"/>
+      <FloatSelect v-model="form.fleet" label="Fleet" placeholder="Black Sedan" :options="fleetOptions" />
+      <FloatInput v-model="form.no_of_passengers" label="Passengers" placeholder="04" />
+      <FloatInput v-model="form.no_of_lugguage" label="Lugguage" placeholder="03" />
       <FloatSelect v-model="form.service" label="Service" :options="fleetOptions" />
-      
+
       <FloatSelect v-model="form.travel" label="Travel" :options="fleetOptions" />
       <div class="md:col-span-2 mx-auto">
-        <button
-          type="submit"
-          class="w-full mx-auto bg-[linear-gradient(93.72deg,#FAB707_2.95%,#FCDA19_100%)] px-16 text-black font-bold py-2 rounded-lg hover:opacity-90 transition"
-        >
+        <button type="submit"
+          class="w-full mx-auto bg-[linear-gradient(93.72deg,#FAB707_2.95%,#FCDA19_100%)] px-16 text-black font-bold py-2 rounded-lg hover:opacity-90 transition">
           Get a Free Quote
         </button>
       </div>

@@ -1,11 +1,18 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
-import { defineProps, defineEmits, defineModel } from "vue";
+import { defineProps, defineEmits, ref, defineModel } from "vue";
 
 defineProps({
   label: {
     type: String,
     required: true,
+  },
+  placeholder: {
+    type: String,
+    default: () => "",
+  },
+  id: {
+    type: String,
+    default: () => "",
   },
   options: {
     type: Array,
@@ -15,86 +22,38 @@ defineProps({
 
 const model = defineModel();
 const emit = defineEmits(["change"]);
-
 const focused = ref(false);
-const showOptions = ref(false);
 
-const wrapperRef = ref(null);
-
-const selectOption = (option) => {
-  model.value = option.value; 
-  emit("change", option.value);
-  showOptions.value = false;
+const handleFocus = () => {
   focused.value = true;
-};
+}
 
-// Close dropdown on outside click
-const handleClickOutside = (event) => {
-  if (wrapperRef.value && !wrapperRef.value.contains(event.target)) {
-    showOptions.value = false;
-
-    // If no value and user clicked away, remove focus → label goes down
-    if (!model.value) {
-      focused.value = false;
-    }
-  }
-};
-
-onMounted(() => {
-  document.addEventListener("click", handleClickOutside);
-});
-
-onBeforeUnmount(() => {
-  document.removeEventListener("click", handleClickOutside);
-});
+const handleBlur = () => {
+  focused.value = false;
+}
 </script>
 
 <template>
-  <div ref="wrapperRef" class="relative w-full max-w-sm">
-    <!-- Wrapper / Display Field -->
-    <div
-      class="flex items-center justify-between w-full px-3 py-4 border border-[#CCCCCC] rounded-2xl shadow bg-white cursor-pointer"
-      @click="
-        showOptions = !showOptions;
-        focused = true;
-      "
-    >
-      <!-- Floating Label -->
-      <label
-        :class="[
-          'absolute left-3 transition-all duration-200 bg-white px-1 font-semibold text-[#7C7C7C]',
-          model || focused ? '-top-2 text-xs text-yellow-600' : 'top-3 text-md',
-        ]"
-      >
-        {{ label }}
-      </label>
+  <div class="relative w-full max-w-sm">
+    <!-- Select -->
+    <select :id="id" :placeholder="placeholder"
+      class="peer w-full px-3 py-3 border border-[#CCCCCC] rounded-2xl cursor-pointer shadow bg-white text-[#404040] placeholder:text-[#404040] placeholder:text-right placeholder:text-xs focus:placeholder-transparent focus:outline-none focus:ring-0 focus:border-[#FDD31C]"
+      v-model="model" @change="emit('change', $event.target.value)" @focus="handleFocus" @blur="handleBlur">
 
-      <!-- Selected Value -->
-      <span class="text-xs text-[#404040]">
-        {{ model || "" }}
-      </span>
-
-      <!-- Dropdown Arrow -->
-      <img
-        src="@/assets/icons/wesbsite/hero/dropdown-arrow.svg"
-        alt="dropdown arrow"
-        class="w-2 h-2 object-contain ml-auto"
-      />
-    </div>
-
-    <!-- Dropdown Options -->
-    <div
-      v-if="showOptions"
-      class="absolute left-0 mt-1 w-full bg-white border border-gray-300 rounded-xl shadow-lg z-10"
-    >
-      <div
-        v-for="option in options"
-        :key="option.value"
-        @click="selectOption(option)"
-        class="px-3 text-sm cursor-pointer hover:bg-gray-100"
-      >
+      <option v-if="!focused" disabled value="" class="text-right text-xs text-gray-400">
+        {{ placeholder }}
+      </option>
+      <option class="rounded-xl" v-for="option in options" :key="option.value" :value="option.value">
         {{ option.label }}
-      </div>
-    </div>
+      </option>
+    </select>
+
+    <!-- floating label -->
+    <label :for="id" :class="[
+      'absolute left-3 text-[#7C7C7C] font-semibold transition-all duration-200 bg-white px-1',
+      model || focused ? '-top-2 text-xs text-[#404040]' : 'top-3 text-md',
+    ]">
+      {{ label }}
+    </label>
   </div>
 </template>
