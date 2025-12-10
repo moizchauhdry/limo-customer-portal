@@ -84,20 +84,20 @@ const form = reactive({
     </div>
 
     <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <FloatInput v-model="form.name" label="Name" placeholder="Jack" />
-      <FloatInput v-model="form.email" label="Email" placeholder="example@gmail.com" />
-      <FloatInput v-model="form.date" label="Date" customType="date" placeholder="Apr 19, 2025" />
-      <FloatInput v-model="form.time" label="Time" customType="time" placeholder="08:00 pm" />
+      <FloatInput v-model="form.name" label="Name" placeholder="Jack" id="name"/>
+      <FloatInput v-model="form.email" label="Email" placeholder="example@gmail.com" id="email" />
+      <FloatInput v-model="form.date" label="Date" customType="date" placeholder="Apr 19, 2025" id="date" />
+      <FloatInput v-model="form.time" label="Time" customType="time" placeholder="08:00 pm" id="time" />
       <FloatInput v-model="form.pick_up" label="Pick Up" placeholder="From: Airport, Hotel ..." id="origin-input" />
       <FloatInput v-model="form.destination" label="Destination" placeholder="From: Airport, Hotel ..."
         id="destination-input" />
-      <FloatInput v-model="form.number" label="Number" placeholder="(XXX) XXX-XXXX" />
-      <FloatSelect v-model="form.fleet" label="Fleet" placeholder="Black Sedan" :options="fleetOptions" />
-      <FloatInput v-model="form.no_of_passengers" label="Passengers" placeholder="04" />
-      <FloatInput v-model="form.no_of_lugguage" label="Lugguage" placeholder="03" />
-      <FloatSelect v-model="form.service" label="Service" :options="fleetOptions" />
+      <FloatInput v-model="form.number" label="Number" placeholder="(XXX) XXX-XXXX" id="number" />
+      <FloatSelect v-model="form.fleet" label="Fleet" placeholder="Black Sedan" :options="fleetOptions" id="fleet" />
+      <FloatInput v-model="form.no_of_passengers" label="Passengers" placeholder="04" id="passenger"/>
+      <FloatInput v-model="form.no_of_lugguage" label="Lugguage" placeholder="03" id="lugguage" />
+      <FloatSelect v-model="form.service" label="Service" placeholder="Airport pick-up" :options="fleetOptions" id="service" />
 
-      <FloatSelect v-model="form.travel" label="Travel" :options="fleetOptions" />
+      <FloatSelect v-model="form.travel" label="Travel" placeholder="One way" :options="fleetOptions" id="travel"/>
       <div class="md:col-span-2 mx-auto">
         <button type="submit"
           class="w-full mx-auto bg-[linear-gradient(93.72deg,#FAB707_2.95%,#FCDA19_100%)] px-16 text-black font-bold py-2 rounded-lg hover:opacity-90 transition">
