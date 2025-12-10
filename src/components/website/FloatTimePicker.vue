@@ -6,6 +6,10 @@ defineProps({
     type: String,
     default: "Time",
   },
+  placeholder: {
+    type: String,
+    default: () => "",
+  },
 });
 
 const model = defineModel();
@@ -54,8 +58,8 @@ onBeforeUnmount(() => {
     <!-- Trigger Input -->
     <input
       readonly
-      placeholder=" "
-      class="peer w-full px-3 py-3 border border-[#CCCCCC] rounded-2xl shadow bg-white text-[#404040] placeholder-transparent focus:outline-none focus:ring-1 focus:ring-[#FDD31C] cursor-pointer"
+      :placeholder="placeholder"
+      class="peer w-full px-3 py-3 border border-[#CCCCCC] rounded-2xl shadow bg-white text-[#404040] placeholder:text-[#404040] placeholder:text-right placeholder:text-xs focus:placeholder-transparent  focus:outline-none focus:ring-1 focus:ring-[#FDD31C] cursor-pointer"
       v-model="model"
        @focus="focused = true; showPicker = true"
     />

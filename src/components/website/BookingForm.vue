@@ -50,17 +50,19 @@ const form = reactive({
     </div>
 
     <form class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <FloatInput v-model="form.name" label="Name" />
-      <FloatInput v-model="form.email" label="Email" />
-      <FloatInput v-model="form.date" type="date" />
-      <FloatTimePicker v-model="form.time" label="Time" />
-      <FloatInput v-model="form.pick_up" label="Pick Up" />
-      <FloatInput v-model="form.destination" label="Destination" />
-      <FloatInput v-model="form.number" label="Number" />
+      <FloatInput v-model="form.name" label="Name" placeholder="Jack" />
+      <FloatInput v-model="form.email" label="Email" placeholder="example@gmail.com" />
+      <FloatInput v-model="form.date" label="Date" type="date" placeholder="Apr 19, 2025" />
+      <!-- <FloatInput v-model="form.time" type="time" /> -->
+      <FloatTimePicker v-model="form.time" label="Time" placeholder="08:00 pm" />
+      <FloatInput v-model="form.pick_up" label="Pick Up" placeholder="From: Airport, Hotel ..."/>
+      <FloatInput v-model="form.destination" label="Destination" placeholder="From: Airport, Hotel ..." />
+      <FloatInput v-model="form.number" label="Number" placeholder="(XXX) XXX-XXXX" />
       <FloatSelect v-model="form.fleet" label="Fleet" :options="fleetOptions" />
 
-      <FloatInput v-model="form.no_of_passengers" label="Passengers" />
-      <FloatInput v-model="form.no_of_lugguage" label="Lugguage" /><FloatSelect v-model="form.service" label="Service" :options="fleetOptions" />
+      <FloatInput v-model="form.no_of_passengers" label="Passengers" placeholder="04"/>
+      <FloatInput v-model="form.no_of_lugguage" label="Lugguage" placeholder="03"/>
+      <FloatSelect v-model="form.service" label="Service" :options="fleetOptions" />
       
       <FloatSelect v-model="form.travel" label="Travel" :options="fleetOptions" />
       <div class="md:col-span-2 mx-auto">
