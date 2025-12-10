@@ -18,6 +18,10 @@ defineProps({
     type: Array,
     default: () => [],
   },
+  error: {
+    type: String,
+    default: () => "",
+  },
 });
 
 const model = defineModel();
@@ -55,5 +59,10 @@ const handleBlur = () => {
     ]">
       {{ label }}
     </label>
+
+    <!-- error -->
+    <p v-if="error" class="text-red-500 text-xs mt-1">
+      {{ error }}
+    </p>
   </div>
 </template>

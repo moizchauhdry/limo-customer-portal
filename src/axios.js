@@ -1,5 +1,6 @@
 // src/axios.js
 import axios from "axios";
+import Form from "vform";
 import { useRouter } from "vue-router";
 
 // Determine base URL in a way that works for Vue CLI and Vite
@@ -55,4 +56,5 @@ instance.interceptors.response.use(
   (error) => Promise.reject(error)
 );
 
+Form.axios = instance;
 export default instance;

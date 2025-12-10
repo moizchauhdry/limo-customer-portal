@@ -22,6 +22,10 @@ const props = defineProps({
     type: String,
     default: () => "",
   },
+  error: {
+    type: String,
+    default: () => "",
+  },
 });
 
 const model = defineModel();
@@ -53,8 +57,8 @@ const handleBlur = () => {
     <!-- Input -->
     <input :type="storeType" :id="id" :placeholder="placeholder"
       class="peer w-full px-3 py-3 border border-[#CCCCCC] rounded-2xl cursor-pointer shadow bg-white text-[#404040] placeholder:text-[#404040] placeholder:text-right placeholder:text-xs focus:placeholder-transparent focus:outline-none focus:ring-0 focus:border-[#FDD31C]"
-      :class="{ 'has-value': model }" v-model="model" @input="emit('input', $event.target.value)" @focus="handleFocus"
-      @blur="handleBlur" />
+      :class="{ 'no-spinner': storeType == 'number' }" v-model="model" @input="emit('input', $event.target.value)"
+      @focus="handleFocus" @blur="handleBlur" />
 
     <!-- floating label -->
     <label :for="id" :class="[
@@ -63,21 +67,23 @@ const handleBlur = () => {
     ]">
       {{ label }}
     </label>
+
+    <!-- error -->
+    <p v-if="error" class="text-red-500 text-xs mt-1">
+      {{ error }}
+    </p>
   </div>
 </template>
 
 <style scoped>
-input[type="date"]:in-range::-webkit-datetime-edit-year-field,
-input[type="date"]:in-range::-webkit-datetime-edit-month-field,
-input[type="date"]:in-range::-webkit-datetime-edit-day-field,
-input[type="date"]:in-range::-webkit-datetime-edit-text {
-  color: transparent;
+/* Tailwind custom class */
+.no-spinner::-webkit-outer-spin-button,
+.no-spinner::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-/* input[type="time"]::-webkit-datetime-edit-text,
-input[type="time"]::-webkit-datetime-edit-hour-field,
-input[type="time"]::-webkit-datetime-edit-minute-field,
-input[type="time"]::-webkit-datetime-edit-ampm-field {
-  color: transparent;
-} */
+.no-spinner {
+  -moz-appearance: textfield;
+}
 </style>
