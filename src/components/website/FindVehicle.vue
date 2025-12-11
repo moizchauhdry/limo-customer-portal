@@ -6,13 +6,14 @@ import card2 from "@/assets/icons/wesbsite/hero/card2.svg";
 import card3 from "@/assets/icons/wesbsite/hero/card3.svg";
 
 const carousel = ref(null);
+const imageIndex = ref({});
 
 const cards = [
   {
     id: 1,
     title: "First Class Sedan",
     text: "Perfect for Weddings, Luxury Travel and Premium Transfers",
-    img: card1,
+    img: [card1, card2, card3],
     popular: true,
     features: [
       "Leather Seats",
@@ -25,7 +26,7 @@ const cards = [
     id: 2,
     title: "Luxury Sedan",
     text: "Our most popular choice for Airport Travel and City Travel",
-    img: card2,
+    img: [card2, card1, card3],
     popular: false,
     features: [
       "Leather Seats",
@@ -38,7 +39,7 @@ const cards = [
     id: 3,
     title: "Full Size SUV",
     text: "Perfect for family trips and larger groups",
-    img: card3,
+    img: [card3, card2, card1],
     popular: true,
     features: [
       "Leather Seats",
@@ -48,10 +49,10 @@ const cards = [
     ],
   },
   {
-    id: 1,
+    id: 4,
     title: "First Class Sedan",
     text: "Perfect for Weddings, Luxury Travel and Premium Transfers",
-    img: card1,
+    img: [card1, card2, card3],
     popular: true,
     features: [
       "Leather Seats",
@@ -61,10 +62,10 @@ const cards = [
     ],
   },
   {
-    id: 2,
+    id: 5,
     title: "Luxury Sedan",
     text: "Our most popular choice for Airport Travel and City Travel",
-    img: card2,
+    img: [card2, card1, card3],
     popular: false,
     features: [
       "Leather Seats",
@@ -74,6 +75,10 @@ const cards = [
     ],
   },
 ];
+
+cards.forEach((card) => {
+  imageIndex.value[card.id] = 0;
+});
 
 const visibleCards = () => (window.innerWidth >= 1024 ? 3 : 1);
 
@@ -93,6 +98,14 @@ const slideRight = () => {
       behavior: "smooth",
     });
   }
+};
+
+const nextImage = (cardId, total) => {
+  imageIndex.value[cardId] = (imageIndex.value[cardId] + 1) % total;
+};
+
+const prevImage = (cardId, total) => {
+  imageIndex.value[cardId] = (imageIndex.value[cardId] - 1 + total) % total;
 };
 </script>
 
@@ -132,18 +145,45 @@ const slideRight = () => {
         class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 no-scrollbar py-4"
       >
         <article
-          v-for="card in cards"
-          :key="card.id"
-          class="snap-center flex-shrink-0 bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] flex flex-col overflow-hidden border border-[#C5C5C5]"
-          style="width: 100%; max-width: 350px"
-        >
-          <div class="relative h-56">
-            <img
-              :src="card.img"
-              :alt="card.title"
-              class="object-cover p-2 mt-12 w-full"
-            />
+  v-for="card in cards"
+  :key="card.id"
+  class="snap-center flex-shrink-0 bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] flex flex-col overflow-hidden border border-[#C5C5C5]
+         w-[100%] sm:w-[300px] lg:w-[32%]"
+>
+
+          <div class="relative overflow-hidden rounded-t-xl">
+            <!-- IMAGE SLIDES -->
+            <div
+              class="flex transition-transform duration-500"
+              :style="{
+                transform: `translateX(-${imageIndex[card.id] * 100}%)`,
+              }"
+            >
+              <img
+                v-for="(pic, idx) in card.img"
+                :key="idx"
+                :src="pic"
+                class="object-cover w-full pt-14 px-1  flex-shrink-0"
+              />
+            </div>
+
+            <!-- LEFT ARROW -->
+            <button
+              @click="prevImage(card.id, card.img.length)"
+              class="absolute top-1/2 left-2 -translate-y-1/2 bg-black/40 text-white rounded-full px-2 py-1"
+            >
+              ‹
+            </button>
+
+            <!-- RIGHT ARROW -->
+            <button
+              @click="nextImage(card.id, card.img.length)"
+              class="absolute top-1/2 right-2 -translate-y-1/2 bg-black/40 text-white rounded-full px-2 py-1"
+            >
+              ›
+            </button>
           </div>
+
           <div class="flex-1 flex flex-col p-3">
             <div class="flex items-center justify-between mb-2">
               <h3 class="text-xl md:text-[20px] font-semibold text-[#010101]">

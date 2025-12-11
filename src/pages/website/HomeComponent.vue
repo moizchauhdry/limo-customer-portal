@@ -1,6 +1,6 @@
 <script setup>
 import HeroSection from "@/components/website/HeroSection.vue";
-import BookingForm from "@/components/website/BookingForm.vue";
+// import BookingForm from "@/components/website/BookingForm.vue";
 import FindVehicle from "@/components/website/FindVehicle.vue";
 import FleetButton from "@/components/website/FleetButton.vue";
 import ChooseButton from "@/components/website/ChooseButton.vue";
@@ -20,10 +20,9 @@ import JourneyToday from "@/components/website/JourneyToday.vue";
 
 <template>
   <div>
-    <div class="max-w-7xl mx-auto">
+    
     <HeroSection />
-    <BookingForm />
-    </div>
+    <!-- <BookingForm class="hidden sm:block px-12"/> -->
     <FleetButton />
     <FindVehicle />
     <ChooseButton />
