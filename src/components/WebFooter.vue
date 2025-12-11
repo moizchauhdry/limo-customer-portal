@@ -43,7 +43,7 @@
       <!-- 2️⃣ VEHICLE TYPES -->
       <div>
         <h4 class="text-lg font-semibold mb-4">Vehicle types</h4>
-        <ul class="space-y-2 text-xs text-gray-300">
+        <ul class="space-y-4 text-xs text-gray-300">
           <li><a href="#" class="hover:text-white">CAR RENTAL</a></li>
           <li><a href="#" class="hover:text-white">CLASSIC CAR RENTAL</a></li>
           <li><a href="#" class="hover:text-white">VAN RENTAL</a></li>
@@ -53,7 +53,7 @@
       <!-- 2️⃣ VEHICLE TYPES -->
       <div>
         <div class="mb-4"></div>
-        <ul class="space-y-2 text-xs text-gray-300 mt-[2.75rem]">
+        <ul class="space-y-4 text-xs text-gray-300 mt-[2.75rem]">
           <li><a href="#" class="hover:text-white">SUV RENTAL</a></li>
           <li><a href="#" class="hover:text-white">SPORTS CAR RENTAL</a></li>
           <li><a href="#" class="hover:text-white">TRUCK RENTAL</a></li>
@@ -68,7 +68,7 @@
       <!-- 3️⃣ COMPANY -->
       <div>
         <h4 class="text-lg font-semibold mb-4">Company</h4>
-        <ul class="space-y-2 text-sm text-gray-300">
+        <ul class="space-y-4 text-sm text-gray-300">
           <li class="flex items-center gap-2">
             <img
               src="@/assets/icons/footer/footer2.svg"
@@ -154,28 +154,21 @@
 
         <!-- STORE BADGES -->
         <div class="flex space-x-3">
-  <a
-    href="#"
-    class="flex items-center gap-4 rounded-lg text-sm"
-  >
-    <img
-      src="@/assets/icons/footer/google-play.svg"
-      alt="Google Play"
-      class="w-36 h-auto"   
-    />
-  </a>
-  <a
-    href="#"
-    class="flex items-center gap-2 rounded-lg text-sm"
-  >
-    <img
-      src="@/assets/icons/footer/app-store.svg"
-      alt="App Store"
-      class="w-36 h-auto"  
-    />
-  </a>
-</div>
-
+          <a href="#" class="flex items-center gap-4 rounded-lg text-sm">
+            <img
+              src="@/assets/icons/footer/google-play.svg"
+              alt="Google Play"
+              class="w-36 h-auto"
+            />
+          </a>
+          <a href="#" class="flex items-center gap-2 rounded-lg text-sm">
+            <img
+              src="@/assets/icons/footer/app-store.svg"
+              alt="App Store"
+              class="w-36 h-auto"
+            />
+          </a>
+        </div>
       </div>
     </div>
   </footer>
