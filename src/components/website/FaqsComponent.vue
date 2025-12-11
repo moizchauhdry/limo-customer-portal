@@ -35,7 +35,7 @@ const faqs = ref([
 </script>
 <template>
   <!-- FAQ SECTION : image-right layout -->
-  <section class="px-4 py-16 md:px-10 lg:px-20 bg-white">
+  <section class="px-4 py-6 sm:py-16 md:px-10 lg:px-20 bg-white">
     <div
       class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 items-start gap-8"
     >
@@ -43,7 +43,7 @@ const faqs = ref([
       <div class="flex flex-col col-span-2">
         <!-- HEADING -->
         <div class="flex items-center gap-3 mb-5">
-          <h2 class="text-4xl md:text-5xl font-bold text-black">FAQS</h2>
+          <h2 class="text-4xl md:text-5xl sm:font-bold text-black mx-auto sm:mx-0">FAQS</h2>
         </div>
 
         <!-- ACCORDION -->
@@ -55,9 +55,9 @@ const faqs = ref([
           >
             <button
               @click="toggle(idx)"
-              class="w-full flex items-center justify-between px-5 py-4 hover:bg-gray-100 transition"
+              class="w-full flex items-center justify-between px-3 sm:px-5 py-4 hover:bg-gray-100 transition"
             >
-              <span class="text-left text-sm md:text-base font-semibold text-black font-poppins">
+              <span class="text-left text-xs md:text-base font-semibold text-black font-poppins">
                 {{ faq.q }}
               </span>
               <span class="text-xl text-black font-bold ml-4 shrink-0">
@@ -73,7 +73,7 @@ const faqs = ref([
               leave-from-class="max-h-96 opacity-100"
               leave-to-class="max-h-0 opacity-0"
             >
-              <div v-show="open === idx" class="px-5 py-2 text-sm text-[#000000] font-medium">
+              <div v-show="open === idx" class="px-2 py-2 text-xs sm:text-sm text-[#000000] font-medium">
                 {{ faq.a }}
               </div>
             </transition>
