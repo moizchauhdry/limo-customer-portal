@@ -6,24 +6,57 @@ import RidesComing from "./rides/components/RidesComing.vue";
 import RidesCompleted from "./rides/components/RidesCompleted.vue";
 import RidesCancelled from "./rides/components/RidesCancelled.vue";
 
-const activeTab = ref("coming");
+const activeTab = ref("upcoming");
 
 // API data variable
 const bookings = ref([]);
 const totalBookings = ref(0);
 const cancelledBookings = ref(0);
+const search = ref("");
+const dateType = ref("");
+const dateRange = ref(null);
+
+// Watch for tab changes to refetch data
+watch(activeTab, () => {
+  fetchBookings();
+});
+
+const handleCompleted = () => {
+  activeTab.value = "completed";
+  search.value = "";
+  dateType.value = "";
+  dateRange.value = null;
+};
+
+const filterRidesBySearch = (value) => {
+  search.value = value;
+  fetchBookings();
+};
+
+const filterRidesByDate = (value, range) => {
+  dateType.value = value;
+  dateRange.value = range;
+  fetchBookings();
+};
+
+const filterRidesByDateRange = (value) => {
+  dateRange.value = value;
+  fetchBookings();
+};
 
 // API call function
 const fetchBookings = async () => {
   try {
-    let filter = "";
-
-    if (activeTab.value === "coming") filter = "upcoming";
-    if (activeTab.value === "completed") filter = "completed";
-    if (activeTab.value === "cancelled") filter = "cancelled";
+    let filters = {
+      tab: activeTab.value,
+      search: activeTab.value === "completed" ? search.value : "",
+      search_date_key: activeTab.value === "completed" ? dateType.value : "",
+      start_date: activeTab.value === "completed" && dateType.value === "date_range" ? dateRange.value?.start : "",
+      end_date: activeTab.value === "completed" && dateType.value === "date_range" ? dateRange.value?.end : "",
+    };
 
     const res = await axios.get(`/customer/bookings`, {
-      params: { filter },
+      params: filters,
     });
 
     const data = res.data.data;
@@ -36,11 +69,6 @@ const fetchBookings = async () => {
 };
 // Call API on mount
 onMounted(() => {
-  fetchBookings();
-});
-
-// Watch for tab changes to refetch data
-watch(activeTab, () => {
   fetchBookings();
 });
 </script>
@@ -77,32 +105,33 @@ watch(activeTab, () => {
       <!-- =============== TABS =============== -->
       <div class="mt-4 border border-[#CECECE] rounded-xl p-2 flex flex-col sm:flex-row gap-2 sm:gap-4 justify-between">
         <!-- Up-coming -->
-        <button @click="activeTab = 'coming'" :class="activeTab === 'coming'
-            ? 'bg-[#329EE7] text-white'
-            : 'border border-[#878787] text-[#878787] bg-white'
+        <button @click="activeTab = 'upcoming'" :class="activeTab === 'upcoming'
+          ? 'bg-[#329EE7] text-white'
+          : 'border border-[#878787] text-[#878787] bg-white'
           " class="text-sm py-2 px-8 sm:px-16 rounded-md shadow hover:bg-blue-600 transition">
           Up-coming Rides
         </button>
 
         <!-- Completed -->
-        <button @click="activeTab = 'completed'" :class="activeTab === 'completed'
-            ? 'bg-[#0FB14B] text-white'
-            : 'border border-[#878787] text-[#878787] bg-white'
+        <button @click="handleCompleted" :class="activeTab === 'completed'
+          ? 'bg-[#0FB14B] text-white'
+          : 'border border-[#878787] text-[#878787] bg-white'
           " class="text-sm py-2 px-8 sm:px-16 rounded-md shadow">
           Completed Rides
         </button>
 
         <!-- Cancelled -->
         <button @click="activeTab = 'cancelled'" :class="activeTab === 'cancelled'
-            ? 'bg-[#0FB14B] text-white'
-            : 'border border-[#878787] text-[#878787] bg-white'
+          ? 'bg-[#0FB14B] text-white'
+          : 'border border-[#878787] text-[#878787] bg-white'
           " class="text-sm py-2 px-8 sm:px-16 rounded-md shadow">
           Canceled Rides
         </button>
       </div>
 
-      <RidesComing v-if="activeTab === 'coming'" :rides="bookings" />
-      <RidesCompleted v-if="activeTab === 'completed'" :rides="bookings" />
+      <RidesComing v-if="activeTab === 'upcoming'" :rides="bookings" />
+      <RidesCompleted v-if="activeTab === 'completed'" :rides="bookings" @search="filterRidesBySearch"
+        @filterRidesByDate="filterRidesByDate" @filterRidesByDateRange="filterRidesByDateRange" />
       <RidesCancelled v-if="activeTab === 'cancelled'" :rides="bookings" />
     </div>
   </main>
