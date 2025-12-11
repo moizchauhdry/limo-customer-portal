@@ -8,6 +8,7 @@ import FloatSelect from "./FloatSelect.vue";
 import axios from "@/axios";
 import Form from 'vform'
 import DotsLoading from "@/components/DotsLoading.vue";
+import { getHoursOptions } from "@/utils";
 
 const storeBookingDataLoading = ref(false);
 const storeBookingData = ref({});
@@ -15,14 +16,7 @@ const successAlert = ref(false);
 const errorAlert = ref(false);
 const errorMessage = ref("");
 
-const hoursOptions = Array.from({ length: 24 }, (_, i) => {
-  const n = i + 1
-  return {
-    value: n,
-    label: `${String(n).padStart(2, "0")} Hour${n > 1 ? "s" : ""}`
-  }
-})
-
+const hoursOptions = getHoursOptions();
 
 const form = reactive(
   new Form({

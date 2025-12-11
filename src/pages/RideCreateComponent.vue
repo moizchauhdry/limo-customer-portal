@@ -3,7 +3,15 @@
 /* global google */
 
 import axios from "@/axios";
-import { onMounted, reactive, ref, nextTick } from "vue";
+import { onMounted, reactive, ref, nextTick, onBeforeUnmount } from "vue";
+import { getHoursOptions } from "@/utils";
+import Form from 'vform'
+import { useRouter } from "vue-router";
+import { useToast } from "vue-toastification";
+import DotsLoading from "@/components/DotsLoading.vue";
+
+const router = useRouter();
+const toast = useToast();
 
 const appProjectUrl = (typeof process !== "undefined" && process.env && process.env.VUE_APP_PROJECT_URL) || "https://polliwog-internal-fawn.ngrok-free.app";
 const createRideDataLoading = ref(false);
@@ -19,31 +27,37 @@ const distance = ref("");
 const duration = ref("");
 
 const waypointInputs = ref([]); // Vue refs to waypoint input DOM
+const hoursOptions = getHoursOptions();
 
-const form = reactive({
-  service_type: 1,
-  hours: "",
+const carousel = ref(null);
+const scrollAmount = ref(520);
 
-  pickup_date: "",
-  pickup_time: "",
-  pickup_location: "",
-  waypoints: [],
-  drop_location: "",
+const form = reactive(
+  new Form({
+    service_type: 1,
+    hours: "",
 
-  passenger_name: "",
-  passenger_email: "",
-  passenger_phone: "",
+    pickup_date: "",
+    pickup_time: "",
+    pickup_location: "",
+    waypoints: [],
+    drop_location: "",
 
-  service: "",
-  travel_type: 1,
-  no_of_luggage: 0,
-  no_of_passengers: 0,
+    passenger_name: "",
+    passenger_email: "",
+    passenger_phone: "",
 
-  vehicle_id: "",
+    service: "",
+    travel_type: 1,
+    no_of_luggage: 0,
+    no_of_passengers: 0,
 
-  flight_no: "",
-  comments: "",
-});
+    vehicle_id: "",
+
+    flight_no: "",
+    comments: "",
+  })
+);
 
 const getCreateRideData = async () => {
   try {
@@ -206,19 +220,53 @@ const removeWaypoint = async (index) => {
   route();
 };
 
-const carousel = ref(null);
-const scrollAmount = 280; // width of card + gap
+const updateScrollAmount = () => {
+  const width = window.innerWidth;
+
+  // Mobile
+  if (width <= 768) {
+    scrollAmount.value = 260; // half of 520
+  }
+  // Desktop
+  else {
+    scrollAmount.value = 520;
+  }
+};
 
 const slideNext = () => {
-  carousel.value.scrollLeft += scrollAmount;
+  carousel.value.scrollLeft += scrollAmount.value;
 };
 
 const slidePrev = () => {
-  carousel.value.scrollLeft -= scrollAmount;
+  carousel.value.scrollLeft -= scrollAmount.value;
+};
+
+const createRide = async () => {
+  try {
+    const { data } = await form.post("/customer/bookings/create");
+
+    if (data.success == true) {
+      form.reset();
+      toast.success(data?.message || "Ride Created Successfully!");
+      router.push({ name: "rides" });
+    } else {
+      toast.error(data?.message || "Something went wrong! Please try again later.");
+    }
+  } catch (err) {
+    console.error("Store Booking Error:", err);
+    toast.error("Something went wrong! Please try again later.");
+  }
 };
 
 onMounted(() => {
   getCreateRideData();
+
+  updateScrollAmount();
+  window.addEventListener("resize", updateScrollAmount);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener("resize", updateScrollAmount);
 });
 </script>
 
@@ -256,15 +304,23 @@ onMounted(() => {
             <!-- Date & Time Row -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <!-- Date -->
-              <div class="flex items-center gap-3 border-b border-[#D8D8D8] pb-2">
-                <!-- <img src="../assets/icons/distance/date.svg" class="h-5" /> -->
-                <input type="date" class="w-full outline-none text-[#5A5A5A]" v-model="form.pickup_date" />
+              <div>
+                <div class="flex items-center gap-3 pb-2">
+                  <!-- <img src="../assets/icons/distance/date.svg" class="h-5" /> -->
+                  <input type="date" class="w-full outline-none text-[#5A5A5A]" v-model="form.pickup_date" />
+                </div>
+                <p v-if="form.errors.has('pickup_date')" class="text-red-500 text-xs">{{
+                  form.errors.get('pickup_date') }}</p>
               </div>
 
               <!-- Time -->
-              <div class="flex items-center gap-3 border-b border-[#D8D8D8] pb-2">
-                <!-- <img src="../assets/icons/distance/time.svg" class="h-5" /> -->
-                <input type="time" class="w-full outline-none text-[#5A5A5A]" v-model="form.pickup_time" />
+              <div>
+                <div class="flex items-center gap-3 pb-2">
+                  <!-- <img src="../assets/icons/distance/time.svg" class="h-5" /> -->
+                  <input type="time" class="w-full outline-none text-[#5A5A5A]" v-model="form.pickup_time" />
+                </div>
+                <p v-if="form.errors.has('pickup_time')" class="text-red-500 text-xs">{{
+                  form.errors.get('pickup_time') }}</p>
               </div>
             </div>
 
@@ -279,6 +335,8 @@ onMounted(() => {
               <input id="origin-input" type="text" placeholder="Enter Pick up location"
                 class="w-full border border-[#DBDBDB] shadow-sm bg-white rounded-md px-4 py-2 text-[#5A5A5A] text-sm"
                 v-model="form.pickup_location" />
+              <p v-if="form.errors.has('pickup_location')" class="text-red-500 text-xs">{{
+                form.errors.get('pickup_location') }}</p>
             </div>
 
             <!-- Waypoints Inputs -->
@@ -298,6 +356,8 @@ onMounted(() => {
               <input id="destination-input" type="text" placeholder="Enter Drop off location"
                 class="w-full border border-[#DBDBDB] shadow-sm bg-white rounded-md px-4 py-2 text-[#5A5A5A] text-sm"
                 v-model="form.drop_location" />
+              <p v-if="form.errors.has('drop_location')" class="text-red-500 text-xs">{{
+                form.errors.get('drop_location') }}</p>
             </div>
           </div>
 
@@ -313,18 +373,24 @@ onMounted(() => {
                 <input type="text" placeholder="Enter passenger name"
                   class="border border-[#DBDBDB] shadow-sm rounded-md px-4 py-2 text-sm text-[#5A5A5A]"
                   v-model="form.passenger_name" />
+                <p v-if="form.errors.has('passenger_name')" class="text-red-500 text-xs">{{
+                  form.errors.get('passenger_name') }}</p>
               </div>
               <div class="flex flex-col gap-1">
                 <label> Email </label>
                 <input type="Email" placeholder="Enter passenger email"
                   class="border border-[#DBDBDB] shadow-sm rounded-md px-4 py-2 text-sm text-[#5A5A5A]"
                   v-model="form.passenger_email" />
+                <p v-if="form.errors.has('passenger_email')" class="text-red-500 text-xs">{{
+                  form.errors.get('passenger_email') }}</p>
               </div>
               <div class="flex flex-col gap-1">
                 <label> Phone </label>
-                <input type="number" placeholder="Enter passenger phone"
+                <input type="text" placeholder="Enter passenger phone"
                   class="border border-[#DBDBDB] shadow-sm rounded-md px-4 py-2 text-sm text-[#5A5A5A]"
                   v-model="form.passenger_phone" />
+                <p v-if="form.errors.has('passenger_phone')" class="text-red-500 text-xs">{{
+                  form.errors.get('passenger_phone') }}</p>
               </div>
             </div>
           </div>
@@ -348,6 +414,7 @@ onMounted(() => {
                   <option v-for="service in createRideData?.services || []" :key="service?.id" :value="service?.id">{{
                     service?.name }}</option>
                 </select>
+                <p v-if="form.errors.has('service')" class="text-red-500 text-xs">{{ form.errors.get('service') }}</p>
               </div>
 
               <!-- Service Type Toggle -->
@@ -395,6 +462,18 @@ onMounted(() => {
                   <button class="px-2 bg-[#D9D9D9] rounded-md" @click="form.no_of_passengers++">+</button>
                 </div>
               </div>
+
+              <div v-if="form.service_type == 2" class="flex flex-col gap-1">
+                <label class="text-sm text-[#414141]">Duration</label>
+                <select
+                  class="border border-[#DBDBDB] shadow-sm rounded-md px-4 py-2 text-sm w-full text-[#5A5A5A] appearance-none"
+                  v-model="form.hours">
+                  <option value="">Select Duration</option>
+                  <option v-for="duration in hoursOptions" :key="duration?.value" :value="duration?.value">{{
+                    duration?.label }}</option>
+                </select>
+                <p v-if="form.errors.has('hours')" class="text-red-500 text-xs">{{ form.errors.get('hours') }}</p>
+              </div>
             </div>
           </div>
 
@@ -416,8 +495,10 @@ onMounted(() => {
               <!-- cards container -->
               <div class="flex gap-4 overflow-x-hidden scroll-smooth" ref="carousel">
                 <!-- CAR 1 -->
-                <div class="bg-white border border-[#E0E0E0] rounded-xl p-2 shadow flex flex-col min-w-[250px]"
-                  v-for="vehicle in createRideData?.vehicles || []" :key="vehicle?.id">
+                <div class="border rounded-xl p-2 shadow flex flex-col min-w-[250px] cursor-pointer"
+                  :class="form.vehicle_id == vehicle?.id ? 'bg-[#d3ebff] border-[#369FFF]' : 'bg-white border-[#E0E0E0]'"
+                  v-for="vehicle in createRideData?.vehicles || []" :key="vehicle?.id"
+                  @click="form.vehicle_id = vehicle?.id">
                   <p class="text-md font-semibold">{{ vehicle?.name }}</p>
                   <p class="text-xs text-[#7A7A7A] mb-2">
                     Cadillac Escalade, Mercedes S-Class, or similar.
@@ -444,11 +525,18 @@ onMounted(() => {
                 <img src="../assets/icons/distance/scroller-right.svg" class="h-2 w-2" alt="next" />
               </button>
             </div>
+            <p v-if="form.errors.has('vehicle_id')" class="text-red-500 text-xs">{{ form.errors.get('vehicle_id') }}
+            </p>
           </div>
 
           <!-- ===================== CONTINUE BUTTON ===================== -->
-          <button class="w-full bg-[#369FFF] text-white py-3 rounded-lg text-lg font-medium">
-            Continue
+          <button
+            class="w-full bg-[#369FFF] text-white py-3 rounded-lg text-lg font-medium flex justify-center disabled:opacity-50"
+            :disabled="form.busy || createRideDataLoading" @click="createRide">
+            <div v-if="form.busy" class="h-6 flex items-center">
+              <DotsLoading />
+            </div>
+            <span v-else>Continue</span>
           </button>
         </div>
 
@@ -458,8 +546,8 @@ onMounted(() => {
 
           <!-- DISTANCE & TIME -->
           <div class="grid grid-cols-2 gap-4 mt-4">
-            <input class="border p-2 rounded" readonly :value="distance" placeholder="Total Distance" />
-            <input class="border p-2 rounded" readonly :value="duration" placeholder="Total Time" />
+            <input class="border p-2 rounded outline-none" readonly :value="distance" placeholder="Total Distance" />
+            <input class="border p-2 rounded outline-none" readonly :value="duration" placeholder="Total Time" />
           </div>
 
           <!-- <div class="border h-[850px] relative">
