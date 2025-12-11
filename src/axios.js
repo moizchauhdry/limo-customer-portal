@@ -1,7 +1,7 @@
 // src/axios.js
 import axios from "axios";
 import Form from "vform";
-import { useRouter } from "vue-router";
+import router from "@/routers";
 
 // Determine base URL in a way that works for Vue CLI and Vite
 const baseURL = (typeof process.env !== "undefined" && process.env && process.env.VUE_APP_API_URL) || "";
@@ -39,12 +39,9 @@ instance.interceptors.response.use(
       response?.data?.code === 401 &&
       response?.data?.message === "Unauthorized"
     ) {
-      const router = useRouter();
-
       // Clear token and redirect to login
       localStorage.removeItem("token");
       router.push({ name: "login" });
-      //   window.location.href = '/log-in';
     }
 
     return Promise.resolve(response);
