@@ -1,10 +1,10 @@
 <template>
   <!-- START YOUR JOURNEY TODAY -->
-  <section class="relative sm:py-10 overflow-hidden max-w-7xl mx-auto  sm:px-0">
+  <section class="relative sm:py-10 overflow-hidden w-full">
 
     <!-- LEFT : CAR 1 (Desktop only) -->
     <div
-      class="hidden sm:flex absolute top-1/2 left-28 transform -translate-y-1/2 -translate-x-1/3 z-10"
+      class="hidden sm:flex absolute top-1/2 left-0 transform -translate-y-1/2 z-10"
     >
       <img
         src="@/assets/icons/wesbsite/hero/journey2.svg"
@@ -15,20 +15,20 @@
 
     <!-- RIGHT : CAR 2 (Desktop only) -->
     <div
-      class="hidden sm:flex absolute top-1/2 right-28 transform -translate-y-1/2 translate-x-1/3 z-10"
+      class="hidden sm:flex absolute top-1/2 right-0 transform -translate-y-1/2 z-10"
     >
       <img
         src="@/assets/icons/wesbsite/hero/journey1.svg"
         alt="car 2"
-        class="lg:w-[337px] object-contain"
+        class="lg:w-[337px] xl:w-[437] object-contain"
       />
     </div>
 
     <!-- CENTER : TEXT BOX -->
     <div
-      class="relative z-0 max-w-6xl mx-auto bg-[#E5E5E5] rounded-xl py-6 sm:py-20 md:px-10 lg:px-20 shadow-lg"
+      class="relative z-0  bg-[#E5E5E5] rounded-xl py-6 sm:py-20 md:px-10 lg:px-20 shadow-lg"
     >
-      <div class="text-center space-y-3">
+      <div class="text-center space-y-3 max-w-7xl mx-auto">
         <h2
           class="text-[26px] md:text-[44px] lg:text-[50px] text-[#010101] leading-tight font-medium"
         >
@@ -61,7 +61,6 @@
           class="w-[45%] object-contain"
         />
       </div>
-
     </div>
   </section>
 </template>

@@ -112,10 +112,10 @@ const loginHandler = async () => {
             <input type="checkbox" class="rounded text-blue-600" v-model="form.remember" />
             <span>Remember me</span>
           </label>
-          <a
-            href="#"
+          <router-link
+            to="/auth/forget-password"
             class="text-[#0072EF] hover:text-black underline font-poppins"
-            >Forget Password?</a
+            >Forget Password?</router-link
           >
         </div>
         <!-- Submit Button -->

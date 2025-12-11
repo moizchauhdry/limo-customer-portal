@@ -129,11 +129,10 @@ const signupHandler = async () => {
             />
             <span>Remember me</span>
           </label>
-          <a
-            href="#"
+          <router-link
+            to="/auth/forget-password"
             class="text-[#0072EF] hover:text-black underline font-poppins"
-            >Forget Password?</a
-          >
+            >Forget Password?</router-link>
         </div>
 
         <!-- Submit Button -->
