@@ -1,8 +1,10 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import axios from "@/axios";
 import { useToast } from "vue-toastification";
 import RideDistanceBar from "@/components/RideDistanceBar.vue";
+import Form from 'vform'
+import DotsLoading from "@/components/DotsLoading.vue";
 
 const scheduledDates = ref(["2025-12-14", "2025-12-17", "2025-12-31"]);
 const completedDates = ref(["2025-12-21", "2025-12-25"]);
@@ -11,7 +13,11 @@ const toast = useToast();
 const dashboardData = ref({});
 
 const loading = ref(true);
-const sending = ref(false);
+const ratingForm = reactive(
+  new Form({
+    rating_label: "",
+  })
+);
 
 /*  map label → icon path  */
 const iconMap = {
@@ -26,19 +32,19 @@ const getIcon = (label) => iconMap[label];
 
 /*  submit rating  */
 async function submitRating(label) {
-  if (sending.value) return;
-  sending.value = true;
-
   try {
-    await axios.post("/customer/bookings/reviews/create", {
-      rating_label: label.toLowerCase(),
-    });
-    toast.success("Thank you for your feedback!");
+    ratingForm.rating_label = label.toLowerCase();
+    const { data } = await ratingForm.post("/customer/bookings/reviews/create");
+
+    if (data?.success == true) {
+      toast.success("Thank you for your feedback!");
+      fetchDashboard();
+    } else {
+      toast.error(data?.message || "Failed to submit rating. Please try again.");
+    }
   } catch (e) {
     console.error("Rating submission error:", e);
     toast.error("Failed to submit rating. Please try again.");
-  } finally {
-    sending.value = false;
   }
 }
 
@@ -102,14 +108,8 @@ const attributes = ref([
 
 <template>
   <!-- MAIN CONTENT -->
-  <main
-    class="lg:ml-64 pt-[100px] mb-5"
-    data-aos="fade-right"
-    data-aos-duration="1200"
-    data-aos-offset="150"
-    data-aos-easing="ease-in-out"
-    data-aos-delay="100"
-  >
+  <main class="lg:ml-64 pt-[100px] mb-5" data-aos="fade-right" data-aos-duration="1200" data-aos-offset="150"
+    data-aos-easing="ease-in-out" data-aos-delay="100">
     <div class="max-w-7xl mx-auto container">
       <!-- WRAPPER: Two vertical columns -->
       <section class="flex flex-col xl:flex-row gap-6 items-start">
@@ -138,9 +138,7 @@ const attributes = ref([
               <p class="text-3xl font-bold mt-1">
                 {{ dashboardData?.total_fare }}
               </p>
-              <p
-                class="mt-2 border w-fit px-2 rounded-md flex items-center gap-2"
-              >
+              <p class="mt-2 border w-fit px-2 rounded-md flex items-center gap-2">
                 Last 7 Days
                 <img src="../assets/icons/dashboard/arrow.svg" alt="Arrow Up" />
               </p>
@@ -166,28 +164,17 @@ const attributes = ref([
 
           <!-- RIDE-DETAILS CARD -->
           <div class="px-5 sm:px-0">
-            <div
-              class="bg-white p-6 rounded-xl border border-[#DBDBDB] shadow space-y-4"
-            >
+            <div class="bg-white p-6 rounded-xl border border-[#DBDBDB] shadow space-y-4">
               <!-- header -->
               <div class="flex items-center justify-between">
                 <h3 class="text-lg text-[#626262]">Ride Details</h3>
                 <div
-                  class="flex items-center gap-2 border border-[#D8D8D8] text-xs text-[#17171A] px-2 py-1 rounded-lg shadow-[0_0_6px_#D8D8D8]"
-                >
-                  <img
-                    src="../assets/icons/dashboard/date.svg"
-                    class="h-3"
-                    alt="date"
-                  />
+                  class="flex items-center gap-2 border border-[#D8D8D8] text-xs text-[#17171A] px-2 py-1 rounded-lg shadow-[0_0_6px_#D8D8D8]">
+                  <img src="../assets/icons/dashboard/date.svg" class="h-3" alt="date" />
                   <!-- <span> Oct 17, 2025</span> -->
                   <span>{{ dashboardData.next_booking?.pickup_date }}</span>
 
-                  <img
-                    src="../assets/icons/dashboard/time.svg"
-                    class="h-3"
-                    alt="date"
-                  />
+                  <img src="../assets/icons/dashboard/time.svg" class="h-3" alt="date" />
                   <!-- <span> Oct 17, 2025</span> -->
                   <span>{{ dashboardData.next_booking?.pickup_time }}</span>
                 </div>
@@ -197,32 +184,20 @@ const attributes = ref([
               <div class="flex gap-4 items-start text-sm text-[#414141]">
                 <!-- Vertical Route Icon -->
                 <div class="pt-1">
-                  <img
-                    src="../assets/icons/dashboard/location-line.svg"
-                    class="h-14"
-                    alt="Route Icon"
-                  />
+                  <img src="../assets/icons/dashboard/location-line.svg" class="h-14" alt="Route Icon" />
                 </div>
 
                 <!-- Your Original Route Text -->
                 <div class="flex flex-col space-y-6 justify-between">
                   <div class="flex items-center gap-2">
-                    <img
-                      src="../assets/icons/dashboard/location.svg"
-                      class="h-4"
-                      alt="Start"
-                    />
+                    <img src="../assets/icons/dashboard/location.svg" class="h-4" alt="Start" />
                     <!-- <span>LaGuardia Airport (LGA), East USA</span> -->
                     <span>{{
                       dashboardData.next_booking?.pickup_location
                     }}</span>
                   </div>
                   <div class="flex items-center gap-2">
-                    <img
-                      src="../assets/icons/dashboard/airport.svg"
-                      class="h-4"
-                      alt="End"
-                    />
+                    <img src="../assets/icons/dashboard/airport.svg" class="h-4" alt="End" />
                     <!-- <span>JFK Airport</span> -->
                     <span>{{ dashboardData.next_booking?.drop_location }}</span>
                   </div>
@@ -230,42 +205,25 @@ const attributes = ref([
               </div>
 
               <!-- Stats Row -->
-              <div
-                class="grid grid-cols-3 gap-4 items-center text-sm text-[#414141]"
-              >
+              <div class="grid grid-cols-3 gap-4 items-center text-sm text-[#414141]">
                 <!-- Date & Time -->
                 <div
-                  class="flex items-center mx-auto gap-1 border border-[#D8D8D8] rounded-lg py-1 px-2 text-xs text-[#17171A]"
-                >
-                  <img
-                    src="../assets/icons/dashboard/distance.svg"
-                    class="h-3"
-                    alt="Date"
-                  />
+                  class="flex items-center mx-auto gap-1 border border-[#D8D8D8] rounded-lg py-1 px-2 text-xs text-[#17171A]">
+                  <img src="../assets/icons/dashboard/distance.svg" class="h-3" alt="Date" />
                   <!-- <span>Oct 17, 2025</span> -->
                   <span>{{ dashboardData.next_booking?.total_distance }}</span>
 
-                  <img
-                    src="../assets/icons/dashboard/mini-clock.svg"
-                    class="h-3"
-                    alt="Time"
-                  />
+                  <img src="../assets/icons/dashboard/mini-clock.svg" class="h-3" alt="Time" />
                   <!-- <span>0h 17m</span> -->
                   <span>{{ dashboardData.next_booking?.total_time }}</span>
                 </div>
 
                 <!-- Total Fare -->
-                <div
-                  class="text-center ml-auto flex flex-row gap-2 justify-center items-center"
-                >
+                <div class="text-center ml-auto flex flex-row gap-2 justify-center items-center">
                   <p class="font-medium text-md text-[#000000]">Total Fare</p>
 
                   <!-- Icon in the middle -->
-                  <img
-                    src="../assets/icons/dashboard/small-fare.svg"
-                    class="h-8 w-8"
-                    alt="Arrow"
-                  />
+                  <img src="../assets/icons/dashboard/small-fare.svg" class="h-8 w-8" alt="Arrow" />
                   <p class="text-md font-bold text-[#000000]">
                     ${{ dashboardData.next_booking?.payments_total }}
                   </p>
@@ -273,29 +231,20 @@ const attributes = ref([
 
                 <!-- Status Badge -->
                 <div
-                  class="border w-[65%] ml-auto border-[#D8D8D8] rounded-lg py-1.5 text-xs font-semibold text-[#151515] text-center shadow-sm"
-                >
+                  class="border w-[65%] ml-auto border-[#D8D8D8] rounded-lg py-1.5 text-xs font-semibold text-[#151515] text-center shadow-sm">
                   <!-- <p>Confirmed</p> -->
                   <p>{{ dashboardData.next_booking?.booking_status?.name }}</p>
                 </div>
               </div>
 
               <!-- driver block -->
-              <div
-                class="border-t border-dashed border-[#B4B4B4] pt-4 grid grid-cols-1 gap-4"
-              >
-                <div
-                  v-for="driverBooking in dashboardData?.next_booking
-                    ?.driver_bookings || []"
-                  :key="driverBooking?.id"
-                  class="grid grid-cols-[auto_1fr_auto] items-center gap-4"
-                >
+              <div class="border-t border-dashed border-[#B4B4B4] pt-4 grid grid-cols-1 gap-4">
+                <div v-for="driverBooking in dashboardData?.next_booking
+                  ?.driver_bookings || []" :key="driverBooking?.id"
+                  class="grid grid-cols-[auto_1fr_auto] items-center gap-4">
                   <!-- Driver Image -->
-                  <img
-                    src="../assets/icons/navbar/profile.svg"
-                    class="h-12 w-12 rounded-full object-cover"
-                    alt="driver"
-                  />
+                  <img src="../assets/icons/navbar/profile.svg" class="h-12 w-12 rounded-full object-cover"
+                    alt="driver" />
 
                   <!-- Driver Info -->
                   <div class="text-sm text-[#414141]">
@@ -311,13 +260,8 @@ const attributes = ref([
 
                   <!-- Call Button -->
                   <button
-                    class="bg-[#0072EF] text-sm text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition flex items-center gap-2"
-                  >
-                    <img
-                      src="../assets/icons/dashboard/call.svg"
-                      class="h-4"
-                      alt="phone"
-                    />
+                    class="bg-[#0072EF] text-sm text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition flex items-center gap-2">
+                    <img src="../assets/icons/dashboard/call.svg" class="h-4" alt="phone" />
                     Call Driver
                   </button>
                 </div>
@@ -333,9 +277,7 @@ const attributes = ref([
             </h3>
             <div class="overflow-x-auto w-full">
               <table class="w-full text-sm text-left text-[#414141]">
-                <thead
-                  class="text-[#3B3B3B] border-b border-t border-[#E0E0E0]"
-                >
+                <thead class="text-[#3B3B3B] border-b border-t border-[#E0E0E0]">
                   <tr>
                     <th class="px-4 py-3 font-normal">Trip ID</th>
                     <th class="px-4 py-3 font-normal">Date</th>
@@ -346,10 +288,7 @@ const attributes = ref([
                 </thead>
 
                 <tbody>
-                  <tr
-                    v-for="trip in dashboardData?.booking_history"
-                    :key="trip?.id"
-                  >
+                  <tr v-for="trip in dashboardData?.booking_history" :key="trip?.id">
                     <!-- Trip ID -->
                     <td class="px-4 py-3">TR:{{ trip?.id }}</td>
 
@@ -368,13 +307,10 @@ const attributes = ref([
 
                     <!-- Status -->
                     <td class="px-4 py-3">
-                      <span
-                        class="inline-block px-3 py-1 rounded-lg text-white text-xs"
-                        :class="{
-                          'bg-[#0FB14B]': trip.booking_status_id === 2, // Complete
-                          'bg-[#FF4A54] px-5': trip.booking_status_id === 1, //Pending
-                        }"
-                      >
+                      <span class="inline-block px-3 py-1 rounded-lg text-white text-xs" :class="{
+                        'bg-[#0FB14B]': trip.booking_status_id === 2, // Complete
+                        'bg-[#FF4A54] px-5': trip.booking_status_id === 1, //Pending
+                      }">
                         {{ getStatus(trip.booking_status_id) }}
                       </span>
                     </td>
@@ -390,33 +326,22 @@ const attributes = ref([
           <!-- CALENDAR -->
           <div class="bg-white p-4 rounded-xl border border-[#DBDBDB]">
             <!-- Calendar Header -->
-            <div
-              class="flex justify-between items-center text-sm text-[#414141] pb-3 border-b border-[#E0E0E0]"
-            >
+            <div class="flex justify-between items-center text-sm text-[#414141] pb-3 border-b border-[#E0E0E0]">
               <div class="flex gap-2">
-                <button
-                  class="px-2 py-1 bg-[#F5F5F5] text-[#000000] text-sm rounded-md hover:bg-[#EAEAEA]"
-                >
+                <button class="px-2 py-1 bg-[#F5F5F5] text-[#000000] text-sm rounded-md hover:bg-[#EAEAEA]">
                   Today
                 </button>
-                <button
-                  class="px-2 py-1 bg-[#F5F5F5] text-[#000000] text-sm rounded-md hover:bg-[#EAEAEA]"
-                >
+                <button class="px-2 py-1 bg-[#F5F5F5] text-[#000000] text-sm rounded-md hover:bg-[#EAEAEA]">
                   Last 8 Days
                 </button>
                 <button
-                  class="px-3 py-1 bg-[#F5F5F5] text-[#000000] text-sm rounded-md hover:bg-[#EAEAEA] whitespace-nowrap"
-                >
+                  class="px-3 py-1 bg-[#F5F5F5] text-[#000000] text-sm rounded-md hover:bg-[#EAEAEA] whitespace-nowrap">
                   Last Month
                 </button>
               </div>
               <!-- Dropdown Arrow -->
 
-              <img
-                src="../assets/icons/dashboard/calender-arrow.svg"
-                class="h-2"
-                alt="Dropdown Arrow"
-              />
+              <img src="../assets/icons/dashboard/calender-arrow.svg" class="h-2" alt="Dropdown Arrow" />
             </div>
 
             <!-- Calendar Grid -->
@@ -424,8 +349,7 @@ const attributes = ref([
 
             <!-- Calendar Footer Legend -->
             <div
-              class="flex justify-center items-center gap-6 border-t border-[#E0E0E0] mt-4 pt-3 text-sm text-[#414141]"
-            >
+              class="flex justify-center items-center gap-6 border-t border-[#E0E0E0] mt-4 pt-3 text-sm text-[#414141]">
               <div class="flex items-center gap-2">
                 <div class="w-4 h-4 rounded-full bg-yellow-400"></div>
                 <span class="whitespace-nowrap">Rides Scheduled</span>
@@ -440,35 +364,28 @@ const attributes = ref([
           <!-- DISTANCE GRAPH -->
           <div class="rounded-xl border">
             <!-- Graph Image -->
-            <div
-              class="rounded-lg overflow-hidden flex items-center justify-center"
-            >
+            <div class="rounded-lg overflow-hidden flex items-center justify-center">
               <RideDistanceBar class="w-full h-48" />
             </div>
           </div>
 
           <!-- RIDE RATING -->
-          <div class="bg-[#F8F8F8] p-6 rounded-xl border border-[#DBDBDB]">
+          <div v-if="dashboardData.is_last_booking_reviewed == false"
+            class="bg-[#F8F8F8] p-6 rounded-xl border border-[#DBDBDB]">
             <p class="font-semibold text-lg text-[#626262]">
               How was your last ride?
             </p>
             <p class="text-sm text-[#000000] mb-4">Review Rating:</p>
 
-            <!-- grid -->
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <button
-                v-for="item in ['Excellent', 'Good', 'Average', 'Bad']"
-                :key="item"
-                :disabled="sending"
+              <button v-for="item in ['Excellent', 'Good', 'Average', 'Bad']" :key="item" :disabled="ratingForm.busy"
                 class="group flex flex-col items-center py-4 rounded-lg outline-none transition-all duration-300 ease-out"
-                @click="submitRating(item)"
-              >
-                <img
-                  :src="getIcon(item)"
+                @click="submitRating(item)">
+                <img :src="getIcon(item)"
                   class="h-10 mb-2 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110"
-                  :alt="item"
-                />
-                <span class="text-black font-medium text-sm">{{ item }}</span>
+                  :alt="item" />
+                <DotsLoading v-if="ratingForm.busy" />
+                <span v-else class="text-black font-medium text-sm">{{ item }}</span>
               </button>
             </div>
           </div>
@@ -485,19 +402,20 @@ const attributes = ref([
   color: white !important;
   font-size: 12px !important;
 }
+
 .vc-day-content {
-  margin: 4px !important;          /* space between numbers */
-  padding: 8px !important;         /* better touch area */
- 
+  margin: 4px !important;
+  /* space between numbers */
+  padding: 8px !important;
+  /* better touch area */
+
 }
+
 /* Center the calendar body */
 .vc-pane-container,
 .vc-weeks,
-.vc-weeks > div {
+.vc-weeks>div {
 
   margin-left: 5px !important;
 }
-
-
-
 </style>
