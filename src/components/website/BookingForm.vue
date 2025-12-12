@@ -122,7 +122,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="bg-white shadow-xl p-6 rounded-xl max-w-xl sm:ml-auto sm:mt-[-26rem] z-10 relative sm:mr-[2rem] mx-4 sm:mx-0">
+  <section class="bg-white shadow-2xl p-6 rounded-2xl max-w-xl sm:ml-auto sm:mt-[-25rem] z-10 relative sm:mr-[2rem] mx-4 sm:mx-0">
     <div v-if="storeBookingDataLoading" class="flex justify-center pb-6">
       <DotsLoading />
     </div>
@@ -135,7 +135,7 @@ onMounted(() => {
       </button>
     </div>
 
-    <form class="grid grid-cols-2 md:grid-cols-4 gap-3">
+    <form class="grid grid-cols-2 md:grid-cols-4 gap-3 space-y-1 sm:gap-6 ">
       <FloatInput class="col-span-2" v-model="form.name" label="Name" placeholder="Jack" id="name" :error="form.errors.get('name')" />
       <FloatInput class="col-span-2" v-model="form.email" label="Email" placeholder="example@gmail.com" id="email"
         :error="form.errors.get('email')" />
@@ -162,14 +162,14 @@ onMounted(() => {
 
       <FloatSelect class="sm:col-span-2" v-model="form.travel_type" label="Travel" placeholder="One Way"
         :options="storeBookingData?.travel_types || []" id="travel_type" :error="form.errors.get('travel_type')" />
-      <div class="col-span-2 sm:col-span-4">
+      <div class="col-span-2 sm:col-span-4 w-[85%] sm:w-[50%] mx-auto mb-1">
         <button type="button"
           class="w-full mx-auto bg-[linear-gradient(93.72deg,#FAB707_2.95%,#FCDA19_100%)] px-16 text-black font-bold py-2 rounded-lg hover:opacity-90 transition disabled:opacity-50"
           :disabled="form.busy || storeBookingDataLoading" @click="storeBooking">
           <div v-if="form.busy" class="h-6 flex items-center">
             <DotsLoading />
           </div>
-          <span v-else>Get a Free Quote</span>
+          <span class="text-xs sm:text-sm" v-else>Get a Free Quote</span>
         </button>
       </div>
     </form>

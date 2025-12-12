@@ -5,6 +5,10 @@ import card1 from "@/assets/icons/wesbsite/hero/card1.svg";
 import card2 from "@/assets/icons/wesbsite/hero/card2.svg";
 import card3 from "@/assets/icons/wesbsite/hero/card3.svg";
 
+import leftArrow from "@/assets/icons/wesbsite/hero/service5.svg";
+import rightArrow from "@/assets/icons/wesbsite/hero/service6.svg";
+
+
 const carousel = ref(null);
 const imageIndex = ref({});
 
@@ -110,76 +114,65 @@ const prevImage = (cardId, total) => {
 </script>
 
 <template>
-  <section
-    class="px-8 md:px-10 lg:px-15 py-5 bg-white max-w-7xl w-full mx-auto"
-  >
+  <section class="px-8 md:px-10 lg:px-15 py-5 bg-white max-w-7xl w-full mx-auto">
     <!-- Heading block -->
     <div class="text-center mb-8 md:mb-2">
-      <h2
-        class="text-[36px] lg:text-[60px] font-bold leading-tight text-[#010101]"
-      >
+      <h2 class="text-[36px] lg:text-[60px] font-bold leading-tight text-[#010101]">
         Find Your Perfect <br />Vehicle Type
       </h2>
-      <p
-        class="mt-3 md:mt-4 text-sm md:text-base lg:text-lg max-w-5xl mx-auto text-[#626262] font-medium"
-      >
+      <p class="mt-3 md:mt-4 text-sm md:text-base lg:text-lg max-w-5xl mx-auto text-[#626262] font-medium">
         Reliability And Comfort Are Guaranteed. We Have The Latest Model Fleet
         To Ensure A Safe, Sophisticated And Luxury Travel Experience On Every
         Trip.
       </p>
+      <!-- ARROW BUTTONS -->
+      <div class="hidden md:flex items-center justify-end gap-2 mr-6">
+        <button
+          @click="slideLeft"
+          class="w-8 h-8 flex items-center justify-center rounded-full border bg-gray-500 border-gray-300 hover:bg-black transition"
+        >
+          <img :src="leftArrow" class="w-3 h-3" />
+        </button>
+
+        <button
+          @click="slideRight"
+          class="w-8 h-8 flex items-center justify-center rounded-full border bg-black border-gray-300 hover:bg-gray-500 transition"
+        >
+          <img :src="rightArrow" class="w-3 h-3 rounded" />
+        </button>
+      </div>
     </div>
 
     <!-- Carousel wrapper -->
     <div class="relative">
       <!-- Left Arrow -->
-      <button
-        @click="slideLeft"
-        class="absolute -left-6 top-1/2 -translate-y-1/2 z-20 text-2xl md:text-3xl text-black"
-      >
+      <button @click="slideLeft" class="sm:hidden absolute -left-6 top-1/2 -translate-y-1/2 z-20 text-2xl md:text-3xl text-black">
         ‹
       </button>
 
       <!-- Scrollable Cards -->
-      <div
-        ref="carousel"
-        class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 no-scrollbar py-4"
-      >
-        <article
-  v-for="card in cards"
-  :key="card.id"
-  class="snap-center flex-shrink-0 bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] flex flex-col overflow-hidden border border-[#C5C5C5]
-         w-[100%] sm:w-[300px] lg:w-[32%]"
->
+      <div ref="carousel" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-6 no-scrollbar py-4">
+        <article v-for="card in cards" :key="card.id" class="snap-center flex-shrink-0 bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] flex flex-col overflow-hidden border border-[#C5C5C5]
+         w-[100%] sm:w-[300px] lg:w-[32%]">
 
           <div class="relative overflow-hidden rounded-t-xl">
             <!-- IMAGE SLIDES -->
-            <div
-              class="flex transition-transform duration-500"
-              :style="{
-                transform: `translateX(-${imageIndex[card.id] * 100}%)`,
-              }"
-            >
-              <img
-                v-for="(pic, idx) in card.img"
-                :key="idx"
-                :src="pic"
-                class="object-cover w-full pt-14 px-1  flex-shrink-0"
-              />
+            <div class="flex transition-transform duration-500" :style="{
+              transform: `translateX(-${imageIndex[card.id] * 100}%)`,
+            }">
+              <img v-for="(pic, idx) in card.img" :key="idx" :src="pic"
+                class="object-cover w-full pt-14 px-1  flex-shrink-0" />
             </div>
 
             <!-- LEFT ARROW -->
-            <button
-              @click="prevImage(card.id, card.img.length)"
-              class="absolute top-1/2 left-2 -translate-y-1/2 bg-black/40 text-white rounded-full px-2 py-1"
-            >
+            <button @click="prevImage(card.id, card.img.length)"
+              class="absolute top-1/2 left-2 -translate-y-1/2 bg-black/40 text-white rounded-full px-2 py-1">
               ‹
             </button>
 
             <!-- RIGHT ARROW -->
-            <button
-              @click="nextImage(card.id, card.img.length)"
-              class="absolute top-1/2 right-2 -translate-y-1/2 bg-black/40 text-white rounded-full px-2 py-1"
-            >
+            <button @click="nextImage(card.id, card.img.length)"
+              class="absolute top-1/2 right-2 -translate-y-1/2 bg-black/40 text-white rounded-full px-2 py-1">
               ›
             </button>
           </div>
@@ -189,20 +182,14 @@ const prevImage = (cardId, total) => {
               <h3 class="text-xl md:text-[20px] font-semibold text-[#010101]">
                 {{ card.title }}
               </h3>
-              <span
-                v-if="card.popular"
-                class="px-3 text-[8px] font-bold text-white rounded-full"
-                style="background-color: #e85134"
-                >POPULAR</span
-              >
+              <span v-if="card.popular" class="px-3 text-[8px] font-bold text-white rounded-full"
+                style="background-color: #e85134">POPULAR</span>
             </div>
             <p class="text-sm mb-2 font-medium text-[#626262]">
               {{ card.text }}
             </p>
             <h4 class="text-md font-bold mb-2 text-[#091A50]">Key Features:</h4>
-            <ul
-              class="text-sm sm:text-md grid grid-cols-2 gap-1 text-[#626262] font-medium"
-            >
+            <ul class="text-sm sm:text-md grid grid-cols-2 gap-1 text-[#626262] font-medium">
               <li v-for="feature in card.features" :key="feature">
                 • {{ feature }}
               </li>
@@ -210,18 +197,15 @@ const prevImage = (cardId, total) => {
           </div>
           <button
             class="mt-auto w-full text-white font-semibold py-1.5 px-4 rounded-md hover:opacity-90 transition-opacity"
-            style="background: linear-gradient(to right, #4c4c4c, #000000)"
-          >
+            style="background: linear-gradient(to right, #4c4c4c, #000000)">
             Get a Quote
           </button>
         </article>
       </div>
 
       <!-- Right Arrow -->
-      <button
-        @click="slideRight"
-        class="absolute -right-6 top-1/2 -translate-y-1/2 z-20 text-2xl md:text-3xl text-black"
-      >
+      <button @click="slideRight"
+        class="sm:hidden absolute -right-6 top-1/2 -translate-y-1/2 z-20 text-2xl md:text-3xl text-black">
         ›
       </button>
     </div>
@@ -232,6 +216,7 @@ const prevImage = (cardId, total) => {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
   scrollbar-width: none;
 }

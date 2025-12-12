@@ -24,11 +24,11 @@ function scrollOneCard (direction) {
 }
 
 const slideNext = () => scrollOneCard(1)
-const slidePrev = () => scrollOneCard(-1)
+const slidePrev = () => scrollOneCard(-1);
 </script>
 
 <template>
-  <section class="px-4 md:px-10 lg:px-10 bg-white mb-10 mt-5">
+  <section class="px-4 md:px-10 lg:px-10 bg-white mb-10 mt-5 sm:pb-10">
     <div class="max-w-7xl mx-auto">
       <!-- heading + arrows -->
       <div class="text-black space-y-4 text-center">
@@ -39,18 +39,18 @@ const slidePrev = () => scrollOneCard(-1)
           <p class="text-sm md:text-lg text-[#626262] font-medium max-w-3xl mx-auto">
             From coast to coast — premium rides, no matter the city.
           </p>
-          <div class="flex items-center gap-4 sm:mr-8">
+          <div class="flex items-center gap-2 sm:mr-4">
             <button
               @click="slidePrev"
-              class="w-10 h-10 grid place-content-center rounded-full border bg-gray-500 border-gray-300 hover:bg-gray-900 transition"
+              class="w-8 h-8 grid place-content-center rounded-full border bg-gray-500 border-gray-300 hover:bg-black transition"
             >
-              <img :src="leftArrow" class="w-4 h-4" />
+              <img :src="leftArrow" class="w-3 h-3" />
             </button>
             <button
               @click="slideNext"
-              class="w-10 h-10 grid place-content-center rounded-full border bg-black border-gray-300 hover:bg-gray-300 transition"
+              class="w-8 h-8 grid place-content-center rounded-full border bg-black border-gray-300 hover:bg-gray-500 transition"
             >
-              <img :src="rightArrow" class="w-4 h-4 rounded" />
+              <img :src="rightArrow" class="w-3 h-3 rounded" />
             </button>
           </div>
         </div>
