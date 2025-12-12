@@ -6,11 +6,11 @@
       <h2 class="text-3xl md:text-4xl font-medium mb-4 text-[#FFFFFF]">
         Planning a Trip?
       </h2>
-      <p class="text-sm md:text-lg text-[#FFFFFF] mb-4 sm:mb-8  max-w-xs sm:max-w-full mx-auto sm:mx-0">
+      <p class="text-xs md:text-lg text-[#FFFFFF] mb-4 sm:mb-8  max-w-xs sm:max-w-full mx-auto sm:mx-0">
         Choosing Urban Elite Means Choosing Reliability, Safety, And A Seamless Experience. We Handle The Details So You Can Focus On Your Destination.
       </p>
       <button
-        class="bg-[linear-gradient(93.72deg,#FAB707_2.95%,#FCDA19_100%)] text-[#010101] font-semibold py-2 px-12 rounded-lg hover:opacity-90 transition-opacity"
+        class="mb-2 bg-[linear-gradient(93.72deg,#FAB707_2.95%,#FCDA19_100%)] text-[#010101] font-semibold py-2 px-12 rounded-lg hover:opacity-90 transition-opacity"
       >
         Get a Free Quote
       </button>

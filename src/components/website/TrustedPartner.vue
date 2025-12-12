@@ -1,6 +1,6 @@
 <template>
   <!-- Block-1: image RIGHT -->
-  <section class="px-4 py-10 md:px-10 lg:px-20 bg-[#FFFFFF]">
+  <section class="px-4 py-4 sm:py-16 md:px-10 bg-[#FFFFFF]">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-5 md:gap-16">
       <!-- TEXT -->
       <div class="order-1 lg:order-none">
@@ -23,8 +23,8 @@
   </section>
 
   <!-- Block-2: image LEFT -->
-  <section class="px-4 py-0 sm:py-16 md:px-10 lg:px-20 bg-[#FFFFFF]">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-5 md:gap-10">
+  <section class="px-4 py-6 sm:py-16 md:px-10 bg-[#FFFFFF]">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-5 md:gap-16">
       <!-- IMAGE -->
       <div class="w-full h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden">
         <img src="@/assets/icons/wesbsite/hero/trust2.svg" alt="Premium Fleet" class="w-full h-full object-cover">

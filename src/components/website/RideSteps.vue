@@ -48,7 +48,7 @@ const steps = [
 </script>
 
 <template>
-  <section class="px-4 py-6 md:px-10 lg:px-20 bg-[#FFFFFF]">
+  <section class="px-4 py-6 sm:pt-10 md:px-10 lg:px-20 bg-[#FFFFFF]">
     <div class="max-w-7xl mx-auto flex flex-col">
       <!-- Heading -->
       <div class="text-black space-y-3 text-center sm:mb-8">

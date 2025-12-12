@@ -49,7 +49,7 @@ const handleBlur = () => {
   if (props.customType && !model.value) {
     storeType.value = 'text';
   }
-}
+};
 </script>
 
 <template>
@@ -74,16 +74,3 @@ const handleBlur = () => {
     </p>
   </div>
 </template>
-
-<style scoped>
-/* Tailwind custom class */
-.no-spinner::-webkit-outer-spin-button,
-.no-spinner::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.no-spinner {
-  -moz-appearance: textfield;
-}
-</style>
