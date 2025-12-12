@@ -49,7 +49,7 @@ const reviews = [
     time: "02 days ago",
     avatar: avatar1,
   },
-    {
+  {
     id: 2,
     text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more!",
     name: "Karan",
@@ -120,22 +120,12 @@ const slideRight = () => {
       </h3>
 
       <!-- Rating Row -->
-      <div
-        class="flex items-center justify-center gap-4 sm:gap-5 mt-5 text-gray-700 sm:mt-4"
-      >
+      <div class="flex items-center justify-center gap-4 sm:gap-5 mt-5 text-gray-700 sm:mt-4">
         <p class="text-sm sm:text-lg font-medium">4.2/5</p>
 
-        <img
-          src="@/assets/icons/wesbsite/hero/review2.svg"
-          class="w-7 h-7 sm:w-10 sm:h-10"
-          alt="Google Rating"
-        />
+        <img src="@/assets/icons/wesbsite/hero/review2.svg" class="w-7 h-7 sm:w-10 sm:h-10" alt="Google Rating" />
 
-        <img
-          src="@/assets/icons/wesbsite/hero/review3.svg"
-          class="w-7 h-7 sm:w-10 sm:h-10"
-          alt="Star Icon"
-        />
+        <img src="@/assets/icons/wesbsite/hero/review3.svg" class="w-7 h-7 sm:w-10 sm:h-10" alt="Star Icon" />
 
         <p class="text-sm sm:text-lg font-medium">Based on 5210 reviews</p>
       </div>
@@ -146,66 +136,51 @@ const slideRight = () => {
       <div class="grid grid-cols-1 lg:grid-cols-5">
         <!-- LEFT SIDE QUOTE -->
         <div class="flex flex-col justify-start items-start gap-6 sm:mx-0">
-          <img
-            src="@/assets/icons/wesbsite/hero/review1.svg"
-            alt="quote"
-            class="w-20 h-14 mx-auto sm:mx-0"
-          />
+          <img src="@/assets/icons/wesbsite/hero/review1.svg" alt="quote" class="w-20 h-14 mx-auto sm:mx-0" />
 
           <p
-            class="text-2xl font-semibold text-[#000001] leading-snug font-inter mx-auto sm:mx-0 text-center sm:text-start mb-5 sm:mb-0"
-          >
+            class="text-2xl font-semibold text-[#000001] leading-snug font-inter mx-auto sm:mx-0 text-center sm:text-start mb-5 sm:mb-0">
             What Our Customers Are<br />Saying
           </p>
 
           <!-- Arrows + Progress Bar Row -->
-          <div class="flex mx-auto sm:mx-0 items-center mb-4">
+          <div class="hidden sm:flex mx-auto sm:mx-0 items-center mb-4">
             <!-- Left Arrow -->
             <button @click="slideLeft" class="p-1.5 rounded-full">
-              <img
-                src="@/assets/icons/wesbsite/hero/left-arrow.svg"
-                class="w-4"
-              />
+              <img src="@/assets/icons/wesbsite/hero/left-arrow.svg" class="w-4" />
             </button>
 
             <!-- Progress Bar -->
-            <div
-              class="relative flex-1 w-24 h-1 border bg-gray-300 overflow-hidden"
-            >
+            <div class="relative flex-1 w-24 h-1 border bg-gray-300 overflow-hidden">
               <!-- Progress Segment -->
-              <div class="absolute left-0 top-0 h-full w-[27%] bg-black"
-              :style="{ width: progress + '%'}"
-              ></div>
+              <div class="absolute left-0 top-0 h-full w-[27%] bg-black" :style="{ width: progress + '%' }"></div>
             </div>
 
             <!-- Right Arrow -->
             <button @click="slideRight" class="p-1.5 rounded-full">
-              <img
-                src="@/assets/icons/wesbsite/hero/right-arrow.svg"
-                class="w-4"
-              />
+              <img src="@/assets/icons/wesbsite/hero/right-arrow.svg" class="w-4" />
             </button>
           </div>
         </div>
+        <!-- Mobile Left Arrow -->
+        <button @click="slideLeft"
+          class="sm:hidden absolute -left-6 top-[62%] -translate-y-1/2 z-20 text-2xl md:text-3xl text-black px-2">
+          ‹
+        </button>
         <!-- RIGHT SIDE CARDS -->
-
-        <div
-          ref="carousel"
-          class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar gap-6 col-span-4"
-        >
-          <div v-for="item in reviews" :key="item.id" class="relative snap-start">
+        <div ref="carousel"
+          class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar gap-6 col-span-4 px-4 justify-center items-center">
+          <div v-for="item in reviews" :key="item.id" class="relative snap-start ">
             <!-- CARD BODY -->
-            <div
-              class="bg-white border border-gray-300 rounded-xl p-3 pb-10 relative shadow-[0_4px_20px_rgba(0,0,0,0.10)] w-[300px]"
-            >
+            <div class="bg-white border border-gray-300 rounded-xl p-3 pb-10 relative shadow-[0_4px_20px_rgba(0,0,0,0.10)] 
+             w-[86vw] sm:w-[300px] snap-start">
+
               <p class="text-[rgba(32,32,32,1)] h-[160px] text-sm">
                 {{ item.text }}
               </p>
 
               <!-- NOTCH (Speech bubble tail) -->
-              <div
-                class="absolute left-2 -bottom-1 w-9 h-9 bg-white rotate-45"
-              ></div>
+              <div class="absolute left-2 -bottom-1 w-9 h-9 bg-white rotate-45"></div>
             </div>
 
             <!-- USER INFO OUTSIDE THE CARD -->
@@ -218,6 +193,12 @@ const slideRight = () => {
             </div>
           </div>
         </div>
+
+        <!-- Mobile Right Arrow -->
+        <button @click="slideRight"
+          class="sm:hidden absolute -right-6 top-[62%] -translate-y-1/2 z-20 text-2xl md:text-3xl text-black px-2">
+          ›
+        </button>
       </div>
     </div>
   </section>
