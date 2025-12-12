@@ -89,25 +89,36 @@ const airports = [
       </div>
 
       <!-- only mobile responsive -->
-      <div class="relative sm:hidden">
-        <div class="flex justify-between items-center">
-          <button @click="slideLeft" class="text-white text-2xl">‹</button>
-          <div
-            ref="carousel"
-            class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4 no-scrollbar"
-          >
-            <div
-              v-for="a in airports"
-              :key="a.code"
-              class="min-w-full snap-center flex flex-col items-center space-y-2"
-            >
-              <img :src="a.icon" :alt="a.code" class="object-contain" />
-              <span class="text-white text-xl">{{ a.code }}</span>
-            </div>
-          </div>
-          <button @click="slideRight" class="text-white text-2xl">›</button>
-        </div>
+<div class="relative sm:hidden">
+  <div class="flex justify-between items-center">
+    <button @click="slideLeft" class="text-white text-2xl">‹</button>
+
+    <div
+      ref="carousel"
+      class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4 no-scrollbar"
+    >
+      <div
+        v-for="a in airports"
+        :key="a.code"
+        class="min-w-full snap-center flex flex-col items-center"
+      >
+        <!-- wrapper: image + text stacked -->
+        <div class="relative w-full flex justify-center">
+  <img :src="a.icon" :alt="a.code" class="object-contain" />
+
+  <!-- centred, then shifted left -->
+  <span
+    class="absolute whitespace-nowrap inset-24 top-[85%] flex items-center justify-center text-white text-2xl z-10 translate-x-[-20%]"
+  >
+    {{ a.code }}
+  </span>
+</div>
       </div>
+    </div>
+
+    <button @click="slideRight" class="text-white text-2xl">›</button>
+  </div>
+</div>
     </div>
   </section>
 </template>

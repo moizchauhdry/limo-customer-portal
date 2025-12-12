@@ -29,7 +29,7 @@ const slidePrev = () => scrollOneCard(-1);
 
 <template>
   <section class="px-4 md:px-10 lg:px-10 bg-white mb-10 mt-5 sm:pb-10">
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto relative">
       <!-- heading + arrows -->
       <div class="text-black space-y-4 text-center">
         <h2 class="text-[34px] md:text-[36px] lg:text-[52px] font-bold leading-tight capitalize">
@@ -39,7 +39,7 @@ const slidePrev = () => scrollOneCard(-1);
           <p class="text-sm md:text-lg text-[#626262] font-medium max-w-3xl mx-auto">
             From coast to coast — premium rides, no matter the city.
           </p>
-          <div class="flex items-center gap-2 sm:mr-4">
+          <div class="hidden sm:flex items-center gap-2 sm:mr-4">
             <button
               @click="slidePrev"
               class="w-8 h-8 grid place-content-center rounded-full border bg-gray-500 border-gray-300 hover:bg-black transition"
@@ -55,7 +55,11 @@ const slidePrev = () => scrollOneCard(-1);
           </div>
         </div>
       </div>
-
+<!-- Mobile Left Arrow -->
+        <button @click="slideNext"
+          class="sm:hidden absolute -left-6 top-[62%] -translate-y-1/2 z-20 text-2xl md:text-3xl text-black px-3">
+          ‹
+        </button>
       <!-- carousel -->
       <div
         ref="carousel"
@@ -72,6 +76,11 @@ const slidePrev = () => scrollOneCard(-1);
           />
         </div>
       </div>
+       <!-- Mobile Right Arrow -->
+        <button @click="slidePrev"
+          class="sm:hidden absolute -right-6 top-[62%] -translate-y-1/2 z-20 text-2xl md:text-3xl text-black px-3">
+          ›
+        </button>
     </div>
   </section>
 </template>

@@ -153,7 +153,7 @@ const slideRight = () => {
           class="service-card"
         >
           <!-- IMAGE WRAPPER -->
-          <div class="h-[162px] w-[300px] sm:w-[284px] rounded-xl mx-auto overflow-hidden">
+          <div class=" h-[162px] w-[86vw] sm:w-[284px] rounded-xl mx-auto overflow-hidden">
             <img :src="item.image" class="object-cover w-full h-full" />
           </div>
 

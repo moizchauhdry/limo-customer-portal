@@ -6,7 +6,8 @@ import BookingForm from "@/components/website/BookingForm.vue";
 </script>
 
 <template>
-  <section class="relative bg-cover bg-center w-full mx-auto text-white pt-20 sm:pt-28 pb-12 sm:px-6"
+  <section class="relative bg-cover bg-center w-full mx-auto text-white pt-20 sm:pt-28 pb-12 sm:px-6" data-aos="fade-right" data-aos-duration="1200" data-aos-offset="150"
+    data-aos-easing="ease-in-out" data-aos-delay="100"
     :style="{ backgroundImage: `url(${heroBg})` }">
     <div class="max-w-7xl mx-auto">
       <div class="max-w-xl sm:mt-4">

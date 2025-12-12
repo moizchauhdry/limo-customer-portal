@@ -122,7 +122,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="bg-white shadow-2xl p-6 rounded-2xl max-w-xl sm:ml-auto sm:mt-[-25rem] z-10 relative sm:mr-[2rem] mx-4 sm:mx-0">
+  <section class="bg-white shadow-2xl p-6 rounded-2xl max-w-xl sm:ml-auto sm:mt-[-25rem] z-10 relative sm:mr-[2rem] mx-4 sm:mx-0" data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150"
+    data-aos-easing="ease-in-out" data-aos-delay="100">
     <div v-if="storeBookingDataLoading" class="flex justify-center pb-6">
       <DotsLoading />
     </div>
