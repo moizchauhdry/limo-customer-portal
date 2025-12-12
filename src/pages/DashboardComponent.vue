@@ -126,7 +126,7 @@ const attributes = ref([
               <p class="text-3xl font-bold mt-1">
                 {{ dashboardData?.total_bookings_count }}
               </p>
-              <p class="mt-2">+5% from last month</p>
+              <!-- <p class="mt-2">+5% from last month</p> -->
             </div>
 
             <!-- Total Fare -->
@@ -136,7 +136,7 @@ const attributes = ref([
                 <img src="../assets/icons/dashboard/fare.svg" class="h-5" />
               </div>
               <p class="text-3xl font-bold mt-1">
-                {{ dashboardData?.total_fare }}
+                ${{ dashboardData?.total_fare }}
               </p>
               <p class="mt-2 border w-fit px-2 rounded-md flex items-center gap-2">
                 Last 7 Days
@@ -153,7 +153,7 @@ const attributes = ref([
               <p class="text-3xl font-bold mt-1">
                 {{ dashboardData.cancelled_bookings_count }}
               </p>
-              <p class="mt-2">From last month</p>
+              <!-- <p class="mt-2">From last month</p> -->
             </div>
           </div>
 
