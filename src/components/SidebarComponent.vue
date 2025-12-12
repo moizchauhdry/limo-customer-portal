@@ -2,6 +2,7 @@
 import { RouterLink, useRouter } from "vue-router";
 import { useToast } from "vue-toastification";
 import axios from "@/axios";
+import { logout } from "@/utils";
 
 const toast = useToast();
 const router = useRouter();
@@ -11,7 +12,7 @@ const logoutHandler = async () => {
     const { data } = await axios.post("/customer/auth/logout");
 
     if (data.success == true) {
-      localStorage.removeItem("token");
+      logout();
       router.push({ name: "login" });
     } else {
       toast.error(data?.message || "Signup Failed!");
@@ -84,10 +85,7 @@ const iconSettingsActive = new URL(
 </script>
 
 <template>
-  <label
-    for="menu-toggle"
-    class="lg:hidden fixed top-8 left-5 z-[70] cursor-pointer"
-  >
+  <label for="menu-toggle" class="lg:hidden fixed top-8 left-5 z-[70] cursor-pointer">
     <div class="space-y-1">
       <span class="block w-7 h-1 bg-black"></span>
       <span class="block w-7 h-1 bg-black"></span>
@@ -98,128 +96,73 @@ const iconSettingsActive = new URL(
   <input type="checkbox" id="menu-toggle" class="hidden peer" />
 
   <aside
-    class="fixed z-[60] lg:z-0 lg:translate-x-0 peer-checked:translate-x-0 transition-transform duration-300 w-64 bg-white shadow-xl top-[84px] bottom-0 p-6 overflow-y-auto -translate-x-full"
-  >
+    class="fixed z-[60] lg:z-0 lg:translate-x-0 peer-checked:translate-x-0 transition-transform duration-300 w-64 bg-white shadow-xl top-[84px] bottom-0 p-6 overflow-y-auto -translate-x-full">
     <nav class="space-y-8">
       <RouterLink to="/dashboard" custom v-slot="{ navigate, isActive }">
-        <div
-          @click="navigate"
-          class="flex items-center gap-3 cursor-pointer"
-          :class="isActive ? 'text-[#369FFF]' : 'text-[#949494]'"
-        >
-          <img
-            :src="isActive ? iconDashboardActive : iconDashboard"
-            class="h-6"
-          />
+        <div @click="navigate" class="flex items-center gap-3 cursor-pointer"
+          :class="isActive ? 'text-[#369FFF]' : 'text-[#949494]'">
+          <img :src="isActive ? iconDashboardActive : iconDashboard" class="h-6" />
           Dashboard
-          <span
-            v-if="isActive"
-            class="w-3 h-3 ml-auto bg-[#369FFF] rounded-full"
-          ></span>
+          <span v-if="isActive" class="w-3 h-3 ml-auto bg-[#369FFF] rounded-full"></span>
         </div>
       </RouterLink>
 
       <RouterLink to="/rides" custom v-slot="{ navigate, isActive }">
-        <div
-          @click="navigate"
-          class="flex items-center gap-3 cursor-pointer"
-          :class="isActive ? 'text-[#369FFF]' : 'text-[#949494]'"
-        >
+        <div @click="navigate" class="flex items-center gap-3 cursor-pointer"
+          :class="isActive ? 'text-[#369FFF]' : 'text-[#949494]'">
           <img :src="isActive ? iconRidesActive : iconRides" class="h-6" />
           Rides
-          <span
-            v-if="isActive"
-            class="w-3 h-3 ml-auto bg-[#369FFF] rounded-full"
-          ></span>
+          <span v-if="isActive" class="w-3 h-3 ml-auto bg-[#369FFF] rounded-full"></span>
         </div>
       </RouterLink>
 
       <RouterLink to="/history" custom v-slot="{ navigate, isActive }">
-        <div
-          @click="navigate"
-          class="flex items-center gap-3 cursor-pointer"
-          :class="isActive ? 'text-[#369FFF]' : 'text-[#949494]'"
-        >
+        <div @click="navigate" class="flex items-center gap-3 cursor-pointer"
+          :class="isActive ? 'text-[#369FFF]' : 'text-[#949494]'">
           <img :src="isActive ? iconHistoryActive : iconHistory" class="h-6" />
 
           History
-          <span
-            v-if="isActive"
-            class="w-3 h-3 ml-auto bg-[#369FFF] rounded-full"
-          ></span>
+          <span v-if="isActive" class="w-3 h-3 ml-auto bg-[#369FFF] rounded-full"></span>
         </div>
       </RouterLink>
 
       <RouterLink to="/wallet" custom v-slot="{ navigate, isActive }">
-        <div
-          @click="navigate"
-          class="flex items-center gap-3 cursor-pointer"
-          :class="isActive ? 'text-[#369FFF]' : 'text-[#949494]'"
-        >
+        <div @click="navigate" class="flex items-center gap-3 cursor-pointer"
+          :class="isActive ? 'text-[#369FFF]' : 'text-[#949494]'">
           <img :src="isActive ? iconWalletActive : iconWallet" class="h-5" />
           My Wallet
-          <span
-            v-if="isActive"
-            class="w-3 h-3 ml-auto bg-[#369FFF] rounded-full"
-          ></span>
+          <span v-if="isActive" class="w-3 h-3 ml-auto bg-[#369FFF] rounded-full"></span>
         </div>
       </RouterLink>
 
       <RouterLink to="/reports" custom v-slot="{ navigate, isActive }">
-        <div
-          @click="navigate"
-          class="flex items-center gap-3 cursor-pointer"
-          :class="isActive ? 'text-[#369FFF]' : 'text-[#949494]'"
-        >
+        <div @click="navigate" class="flex items-center gap-3 cursor-pointer"
+          :class="isActive ? 'text-[#369FFF]' : 'text-[#949494]'">
           <img :src="isActive ? iconReportsActive : iconReports" class="h-6" />
           Manage Reports
-          <span
-            v-if="isActive"
-            class="w-3 h-3 ml-auto bg-[#369FFF] rounded-full"
-          ></span>
+          <span v-if="isActive" class="w-3 h-3 ml-auto bg-[#369FFF] rounded-full"></span>
         </div>
       </RouterLink>
 
       <RouterLink to="/complaints" custom v-slot="{ navigate, isActive }">
-        <div
-          @click="navigate"
-          class="flex items-center gap-3 cursor-pointer"
-          :class="isActive ? 'text-[#369FFF]' : 'text-[#949494]'"
-        >
-          <img
-            :src="isActive ? iconComplaintsActive : iconComplaints"
-            class="h-6"
-          />
+        <div @click="navigate" class="flex items-center gap-3 cursor-pointer"
+          :class="isActive ? 'text-[#369FFF]' : 'text-[#949494]'">
+          <img :src="isActive ? iconComplaintsActive : iconComplaints" class="h-6" />
           Complaints
-          <span
-            v-if="isActive"
-            class="w-3 h-3 ml-auto bg-[#369FFF] rounded-full"
-          ></span>
+          <span v-if="isActive" class="w-3 h-3 ml-auto bg-[#369FFF] rounded-full"></span>
         </div>
       </RouterLink>
 
       <RouterLink to="/settings" custom v-slot="{ navigate, isActive }">
-        <div
-          @click="navigate"
-          class="flex items-center gap-3 cursor-pointer"
-          :class="isActive ? 'text-[#369FFF]' : 'text-[#949494]'"
-        >
-          <img
-            :src="isActive ? iconSettingsActive : iconSettings"
-            class="h-6"
-          />
+        <div @click="navigate" class="flex items-center gap-3 cursor-pointer"
+          :class="isActive ? 'text-[#369FFF]' : 'text-[#949494]'">
+          <img :src="isActive ? iconSettingsActive : iconSettings" class="h-6" />
           Settings
-          <span
-            v-if="isActive"
-            class="w-3 h-3 ml-auto bg-[#369FFF] rounded-full"
-          ></span>
+          <span v-if="isActive" class="w-3 h-3 ml-auto bg-[#369FFF] rounded-full"></span>
         </div>
       </RouterLink>
 
-      <div
-        class="flex items-center gap-3 text-[#949494] hover:text-black cursor-pointer"
-        @click="logoutHandler"
-      >
+      <div class="flex items-center gap-3 text-[#949494] hover:text-black cursor-pointer" @click="logoutHandler">
         <img src="../assets/icons/sidebar/logout.svg" class="h-6" />
         Logout
       </div>
