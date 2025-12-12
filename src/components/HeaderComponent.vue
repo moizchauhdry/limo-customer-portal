@@ -1,12 +1,18 @@
 <script setup>
 const date = new Date();
+const customer = JSON.parse(localStorage.getItem("customer"));
+
+let name = "there";
+if (customer) {
+  name = customer?.name?.split(" ")?.[0];
+}
 </script>
 <template>
   <header class="w-full bg-white shadow flex items-center justify-between px-6 py-4 fixed top-0 left-0 z-50">
     <div class="flex items-center justify-between sm:w-[30%] ml-auto sm:ml-6 gap-3">
       <img src="../assets/images/logo.svg" class="h-10 cursor-pointer" alt="Logo" @click="$router.push('/')" />
       <div class="text-xl">
-        <h1 class="text-[#595959]">Hi! Hamza,</h1>
+        <h1 class="text-[#595959]">Hi! {{ name }},</h1>
         <span class="text-[#000000] font-semibold">Good Morning</span>
       </div>
     </div>

@@ -17,7 +17,7 @@ const form = reactive(
   })
 );
 
-const getProfileData = async () => {
+const getProfileData = async (updateLocalStorage = false) => {
   try {
     loading.value = true;
     const { data } = await axios.get("/customer/profile");
@@ -26,6 +26,10 @@ const getProfileData = async () => {
       form.name = data?.data?.name || "";
       form.email = data?.data?.email || "";
       form.phone = data?.data?.phone || "";
+
+      if (updateLocalStorage) {
+        localStorage.setItem("customer", JSON.stringify(data?.data));
+      }
     } else {
       toast.error(data.message || "Failed to fetch profile data");
     }
@@ -42,7 +46,7 @@ const updateProfile = async () => {
     const { data } = await form.put("/customer/profile/update");
 
     if (data.success == true) {
-      getProfileData();
+      getProfileData(true);
       toast.success(data.message || "Profile updated successfully");
     } else {
       toast.error(data.message || "Failed to update profile");
