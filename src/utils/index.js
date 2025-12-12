@@ -1,3 +1,5 @@
+import moment from "moment";
+
 export const login = (token = "", customer = {}) => {
     localStorage.setItem("token", token);
     localStorage.setItem("customer", JSON.stringify(customer));
@@ -14,4 +16,8 @@ export const getHoursOptions = (length = 24) => {
             label: `${String(n).padStart(2, "0")} Hour${n > 1 ? "s" : ""}`
         }
     })
+}
+export const formatDate = (date) => {
+    if (!date) return ''
+    return moment(date).format('MMM DD, YYYY');
 }
