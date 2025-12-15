@@ -113,7 +113,8 @@ const slideRight = () => {
   <!-- MAIN SECTION -->
   <section class="bg-white py-8 px-6 lg:px-10 max-w-7xl w-full mx-auto">
     <!-- TOP TEXT -->
-    <div class="text-center mb-6 mx-auto flex flex-col space-y-0 sm:space-y-2">
+    <div class="text-center mb-6 mx-auto flex flex-col space-y-0 sm:space-y-2" data-aos="fade-up"
+      data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out" data-aos-delay="100">
       <h2 class="text-[28px] md:text-4xl font-medium">Read Reviews</h2>
       <h3 class="text-[28px] md:text-4xl font-semibold mt-2 whitespace-nowrap">
         Ride With Confidence
@@ -135,7 +136,8 @@ const slideRight = () => {
     <div class="relative">
       <div class="grid grid-cols-1 lg:grid-cols-5">
         <!-- LEFT SIDE QUOTE -->
-        <div class="flex flex-col justify-start items-start gap-6 sm:mx-0">
+        <div class="flex flex-col justify-start items-start gap-6 sm:mx-0" data-aos="fade-up" data-aos-duration="1200"
+          data-aos-offset="150" data-aos-easing="ease-in-out" data-aos-delay="100">
           <img src="@/assets/icons/wesbsite/hero/review1.svg" alt="quote" class="w-20 h-14 mx-auto sm:mx-0" />
 
           <p
@@ -169,7 +171,9 @@ const slideRight = () => {
         </button>
         <!-- RIGHT SIDE CARDS -->
         <div ref="carousel"
-          class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar gap-6 col-span-4 px-4 justify-center items-center">
+          class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar gap-6 col-span-4 px-4 justify-center items-center"
+           data-aos="fade-left" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
+    data-aos-delay="100">
           <div v-for="item in reviews" :key="item.id" class="relative snap-start ">
             <!-- CARD BODY -->
             <div class="bg-white border border-gray-300 rounded-xl p-3 pb-10 relative shadow-[0_4px_20px_rgba(0,0,0,0.10)] 

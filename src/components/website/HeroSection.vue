@@ -6,9 +6,9 @@ import BookingForm from "@/components/website/BookingForm.vue";
 </script>
 
 <template>
-  <section class="relative bg-cover bg-center w-full mx-auto text-white pt-20 sm:pt-28 pb-12 sm:px-6" data-aos="fade-right" data-aos-duration="1200" data-aos-offset="150"
-    data-aos-easing="ease-in-out" data-aos-delay="100"
-    :style="{ backgroundImage: `url(${heroBg})` }">
+  <section class="relative bg-cover bg-center w-full mx-auto text-white pt-20 sm:pt-28 pb-12 sm:px-6"
+    data-aos="fade-right" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
+    data-aos-delay="100" :style="{ backgroundImage: `url(${heroBg})` }">
     <div class="max-w-7xl mx-auto">
       <div class="max-w-xl sm:mt-4">
         <div class="flex mt-2">
@@ -16,7 +16,9 @@ import BookingForm from "@/components/website/BookingForm.vue";
             class="text-xs sm:text-sm bg-[#99979959] backdrop-blur-[22.74235725402832px] px-5 py-2 sm:py-3 rounded-full font-inter mx-auto sm:mx-0">Rated
             #1 Car And Limo Service</span>
         </div>
-        <h1 class="text-[43px] leading-[40px]  md:text-5xl font-bold mt-4 mb-2 text-center sm:text-start">
+        <h1 class="text-[43px] leading-[40px]  md:text-5xl font-bold mt-4 mb-2 text-center sm:text-start"
+          data-aos="fade-down" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
+          data-aos-delay="100">
           Premium Car <br class="block sm:hidden"> Service <br> <span class="text-[#FDD31C]">Made Simple</span>
         </h1>
         <p class="mb-4 w-[80%] sm:w-full mx-auto sm:mx-0 text-center sm:text-start text-[12px] sm:text-[15px]">

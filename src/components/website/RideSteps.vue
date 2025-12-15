@@ -51,26 +51,20 @@ const steps = [
   <section class="px-4 py-6 sm:pt-10 md:px-10 lg:px-20 bg-[#FFFFFF]">
     <div class="max-w-7xl mx-auto flex flex-col">
       <!-- Heading -->
-      <div class="text-black space-y-3 text-center sm:mb-8">
-        <h2
-          class="text-[28px] md:text-[36px] lg:text-[52px] font-bold leading-tight capitalize"
-        >
+      <div class="text-black space-y-3 text-center sm:mb-8" data-aos="fade-down" data-aos-duration="1200"
+        data-aos-offset="150" data-aos-easing="ease-in-out" data-aos-delay="100">
+        <h2 class="text-[28px] md:text-[36px] lg:text-[52px] font-bold leading-tight capitalize">
           How it Works
         </h2>
-        <p
-          class="text-sm md:text-base text-[#626262] font-medium max-w-3xl mx-auto"
-        >
+        <p class="text-sm md:text-base text-[#626262] font-medium max-w-3xl mx-auto">
           Book a Ride in 3 simple steps. It’s that easy!
         </p>
       </div>
 
       <!-- DESKTOP GRID -->
-      <div class="hidden sm:grid grid-cols-3 gap-6 sm:px-14">
-        <div
-          v-for="step in steps"
-          :key="step.id"
-          class="flex flex-col items-center text-center"
-        >
+      <div class="hidden sm:grid grid-cols-3 gap-6 sm:px-14" data-aos="fade-up" data-aos-duration="1200"
+        data-aos-offset="150" data-aos-easing="ease-in-out" data-aos-delay="100">
+        <div v-for="step in steps" :key="step.id" class="flex flex-col items-center text-center">
           <img :src="step.img" :alt="step.title" />
           <div class="text-md md:text-2xl font-bold text-black mb-3">
             {{ step.title }}
@@ -82,23 +76,15 @@ const steps = [
       </div>
 
       <!-- MOBILE CAROUSEL -->
-      <div class="relative sm:hidden">
+      <div class="relative sm:hidden" data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150"
+        data-aos-easing="ease-in-out" data-aos-delay="100">
         <!-- Arrows -->
         <div class="flex justify-between items-center mb-2 px-1">
           <button @click="slideLeft" class="text-black text-2xl">‹</button>
 
-          <div
-            ref="carousel"
-            class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4 py-4 no-scrollbar"
-          >
-            <div
-              v-for="step in steps"
-              :key="step.id"
-              class="min-w-full snap-center space-y-0"
-            >
-              <div
-                class="flex flex-col items-center text-center p-4"
-              >
+          <div ref="carousel" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4 py-4 no-scrollbar">
+            <div v-for="step in steps" :key="step.id" class="min-w-full snap-center space-y-0">
+              <div class="flex flex-col items-center text-center p-4">
                 <img :src="step.img" :alt="step.title" class="mb-4" />
                 <div class="text-2xl font-bold text-black mb-2">
                   {{ step.title }}
@@ -115,8 +101,7 @@ const steps = [
       </div>
 
       <button
-        class="flex mx-auto sm:mt-12 whitespace-nowrap bg-[linear-gradient(93.72deg,#3D3D3D_2.95%,#000000_100%)] text-[#FFFFFF] font-semibold px-12 sm:px-24 py-2 rounded-lg hover:opacity-90 transition-opacity"
-      >
+        class="flex mx-auto sm:mt-12 whitespace-nowrap bg-[linear-gradient(93.72deg,#3D3D3D_2.95%,#000000_100%)] text-[#FFFFFF] font-semibold px-12 sm:px-24 py-2 rounded-lg hover:opacity-90 transition-opacity">
         Get a Free Quote
       </button>
     </div>
@@ -127,6 +112,7 @@ const steps = [
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
   scrollbar-width: none;
 }

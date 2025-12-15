@@ -116,7 +116,8 @@ const prevImage = (cardId, total) => {
 <template>
   <section class="px-8 md:px-10 lg:px-15 py-5 bg-white max-w-7xl w-full mx-auto">
     <!-- Heading block -->
-    <div class="text-center mb-8 md:mb-2">
+    <div class="text-center mb-8 md:mb-2" data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150"
+      data-aos-easing="ease-in-out" data-aos-delay="100">
       <h2 class="text-[36px] lg:text-[60px] font-bold leading-tight text-[#010101]">
         Find Your Perfect <br />Vehicle Type
       </h2>
@@ -127,26 +128,25 @@ const prevImage = (cardId, total) => {
       </p>
       <!-- ARROW BUTTONS -->
       <div class="hidden md:flex items-center justify-end gap-2 mr-6">
-        <button
-          @click="slideLeft"
-          class="w-8 h-8 flex items-center justify-center rounded-full border bg-gray-500 border-gray-300 hover:bg-black transition"
-        >
+        <button @click="slideLeft"
+          class="w-8 h-8 flex items-center justify-center rounded-full border bg-gray-500 border-gray-300 hover:bg-black transition">
           <img :src="leftArrow" class="w-3 h-3" />
         </button>
 
-        <button
-          @click="slideRight"
-          class="w-8 h-8 flex items-center justify-center rounded-full border bg-black border-gray-300 hover:bg-gray-500 transition"
-        >
+        <button @click="slideRight"
+          class="w-8 h-8 flex items-center justify-center rounded-full border bg-black border-gray-300 hover:bg-gray-500 transition">
           <img :src="rightArrow" class="w-3 h-3 rounded" />
         </button>
       </div>
     </div>
 
     <!-- Carousel wrapper -->
-    <div class="relative">
+    <div class="relative"
+     data-aos="fade-right" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
+    data-aos-delay="100">
       <!-- Left Arrow -->
-      <button @click="slideLeft" class="sm:hidden absolute -left-6 top-1/2 -translate-y-1/2 z-20 text-2xl md:text-3xl text-black">
+      <button @click="slideLeft"
+        class="sm:hidden absolute -left-6 top-1/2 -translate-y-1/2 z-20 text-2xl md:text-3xl text-black">
         ‹
       </button>
 

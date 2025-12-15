@@ -68,21 +68,14 @@ const cards = [
 </script>
 
 <template>
-  <section
-    class="px-4 md:px-10 lg:px-15 py-4 bg-white max-w-7xl w-full mx-auto mb-10"
-  >
+  <section class="px-4 md:px-10 lg:px-15 py-4 bg-white max-w-7xl w-full mx-auto mb-10">
     <!-- Heading -->
-    <div class="text-center mb-3 md:mb-4">
-      <h2
-        class="text-[40px] md:text-[36px] lg:text-[60px] font-bold leading-tight capitalize"
-        style="color: #010101"
-      >
+    <div class="text-center mb-3 md:mb-4" data-aos="fade-left" data-aos-duration="1200" data-aos-offset="150"
+      data-aos-easing="ease-in-out" data-aos-delay="100">
+      <h2 class="text-[40px] md:text-[36px] lg:text-[60px] font-bold leading-tight capitalize" style="color: #010101">
         What Makes Us Different?
       </h2>
-      <p
-        class="mt-3 text-sm md:text-base lg:text-lg max-w-4xl mx-auto capitalize font-medium"
-        style="color: #626262"
-      >
+      <p class="mt-3 text-sm md:text-base lg:text-lg max-w-4xl mx-auto capitalize font-medium" style="color: #626262">
         Choosing Urban Elite means choosing reliability, safety, and a seamless
         experience. We handle the details so you can focus on your destination.
       </p>
@@ -91,20 +84,11 @@ const cards = [
     <!-- DESKTOP GRID -->
     <div class="hidden lg:block overflow-hidden relative gap-3 md:gap-5">
       <div class="flex animate-scroll gap-5">
-        <div
-          v-for="item in [...cards, ...cards]"
-          :key="item.id + '-loop'"
-          class="bg-white w-[340px] rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] overflow-hidden border border-[#C5C5C5]"
-        >
-          <img
-            :src="item.img"
-            :alt="item.title"
-            class="object-cover p-2 h-12"
-          />
+        <div v-for="item in [...cards, ...cards]" :key="item.id + '-loop'"
+          class="bg-white w-[340px] rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] overflow-hidden border border-[#C5C5C5]">
+          <img :src="item.img" :alt="item.title" class="object-cover p-2 h-12" />
           <div class="p-3">
-            <h3
-              class="text-xl md:text-[20px] font-semibold text-[#010101] mb-1"
-            >
+            <h3 class="text-xl md:text-[20px] font-semibold text-[#010101] mb-1">
               {{ item.title }}
             </h3>
             <p class="text-sm font-medium text-[#777777]">{{ item.text }}</p>
@@ -117,23 +101,11 @@ const cards = [
     <div class="relative sm:hidden">
       <div class="flex justify-between items-center gap-1">
         <button @click="slideLeft" class="text-black text-2xl">‹</button>
-        <div
-          ref="carousel"
-          class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4 py-4 no-scrollbar"
-        >
-          <div
-            v-for="item in cards"
-            :key="item.id"
-            class="min-w-full snap-center px-1"
-          >
+        <div ref="carousel" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4 py-4 no-scrollbar">
+          <div v-for="item in cards" :key="item.id" class="min-w-full snap-center px-1">
             <div
-              class="bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] overflow-hidden border border-[#C5C5C5]"
-            >
-              <img
-                :src="item.img"
-                :alt="item.title"
-                class="object-cover p-2 h-12"
-              />
+              class="bg-white rounded-xl shadow-[0_4px_20px_rgba(0,0,0,0.08)] overflow-hidden border border-[#C5C5C5]">
+              <img :src="item.img" :alt="item.title" class="object-cover p-2 h-12" />
               <div class="p-3">
                 <h3 class="text-lg font-semibold text-[#010101] mb-1">
                   {{ item.title }}
@@ -155,13 +127,16 @@ const cards = [
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
   scrollbar-width: none;
 }
+
 @keyframes scroll {
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }

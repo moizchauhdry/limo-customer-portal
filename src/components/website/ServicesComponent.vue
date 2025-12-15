@@ -97,7 +97,8 @@ const slideRight = () => {
   <section class="w-full px-6 md:px-12 lg:px-10 max-w-7xl mx-auto">
     <!-- TEXT HEADING -->
     <div class="flex flex-col sm:flex-row gap-6 sm:gap-0 justify-between items-center sm:mb-4">
-      <div>
+      <div  data-aos="fade-down" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
+    data-aos-delay="100">
         <h2
           class="text-4xl md:text-4xl text-center sm:text-start sm:mx-0 font-medium"
           style="color: rgba(1, 1, 1, 1)"
@@ -132,7 +133,9 @@ const slideRight = () => {
     </div>
 
     <!-- SERVICE CARDS CAROUSEL -->
-    <div class="relative">
+    <div class="relative"
+     data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
+    data-aos-delay="100">
       
       <!-- Mobile Left Arrow -->
       <button

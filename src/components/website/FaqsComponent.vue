@@ -40,14 +40,17 @@ const faqs = ref([
       class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 items-start gap-8"
     >
       <!-- LEFT : FAQ heading + accordion -->
-      <div class="flex flex-col col-span-2">
+      <div class="flex flex-col col-span-2"
+       data-aos="fade-down" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
+    data-aos-delay="100">
         <!-- HEADING -->
         <div class="flex items-center gap-3 mb-5">
           <h2 class="text-4xl md:text-5xl sm:font-bold text-black mx-auto sm:mx-0">FAQS</h2>
         </div>
 
         <!-- ACCORDION -->
-        <div class="space-y-4">
+        <div class="space-y-4"
+        >
           <div
             v-for="(faq, idx) in faqs"
             :key="idx"
@@ -82,7 +85,9 @@ const faqs = ref([
       </div>
 
       <!-- RIGHT : PICTURE -->
-     <div class="col-span-1 w-screen sm:w-auto -mx-3 px-3 sm:px-0 sm:mx-0 h-auto rounded-2xl overflow-hidden lg:mt-10">
+     <div class="col-span-1 w-screen sm:w-auto -mx-3 px-3 sm:px-0 sm:mx-0 h-auto rounded-2xl overflow-hidden lg:mt-10"
+     data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
+    data-aos-delay="100">
         <img
           src="@/assets/icons/wesbsite/hero/faq.svg"
           alt="FAQ car"
