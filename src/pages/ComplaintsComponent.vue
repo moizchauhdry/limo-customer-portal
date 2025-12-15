@@ -2,6 +2,7 @@
 import { ref, onMounted, watch } from "vue";
 import axios from "@/axios";
 import { formatDate } from "@/utils";
+import CreateComplaintComponent from "@/components/complaints/CreateComplaintComponent.vue";
 
 const now = new Date();
 const start = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
@@ -9,6 +10,7 @@ const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
 const end = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(lastDay).padStart(2, "0")}`;
 const range = ref({ start, end });
 
+const showModal = ref(false);
 const complaints = ref([]);
 const filters = ref({
   search: "",
@@ -67,41 +69,12 @@ onMounted(() => {
 });
 </script>
 <template>
+
+  <CreateComplaintComponent v-model="showModal" @refresh="fetchComplaints()" />
+
   <main class="lg:ml-64 pt-[100px] mb-5" data-aos="fade-right" data-aos-duration="1200" data-aos-offset="150"
     data-aos-easing="ease-in-out" data-aos-delay="100">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <!-- =============== wallets row =============== -->
-      <!-- Heading -->
-      <!-- <p class="text-2xl sm:text-3xl text-[#414141] font-bold mt-4 mb-4">
-        Submit a new Complaint
-      </p> -->
-
-      <!-- Complaint Form -->
-      <!-- <div class="space-y-1 grid grid-cols-1 sm:grid-cols-2 gap-5">
-        <div>
-          <label class="block text-sm sm:text-base text-[#414141] font-medium mb-2">
-            Describe your issue
-          </label>
-          <textarea placeholder="Write here" rows="4"
-            class="w-full border border-[#D8D8D8] rounded-lg px-4 py-2 text-sm text-[#414141] placeholder:text-[#A0A0A0] focus:outline-none focus:ring-2 focus:ring-[#0072EF]"></textarea>
-        </div>
-
-        <div>
-          <label class="block text-sm sm:text-base text-[#414141] font-medium mb-1">
-            Attach files
-          </label>
-          <div class="relative">
-            <input type="text" placeholder="Optional"
-              class="w-full border border-[#D8D8D8] rounded-lg px-4 py-2 pr-10 text-sm text-[#414141] placeholder:text-[#A0A0A0] focus:outline-none focus:ring-2 focus:ring-[#0072EF]" />
-            <img src="../assets/icons/complaints/attach.svg" class="absolute right-3 top-2.5 h-4" alt="Attach" />
-          </div>
-          <div class="mt-3">
-            <button class="bg-[#0072EF] text-white text-sm w-full py-2 rounded-lg hover:bg-blue-700 transition">
-              Submit
-            </button>
-          </div>
-        </div>
-      </div> -->
 
       <!-- Heading -->
       <div class="flex flex-wrap sm:flex-nowrap items-center justify-between">
@@ -110,14 +83,14 @@ onMounted(() => {
         </p>
         <button
           class="bg-[#369FFF] text-white w-full sm:w-[50%] py-3 font-semibold rounded-lg hover:bg-blue-600 transition"
-          @click="void (0)">
+          @click="showModal = true">
           <span>Submit a new complaint</span>
         </button>
       </div>
 
       <div class="bg-white rounded-xl space-y-4 pt-4 pb-0 sm:pb-3">
         <div class="flex flex-wrap gap-2">
-          <div class="w-full sm:flex-[2]">
+          <div class="w-full sm:flex-[2] relative">
             <input type="text" placeholder="Search by booking ID"
               class="w-full pl-10 pr-4 py-2 border border-[#D8D8D8] rounded-lg text-sm text-[#414141] placeholder:text-[#A0A0A0] focus:outline-none focus:ring-2 focus:ring-[#0072EF]"
               v-model="filters.search" />

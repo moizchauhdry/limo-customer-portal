@@ -20,12 +20,14 @@ body {
 ::-webkit-scrollbar-button {
   display: none;
 }
+
 /* width */
 ::-webkit-scrollbar {
   width: 9px;
   height: 4px;
   border-radius: 10px;
 }
+
 /* Hide scrollbar for Chrome, Edge, Safari */
 .no-scrollbar::-webkit-scrollbar {
   display: none;
@@ -60,31 +62,40 @@ body {
   scrollbar-width: thin;
   scrollbar-color:red #f1f1f1;;
 } */
-.value-container{
+.value-container {
   background: none !important;
   height: auto !important;
   font-size: 14px !important;
   white-space: nowrap !important;
 }
-.indicators-container{
+
+.indicators-container {
   background: none !important;
 }
-.control{
+
+.control {
   border: none !important;
   border-bottom: 1px solid #D1D5DB !important;
 }
-.menu-option{
+
+.menu-option {
   font-size: 13px !important;
 }
-.vue-select .single-value{
+
+.vue-select .single-value {
   font-size: 14px !important;
+}
+
+.filepond--credits {
+  display: none !important;
 }
 
 @media (max-width: 640px) {
   .placeholder-hide-on-mobile::placeholder {
     opacity: 0;
   }
-  body{
+
+  body {
     font-size: 15px;
   }
 
