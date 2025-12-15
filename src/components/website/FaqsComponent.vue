@@ -85,7 +85,7 @@ const faqs = ref([
       </div>
 
       <!-- RIGHT : PICTURE -->
-     <div class="col-span-1 w-screen sm:w-auto -mx-3 px-3 sm:px-0 sm:mx-0 h-auto rounded-2xl overflow-hidden lg:mt-10"
+     <div class="col-span-1 w-screen sm:w-auto -mx-3 pl-[0.75rem] pr-[1.2rem] sm:px-0 sm:mx-0 h-auto rounded-2xl overflow-hidden lg:mt-10"
      data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
     data-aos-delay="100">
         <img

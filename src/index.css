@@ -11,6 +11,11 @@ body {
   font-family: "Inter", sans-serif;
   overflow-x: hidden;
 }
+/* maaz added this for the overflow of navbar  */
+html, body {
+  overflow-x: hidden;
+}
+
 
 .logo_heading {
   font-family: 'Nexa', sans-serif;

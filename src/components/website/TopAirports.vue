@@ -50,7 +50,7 @@ const airports = [
   <section class="px-4 py-6 sm:py-16 md:px-10 lg:px-20 bg-black">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 items-center gap-10 md:gap-16">
       <!-- LEFT : heading + text -->
-      <div class="flex flex-col" data-aos="fade-right" data-aos-duration="1200" data-aos-offset="150"
+      <div class="flex flex-col" data-aos="fade-down" data-aos-duration="1200" data-aos-offset="150"
         data-aos-easing="ease-in-out" data-aos-delay="200">
         <h2 class="text-3xl md:text-5xl font-bold text-[#E9E9E9] text-center sm:text-start">
           Top Airports
@@ -63,7 +63,7 @@ const airports = [
       </div>
 
       <!-- RIGHT : airport icons -->
-      <div class="hidden sm:grid grid-cols-2 sm:grid-cols-4 gap-6 md:gap-2 col-span-2" data-aos="fade-left"
+      <div class="hidden sm:grid grid-cols-2 sm:grid-cols-4 gap-6 md:gap-2 col-span-2" data-aos="fade-up"
         data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out" data-aos-delay="200">
         <div v-for="a in airports" :key="a.code" class="flex flex-col items-center text-center">
           <div class="rounded-full flex items-center justify-center mb-3 h-auto">

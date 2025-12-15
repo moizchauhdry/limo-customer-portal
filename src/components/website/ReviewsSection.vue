@@ -172,8 +172,8 @@ const slideRight = () => {
         <!-- RIGHT SIDE CARDS -->
         <div ref="carousel"
           class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar gap-6 col-span-4 px-4 justify-center items-center"
-           data-aos="fade-left" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
-    data-aos-delay="100">
+          data-aos="fade-down" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
+          data-aos-delay="100">
           <div v-for="item in reviews" :key="item.id" class="relative snap-start ">
             <!-- CARD BODY -->
             <div class="bg-white border border-gray-300 rounded-xl p-3 pb-10 relative shadow-[0_4px_20px_rgba(0,0,0,0.10)] 

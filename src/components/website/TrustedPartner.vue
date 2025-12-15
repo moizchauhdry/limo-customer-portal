@@ -3,8 +3,7 @@
   <section class="px-4 py-4 sm:py-16 md:px-10 bg-[#FFFFFF]">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-5 md:gap-16">
       <!-- TEXT -->
-      <div class="order-1 lg:order-none" data-aos="fade-right" data-aos-duration="1200" data-aos-offset="150"
-        data-aos-easing="ease-in-out" data-aos-delay="100">
+      <div class="order-1 lg:order-none">
         <h2 class="text-[32px] md:text-[36px] lg:text-[42px] font-medium leading-tight text-center sm:text-start"
           style="color:#010101">
           Your Trusted Car <br class="hidden md:block">Rental Partner
@@ -20,8 +19,7 @@
       </div>
 
       <!-- IMAGE -->
-      <div class="w-full h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden order-2 lg:order-none" data-aos="fade-left"
-        data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out" data-aos-delay="100">
+      <div class="w-full h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden order-2 lg:order-none" >
         <img src="@/assets/icons/wesbsite/hero/trust1.svg" alt="Luxury Sedan" class="w-full h-full object-cover">
       </div>
     </div>
@@ -32,14 +30,12 @@
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 items-center gap-5 md:gap-16">
       <!-- IMAGE -->
       <div class="w-full h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden"
-       data-aos="fade-left" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
-    data-aos-delay="100">
+      >
         <img src="@/assets/icons/wesbsite/hero/trust2.svg" alt="Premium Fleet" class="w-full h-full object-cover">
       </div>
 
       <!-- TEXT -->
-      <div  data-aos="fade-right" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
-    data-aos-delay="100">
+      <div  >
         <h2 class="text-[32px] md:text-[36px] lg:text-[42px] font-medium leading-tight text-center sm:text-start"
           style="color:#010101">
           Your Trusted Car <br class="hidden md:block">Rental Partner

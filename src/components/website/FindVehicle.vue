@@ -142,7 +142,7 @@ const prevImage = (cardId, total) => {
 
     <!-- Carousel wrapper -->
     <div class="relative"
-     data-aos="fade-right" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
+     data-aos="fade-down" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
     data-aos-delay="100">
       <!-- Left Arrow -->
       <button @click="slideLeft"

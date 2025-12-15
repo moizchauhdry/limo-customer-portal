@@ -3,7 +3,7 @@
   <section class="relative sm:py-10 overflow-hidden w-full">
 
     <!-- LEFT : CAR 1 (Desktop only) -->
-    <div class="hidden sm:flex absolute top-1/2 left-0 transform -translate-y-1/2 z-10" data-aos="fade-right"
+    <div class="hidden sm:flex absolute top-1/2 left-0 transform -translate-y-1/2 z-10" data-aos="fade-down"
       data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out" data-aos-delay="100">
       <img src="@/assets/icons/wesbsite/hero/journey2.svg" alt="car 1" class="lg:w-[337px] object-contain" />
     </div>

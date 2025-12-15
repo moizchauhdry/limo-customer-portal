@@ -70,7 +70,7 @@ const cards = [
 <template>
   <section class="px-4 md:px-10 lg:px-15 py-4 bg-white max-w-7xl w-full mx-auto mb-10">
     <!-- Heading -->
-    <div class="text-center mb-3 md:mb-4" data-aos="fade-left" data-aos-duration="1200" data-aos-offset="150"
+    <div class="text-center mb-3 md:mb-4" data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150"
       data-aos-easing="ease-in-out" data-aos-delay="100">
       <h2 class="text-[40px] md:text-[36px] lg:text-[60px] font-bold leading-tight capitalize" style="color: #010101">
         What Makes Us Different?
