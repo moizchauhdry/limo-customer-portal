@@ -71,7 +71,7 @@ const emailHandler = async () => {
         <!-- Submit -->
         <button @click="emailHandler" type="button"
           class="w-full flex items-center bg-[#369FFF] justify-center gap-2 border border-[#AAAAAA] py-2 rounded-lg hover:shadow-lg font-medium">
-          <div v-if="loading" class="pb-3">
+          <div v-if="loading" class="py-2 sm:py-1.5">
             <DotsLoading />
           </div>
           <span v-else>

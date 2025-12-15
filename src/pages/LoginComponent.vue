@@ -96,7 +96,7 @@ const loginHandler = async () => {
         <button type="submit" :disabled="loading"
           class="w-full bg-[#0072EF] text-white py-2 rounded-lg font-semibold hover:bg-black transition">
           <!-- Loading -->
-          <div v-if="loading" class="flex justify-center mb-2 sm:mb-3">
+          <div v-if="loading" class="flex justify-center py-2 sm:py-1.5">
             <DotsLoading />
           </div>
           <span v-else>login</span>

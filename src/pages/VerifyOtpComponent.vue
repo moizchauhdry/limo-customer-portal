@@ -1,4 +1,5 @@
 <script setup>
+import DotsLoading from "@/components/DotsLoading.vue";
 import { useRouter, useRoute } from "vue-router";
 import { reactive, ref } from "vue";
 import axios from "@/axios";
@@ -107,8 +108,12 @@ onMounted(() => {
         <!-- Submit -->
         <button @click="verifyOtp" :disabled="loading" type="button"
           class="w-full flex items-center bg-[#369FFF] justify-center gap-2 border border-[#AAAAAA] py-2 rounded-lg hover:shadow-lg font-medium">
-          <span class="text-[#FFFFFF] font-poppins">
-            {{ loading ? "Verifying.... " : "Verify" }}
+          <!-- Loading -->
+          <div v-if="loading" class="flex justify-center py-2 sm:py-1.5">
+            <DotsLoading />
+          </div>
+          <span v-else class="text-[#FFFFFF] font-poppins">
+            Verify
           </span>
         </button>
       </form>
