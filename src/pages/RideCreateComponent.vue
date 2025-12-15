@@ -278,16 +278,33 @@ onBeforeUnmount(() => {
       <!-- WRAPPER: Two vertical columns -->
       <section class="flex flex-col xl:flex-row gap-6 items-start">
         <!-- MAIN WRAPPER -->
-        <div class="w-full max-w-2xl mx-auto p-4 space-y-6">
-          <!-- ===================== TOP TABS ===================== -->
-          <div class="grid grid-cols-2 gap-3">
-            <!-- Distance -->
+        <div class="w-full max-w-2xl mx-auto p-4 space-y-2">
+
+          <!-- TRAVEL TYPE -->
+          <div class="grid grid-cols-12 gap-3">
+            <button v-for="(travelType, index) in createRideData?.travel_types || []" :key="travelType?.id"
+              class="flex items-center justify-center gap-2 w-full px-4 p-3 rounded-xl border border-[#369FFF] text-sm capitalize"
+              :class="[
+                form.travel_type == travelType?.id
+                  ? 'bg-[#369FFF] text-white'
+                  : 'text-[#369FFF]',
+                index === 0 ? 'col-span-12 sm:col-span-7' : 'col-span-12 sm:col-span-5'
+              ]" @click="form.travel_type = travelType?.id">
+              {{ travelType?.name }}
+            </button>
+          </div>
+
+          <!-- SERVICE TYPE -->
+          <div class="grid grid-cols-12 gap-3">
             <label :for="`service-type-${serviceType?.id}`"
-              class="border border-[#CECECE] p-3 rounded-xl flex justify-between items-center cursor-pointer"
-              :class="form.service_type == serviceType?.id ? 'bg-[#369FFF]' : 'bg-white'"
-              v-for="serviceType in createRideData?.service_types || []" :key="serviceType?.id">
+              class="border border-[#CECECE] p-3 rounded-xl flex justify-between items-center cursor-pointer" :class="[
+                form.service_type == serviceType?.id
+                  ? 'text-[#369FFF]'
+                  : 'text-[#369FFF]',
+                index === 0 ? 'col-span-12 sm:col-span-5' : 'col-span-12 sm:col-span-7'
+              ]" v-for="(serviceType, index) in createRideData?.service_types || []" :key="serviceType?.id">
               <h2 class="text-md font-semibold first-letter:uppercase"
-                :class="form.service_type == serviceType?.id ? 'text-[#FFFFFF]' : 'text-[#838383]'">{{ serviceType?.name
+                :class="form.service_type == serviceType?.id ? 'text-[#369FFF]' : 'text-[#838383]'">{{ serviceType?.name
                 }}</h2>
               <input :id="`service-type-${serviceType?.id}`" type="radio"
                 class="w-5 h-5 text-blue-500 border border-[#369FFF] rounded-full cursor-pointer"
@@ -296,8 +313,8 @@ onBeforeUnmount(() => {
           </div>
 
           <!-- ===================== PICK UP & DROP OFF ===================== -->
-          <div class="border-[#D8D8D8] space-y-5">
-            <h3 class="text-lg border-b-2 border-b-[#369FFF] pb-2 text-[#414141] font-semibold">
+          <div class="border-[#D8D8D8] space-y-5 pt-3">
+            <h3 class="text-lg border-b-[3px] border-b-[#369FFF] pb-2 text-[#414141] font-semibold">
               Pick up & Drop off
             </h3>
 
@@ -305,9 +322,10 @@ onBeforeUnmount(() => {
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <!-- Date -->
               <div>
-                <div class="flex items-center gap-3 pb-2">
-                  <!-- <img src="../assets/icons/distance/date.svg" class="h-5" /> -->
-                  <input type="date" class="w-full outline-none text-[#5A5A5A]" v-model="form.pickup_date" />
+                <div class="flex items-center gap-3 pb-2 relative">
+                  <input type="date"
+                    class="w-full border-0 border-b-2 border-[#D8D8D8] text-[#5A5A5A] text-center focus:ring-0"
+                    v-model="form.pickup_date" />
                 </div>
                 <p v-if="form.errors.has('pickup_date')" class="text-red-500 text-xs">{{
                   form.errors.get('pickup_date') }}</p>
@@ -317,21 +335,24 @@ onBeforeUnmount(() => {
               <div>
                 <div class="flex items-center gap-3 pb-2">
                   <!-- <img src="../assets/icons/distance/time.svg" class="h-5" /> -->
-                  <input type="time" class="w-full outline-none text-[#5A5A5A]" v-model="form.pickup_time" />
+                  <input type="time"
+                    class="w-full border-0 border-b-2 border-[#D8D8D8] text-[#5A5A5A] text-center focus:ring-0"
+                    v-model="form.pickup_time" />
                 </div>
                 <p v-if="form.errors.has('pickup_time')" class="text-red-500 text-xs">{{
                   form.errors.get('pickup_time') }}</p>
               </div>
             </div>
 
-            <!-- Add Stops -->
-            <button class="flex ml-auto items-center gap-2 text-xs" @click="addWaypoint">
-              <p class="bg-[#369FFF] px-3 rounded-md text-white">+</p>
-              Add Stops
-            </button>
             <!-- Pickup Input -->
             <div class="flex flex-col gap-1 w-full">
-              <label> Pick up </label>
+              <div class="flex items-center justify-between">
+                <label> Pick up </label>
+                <button class="flex ml-auto items-center gap-2 text-xs" @click="addWaypoint">
+                  <p class="bg-[#369FFF] px-3 rounded-md text-white">+</p>
+                  Add Stops
+                </button>
+              </div>
               <input id="origin-input" type="text" placeholder="Enter Pick up location"
                 class="w-full border border-[#DBDBDB] shadow-sm bg-white rounded-md px-4 py-2 text-[#5A5A5A] text-sm"
                 v-model="form.pickup_location" />
@@ -362,8 +383,8 @@ onBeforeUnmount(() => {
           </div>
 
           <!-- ===================== PASSENGER INFO ===================== -->
-          <div class="space-y-5">
-            <h3 class="text-lg border-b-2 border-b-[#369FFF] pb-2 text-[#414141] font-semibold">
+          <div class="space-y-5 pt-4">
+            <h3 class="text-lg border-b-[3px] border-b-[#369FFF] pb-2 text-[#414141] font-semibold">
               Passenger Info
             </h3>
 
@@ -396,16 +417,16 @@ onBeforeUnmount(() => {
           </div>
 
           <!-- ===================== RIDE INFO ===================== -->
-          <div class="space-y-5">
+          <div class="space-y-5 pt-4">
             <!-- Title -->
-            <h3 class="text-lg border-b-2 border-b-[#369FFF] pb-2 text-[#414141] font-semibold">
+            <h3 class="text-lg border-b-[3px] border-b-[#369FFF] pb-2 text-[#414141] font-semibold">
               Ride Info
             </h3>
 
             <!-- Service + Service Type -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <!-- Service Dropdown -->
-              <div class="flex flex-col gap-1">
+            <div class="flex flex-col sm:flex-row gap-1">
+
+              <div class="flex flex-col gap-1 w-full">
                 <label class="text-sm text-[#414141]">Service</label>
                 <select
                   class="border border-[#DBDBDB] shadow-sm rounded-md px-4 py-2 text-sm w-full text-[#5A5A5A] appearance-none"
@@ -417,28 +438,7 @@ onBeforeUnmount(() => {
                 <p v-if="form.errors.has('service')" class="text-red-500 text-xs">{{ form.errors.get('service') }}</p>
               </div>
 
-              <!-- Service Type Toggle -->
-              <div class="flex flex-col gap-1">
-                <label class="text-sm text-[#414141]">Travel Type</label>
-                <div class="flex items-center gap-2">
-                  <!-- One Way Selected -->
-                  <button
-                    class="flex items-center justify-between gap-2 w-full px-4 py-2 rounded-md border border-[#369FFF] text-sm capitalize"
-                    :class="form.travel_type == travelType?.id ? 'bg-[#369FFF] text-white' : 'text-[#369FFF]'"
-                    v-for="travelType in createRideData?.travel_types || []" :key="travelType?.id"
-                    :value="travelType?.id" @click="form.travel_type = travelType?.id">
-                    {{ travelType?.name }}
-                    <span class="border-2 border-white rounded-full w-3 h-3"
-                      :class="form.travel_type == travelType?.id ? 'bg-white' : 'bg-[#369FFF]'"></span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            <!-- Luggage + Passenger -->
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <!-- Luggage -->
-              <div>
+              <div class="w-full">
                 <p class="text-[#414141] text-sm mb-2">No. of Luggage</p>
                 <div class="flex items-center justify-between px-1 rounded-md border border-[#878787] gap-2">
                   <button class="px-2 bg-[#D9D9D9] rounded-md"
@@ -450,8 +450,7 @@ onBeforeUnmount(() => {
                 </div>
               </div>
 
-              <!-- Passenger -->
-              <div>
+              <div class="w-full">
                 <p class="text-[#414141] text-sm mb-2">No. of Passenger</p>
                 <div class="flex items-center justify-between px-1 rounded-md border border-[#878787] gap-2">
                   <button class="px-2 bg-[#D9D9D9] rounded-md"
@@ -463,7 +462,7 @@ onBeforeUnmount(() => {
                 </div>
               </div>
 
-              <div v-if="form.service_type == 2" class="flex flex-col gap-1">
+              <div v-if="form.service_type == 2" class="flex flex-col gap-1 w-full">
                 <label class="text-sm text-[#414141]">Duration</label>
                 <select
                   class="border border-[#DBDBDB] shadow-sm rounded-md px-4 py-2 text-sm w-full text-[#5A5A5A] appearance-none"
@@ -474,12 +473,13 @@ onBeforeUnmount(() => {
                 </select>
                 <p v-if="form.errors.has('hours')" class="text-red-500 text-xs">{{ form.errors.get('hours') }}</p>
               </div>
+
             </div>
           </div>
 
           <!-- ===================== SELECT FLEET ===================== -->
-          <div class="space-y-5">
-            <h3 class="text-lg border-b-2 border-b-[#369FFF] pb-2 text-[#414141] font-semibold">
+          <div class="space-y-5 pt-4">
+            <h3 class="text-lg border-b-[3px] border-b-[#369FFF] pb-2 text-[#414141] font-semibold">
               Select Fleet
             </h3>
 
