@@ -14,6 +14,11 @@ const form = reactive(
     name: "",
     email: "",
     phone: "",
+    dob: "",
+    street: "",
+    city: "",
+    postal_code: "",
+    country: "",
   })
 );
 
@@ -26,9 +31,18 @@ const getProfileData = async (updateLocalStorage = false) => {
       form.name = data?.data?.name || "";
       form.email = data?.data?.email || "";
       form.phone = data?.data?.phone || "";
+      form.dob = data?.data?.dob || "";
+      form.street = data?.data?.street || "";
+      form.city = data?.data?.city || "";
+      form.postal_code = data?.data?.postal_code || "";
+      form.country = data?.data?.country || "";
 
       if (updateLocalStorage) {
-        localStorage.setItem("customer", JSON.stringify(data?.data));
+        localStorage.setItem("customer", JSON.stringify({
+          name: data?.data?.name,
+          email: data?.data?.email,
+          phone: data?.data?.phone
+        }));
       }
     } else {
       toast.error(data.message || "Failed to fetch profile data");
@@ -104,7 +118,9 @@ onMounted(() => {
           <div class="flex flex-col">
             <label class="text-md text-[#515151] mb-1">Date of birth</label>
             <input type="date" placeholder="02/12/2001"
-              class="w-full border border-[#B7B7B7] rounded-lg px-4 py-2 text-sm placeholder:text-[#B5B5B5] focus:outline-none focus:ring-2 focus:ring-[#329EE7]" />
+              class="w-full border border-[#B7B7B7] rounded-lg px-4 py-2 text-sm placeholder:text-[#B5B5B5] focus:outline-none focus:ring-2 focus:ring-[#329EE7]"
+              v-model="form.dob" />
+            <p v-if="form.errors.has('dob')" class="text-red-500 text-xs">{{ form.errors.get('dob') }}</p>
           </div>
         </div>
 
@@ -116,32 +132,52 @@ onMounted(() => {
           <div class="border border-[#B7B7B7] rounded-xl p-8 space-y-6">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
               <!-- Street -->
-              <label class="flex items-baseline gap-2">
-                <span class="text-sm text-[#515151] whitespace-nowrap">Street:</span>
-                <input type="text"
-                  class="w-full border-0 border-b border-[#B7B7B7] bg-transparent px-1 text-sm placeholder:text-gray-400 focus:border-b-2 focus:border-[#0072EF] focus:outline-none" />
-              </label>
+              <div>
+                <label class="flex items-baseline gap-2">
+                  <span class="text-sm text-[#515151] whitespace-nowrap">Street:</span>
+                  <input type="text"
+                    class="w-full border-0 border-b border-[#B7B7B7] bg-transparent px-1 text-sm placeholder:text-gray-400 focus:border-b-2 focus:border-[#0072EF] focus:outline-none"
+                    v-model="form.street" />
+                </label>
+                <p v-if="form.errors.has('street')" class="text-red-500 text-xs mt-1">{{ form.errors.get('street') }}
+                </p>
+              </div>
 
               <!-- City -->
-              <label class="flex items-baseline gap-2">
-                <span class="text-sm text-[#515151] whitespace-nowrap">City:</span>
-                <input type="text"
-                  class="w-full border-0 border-b border-[#B7B7B7] bg-transparent px-1 text-sm placeholder:text-gray-400 focus:border-b-2 focus:border-[#0072EF] focus:outline-none" />
-              </label>
+              <div>
+                <label class="flex items-baseline gap-2">
+                  <span class="text-sm text-[#515151] whitespace-nowrap">City:</span>
+                  <input type="text"
+                    class="w-full border-0 border-b border-[#B7B7B7] bg-transparent px-1 text-sm placeholder:text-gray-400 focus:border-b-2 focus:border-[#0072EF] focus:outline-none"
+                    v-model="form.city" />
+                </label>
+                <p v-if="form.errors.has('city')" class="text-red-500 text-xs mt-1">{{ form.errors.get('city') }}</p>
+              </div>
 
               <!-- Postal Code -->
-              <label class="flex items-baseline gap-2">
-                <span class="text-sm text-[#515151] whitespace-nowrap">Postal Code:</span>
-                <input type="text"
-                  class="w-full border-0 border-b border-[#B7B7B7] bg-transparent px-1 text-sm placeholder:text-gray-400 focus:border-b-2 focus:border-[#0072EF] focus:outline-none" />
-              </label>
+              <div>
+                <label class="flex items-baseline gap-2">
+                  <span class="text-sm text-[#515151] whitespace-nowrap">Postal Code:</span>
+                  <input type="text"
+                    class="w-full border-0 border-b border-[#B7B7B7] bg-transparent px-1 text-sm placeholder:text-gray-400 focus:border-b-2 focus:border-[#0072EF] focus:outline-none"
+                    v-model="form.postal_code" />
+                </label>
+                <p v-if="form.errors.has('postal_code')" class="text-red-500 text-xs mt-1">{{
+                  form.errors.get('postal_code') }}
+                </p>
+              </div>
 
               <!-- Country -->
-              <label class="flex items-baseline gap-2">
-                <span class="text-sm text-[#515151] whitespace-nowrap">Country:</span>
-                <input type="text"
-                  class="w-full border-0 border-b border-[#B7B7B7] bg-transparent px-1 text-sm placeholder:text-gray-400 focus:border-b-2 focus:border-[#0072EF] focus:outline-none" />
-              </label>
+              <div>
+                <label class="flex items-baseline gap-2">
+                  <span class="text-sm text-[#515151] whitespace-nowrap">Country:</span>
+                  <input type="text"
+                    class="w-full border-0 border-b border-[#B7B7B7] bg-transparent px-1 text-sm placeholder:text-gray-400 focus:border-b-2 focus:border-[#0072EF] focus:outline-none"
+                    v-model="form.country" />
+                </label>
+                <p v-if="form.errors.has('country')" class="text-red-500 text-xs mt-1">{{ form.errors.get('country') }}
+                </p>
+              </div>
             </div>
           </div>
 
