@@ -1,4 +1,5 @@
 <script setup>
+import DotsLoading from "@/components/DotsLoading.vue";
 import { reactive, ref } from 'vue';
 import axios from "@/axios";
 import { useToast } from "vue-toastification";
@@ -73,8 +74,12 @@ const updatePassword = async () => {
                 <!-- Updating -->
                 <button type="button" @click="updatePassword"
                     class="w-full flex items-center bg-[#369FFF] justify-center gap-2 border border-[#AAAAAA] py-2 rounded-lg hover:shadow-lg font-medium">
-                    <span class="text-[#FFFFFF] font-poppins">
-                        {{ loading ? "Updating.... " : "Update Passwrod" }}
+                    <!-- Loading -->
+                    <div v-if="loading" class="flex justify-center py-2 sm:py-1.5">
+                        <DotsLoading />
+                    </div>
+                    <span v-else class="text-[#FFFFFF] font-poppins">
+                       Update Password
                     </span>
                 </button>
             </form>
