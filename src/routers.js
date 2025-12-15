@@ -18,6 +18,7 @@ import ViewBookingComponent from "./components/ViewBookingComponent.vue";
 import VerifyOtpComponent from "./pages/VerifyOtpComponent.vue";
 import HomeComponent from "./pages/website/HomeComponent.vue";
 import ForgetPassword from "./pages/ForgetPassword.vue";
+import UpdatePassword from "./pages/UpdatePassword.vue";
 
 const routes = [
   {
@@ -28,6 +29,8 @@ const routes = [
       { path: "signup", name: "signup", component: SignupComponent },
       { path: "verify-otp", name: "verify-otp", component: VerifyOtpComponent },
       { path: "forget-password", name: "forget-password", component: ForgetPassword },
+      { path: "update-password", name: "update-password", component: UpdatePassword },
+
     ],
   },
   {
@@ -76,7 +79,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
 
-  const publicPages = ["/auth/login", "/auth/signup", "/auth/verify-otp","/auth/forget-password"];
+  const publicPages = ["/auth/login", "/auth/signup", "/auth/verify-otp","/auth/forget-password","/auth/update-password"];
   const authRequired = !publicPages.includes(to.path);
 
   if (authRequired && !token) {

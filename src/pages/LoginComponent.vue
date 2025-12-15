@@ -1,9 +1,11 @@
 <script setup>
+import DotsLoading from "@/components/DotsLoading.vue";
 import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import axios from "@/axios";
 import { useToast } from "vue-toastification";
 import { login } from "@/utils";
+
 
 const router = useRouter();
 const toast = useToast();
@@ -93,7 +95,11 @@ const loginHandler = async () => {
         <!-- Submit Button -->
         <button type="submit" :disabled="loading"
           class="w-full bg-[#0072EF] text-white py-2 rounded-lg font-semibold hover:bg-black transition">
-          <span>{{ loading ? 'Processing...' : 'Login' }}</span>
+          <!-- Loading -->
+          <div v-if="loading" class="flex justify-center mb-2 sm:mb-3">
+            <DotsLoading />
+          </div>
+          <span v-else>login</span>
         </button>
 
         <!-- Google Sign In -->

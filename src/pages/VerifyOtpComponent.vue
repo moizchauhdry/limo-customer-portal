@@ -12,10 +12,15 @@ const route = useRoute();
 const toast = useToast();
 
 const email = route?.query?.email || "";
+const resetPassword = route?.query?.reset_password == "true" ? 1 : 0;
+
+console.log(resetPassword);
+
 // Reactive form object
 const form = reactive({
   email: email,
   otp: "",
+  reset_password: resetPassword,
 });
 
 const loading = ref(false);
@@ -44,6 +49,11 @@ const verifyOtp = async () => {
 
     if (data.success == true) {
       const token = data?.data?.token;
+      if (data?.data?.reset_password == 1) {
+        router.push({ name: "update-password", query: { token: token } });
+        return;
+      }
+
       if (token) {
         login(token, data.data?.customer);
         router.push({ name: "dashboard" });
