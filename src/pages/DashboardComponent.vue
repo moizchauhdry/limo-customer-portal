@@ -225,7 +225,7 @@ const attributes = ref([
                   <!-- <span> Oct 17, 2025</span> -->
                   <span>{{ dashboardRideData.next_booking?.pickup_time }}</span>
                 </div>
-              </div>              
+              </div>
 
               <!-- top row (route + date) -->
               <div class="flex gap-4 items-start text-sm text-[#414141]">
@@ -250,8 +250,8 @@ const attributes = ref([
                   </div>
                 </div>
                 <!-- One Way / Two Way Seal -->
-            <div class="mr-4 ml-auto mt-1 flex items-center">
-              <div class="ml-auto inline-flex items-center justify-center
+                <div class="mr-4 ml-auto mt-1 flex items-center">
+                  <div class="ml-auto inline-flex items-center justify-center
            border border-[#329EE7]
            whitespace-nowrap
            px-3 sm:px-6
@@ -259,14 +259,14 @@ const attributes = ref([
            text-[#329EE7]
            text-[10px] sm:text-[12px]
            font-medium">
-                {{ dashboardRideData.next_booking?.travel_type === "1"
-                  ? "One Way"
-                  : dashboardRideData.next_booking?.travel_type === "2"
-                    ? "Two Way"
-                : "N/A"
-                }}
-              </div>
-            </div>
+                    {{ dashboardRideData.next_booking?.travel_type === "1"
+                      ? "One Way"
+                      : dashboardRideData.next_booking?.travel_type === "2"
+                        ? "Two Way"
+                        : "N/A"
+                    }}
+                  </div>
+                </div>
               </div>
 
               <!-- Stats Row -->
@@ -430,28 +430,9 @@ const attributes = ref([
         <div class="w-[90%] mx-auto sm:w-full xl:w-[325px] space-y-6">
           <!-- CALENDAR -->
           <div class="bg-white p-4 rounded-xl border border-[#DBDBDB]">
-            <!-- Calendar Header -->
-            <div class="flex justify-between items-center text-sm text-[#414141] pb-3 border-b border-[#E0E0E0]">
-              <div class="flex gap-2">
-                <button class="px-2 py-1 bg-[#F5F5F5] text-[#000000] text-sm rounded-md hover:bg-[#EAEAEA]">
-                  Today
-                </button>
-                <button class="px-2 py-1 bg-[#F5F5F5] text-[#000000] text-sm rounded-md hover:bg-[#EAEAEA]">
-                  Last 8 Days
-                </button>
-                <button
-                  class="px-3 py-1 bg-[#F5F5F5] text-[#000000] text-sm rounded-md hover:bg-[#EAEAEA] whitespace-nowrap">
-                  Last Month
-                </button>
-              </div>
-              <!-- Dropdown Arrow -->
-
-              <img src="../assets/icons/dashboard/calender-arrow.svg" class="h-2" alt="Dropdown Arrow" />
-            </div>
 
             <!-- Calendar Grid -->
             <VCalendar :attributes="attributes" margin="auto" borderless color="yellow" />
-
             <!-- Calendar Footer Legend -->
             <div
               class="flex justify-center items-center gap-6 border-t border-[#E0E0E0] mt-4 pt-3 text-sm text-[#414141]">
@@ -522,5 +503,13 @@ const attributes = ref([
 .vc-weeks>div {
 
   margin-left: 5px !important;
+}
+
+.vc-header .vc-title-wrapper {
+  border: 1px solid gray;
+  border-radius: 12px;
+  font-size: 15px;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 </style>
