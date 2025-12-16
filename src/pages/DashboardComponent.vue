@@ -70,6 +70,7 @@ const fetchDashboardRideData = async () => {
   loading.value = true;
   try {
     const { data } = await axios.get("/customer/dashboard-ride-data");
+    console.log(data)
     if (data?.success) {
       dashboardRideData.value = data.data;
     } else {
@@ -224,7 +225,7 @@ const attributes = ref([
                   <!-- <span> Oct 17, 2025</span> -->
                   <span>{{ dashboardRideData.next_booking?.pickup_time }}</span>
                 </div>
-              </div>
+              </div>              
 
               <!-- top row (route + date) -->
               <div class="flex gap-4 items-start text-sm text-[#414141]">
@@ -248,6 +249,24 @@ const attributes = ref([
                     <span>{{ dashboardRideData.next_booking?.drop_location }}</span>
                   </div>
                 </div>
+                <!-- One Way / Two Way Seal -->
+            <div class="mr-4 ml-auto mt-1 flex items-center">
+              <div class="ml-auto inline-flex items-center justify-center
+           border border-[#329EE7]
+           whitespace-nowrap
+           px-3 sm:px-6
+           rounded-full
+           text-[#329EE7]
+           text-[10px] sm:text-[12px]
+           font-medium">
+                {{ dashboardRideData.next_booking?.travel_type === "1"
+                  ? "One Way"
+                  : dashboardRideData.next_booking?.travel_type === "2"
+                    ? "Two Way"
+                : "N/A"
+                }}
+              </div>
+            </div>
               </div>
 
               <!-- Stats Row -->

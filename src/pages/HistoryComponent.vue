@@ -156,6 +156,24 @@ watch(
                   <p class="text-sm sm:text-lg font-medium text-[#000]">${{ history.payments_total }}</p>
                 </div>
               </div>
+              <!-- One Way / Two Way Seal -->
+              <div class="mr-4 mt-1 flex items-center">
+                <div class="ml-auto inline-flex items-center justify-center
+                             border border-[#329EE7]
+                             whitespace-nowrap
+                             px-3 sm:px-6
+                             rounded-full
+                             text-[#329EE7]
+                             text-[10px] sm:text-[12px]
+                              font-medium">
+                  {{ history.travel_type === "1"
+                    ? "One Way"
+                    : history.travel_type === "2"
+                      ? "Two Way"
+                      : "N/A"
+                  }}
+                </div>
+              </div>
               <!-- ========== ROUTE BLOCK ========== -->
               <div
                 class="flex flex-col sm:flex-row justify-between mb-2 gap-3 items-start text-sm text-[#414141] px-4 pt-3">

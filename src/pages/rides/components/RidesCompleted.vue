@@ -140,7 +140,7 @@ watch(search, (value) => {
               </div>
             </div>
             <!-- ========== ROUTE BLOCK ========== -->
-            <div class="flex gap-3 items-start text-sm text-[#414141] px-4 pt-3 pb-2">
+            <div class="flex flex-col sm:flex-row gap-3 items-start text-sm text-[#414141] px-4 pt-3 pb-2">
               <div class="flex flex-row gap-2">
                 <div class="flex items-center gap-2">
                   <img src="../../../assets/icons/dashboard/location.svg" class="h-4" alt="start" />
@@ -157,6 +157,9 @@ watch(search, (value) => {
                     ride.drop_location
                   }}</span>
                 </div>
+              </div>
+              <div class="ml-auto border border-[#329EE7] whitespace-nowrap px-2 sm:px-6  rounded-full text-[#329EE7] text-[10px] sm:text-[12px]">
+                <h1>{{ ride.travel_type === "1" ? "One Way" : ride.travel_type === "2" ? "Two Way" : "N/A" }}</h1>
               </div>
             </div>
 
