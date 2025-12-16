@@ -13,7 +13,7 @@ import ComplaintsComponent from "./pages/ComplaintsComponent.vue";
 import SettingsComponent from "./pages/SettingsComponent.vue";
 import LoginComponent from "./pages/LoginComponent.vue";
 import SignupComponent from "./pages/SignupComponent.vue";
-import RideCreateComponent from "./pages/RideCreateComponent.vue";
+import RideFormComponent from "./pages/RideFormComponent.vue";
 import ViewBookingComponent from "./components/ViewBookingComponent.vue";
 import VerifyOtpComponent from "./pages/VerifyOtpComponent.vue";
 import HomeComponent from "./pages/website/HomeComponent.vue";
@@ -49,7 +49,8 @@ const routes = [
       { path: "", redirect: "/dashboard" },
       { path: "dashboard", name: "dashboard", component: DashboardComponent },
       { path: "rides", name: "rides", component: RidesComponent },
-      { path: "rides/create", name: "rides-create", component: RideCreateComponent },
+      { path: "rides/create", name: "rides-create", component: RideFormComponent },
+      { path: "rides/edit/:id", name: "rides-edit", component: RideFormComponent },
       { path: "history", name: "history", component: HistoryComponent },
       { path: "wallet", name: "wallet", component: WalletComponent },
       { path: "reports", name: "reports", component: ReportsComponent },
@@ -65,7 +66,7 @@ const routes = [
         component: ViewBookingComponent,
         props: true,
       },
-       { path: "notifications", name: "notifications", component: NotificationComponent },
+      { path: "notifications", name: "notifications", component: NotificationComponent },
     ],
   },
 ];
@@ -81,7 +82,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
 
-  const publicPages = ["/auth/login", "/auth/signup", "/auth/verify-otp","/auth/forget-password","/auth/update-password"];
+  const publicPages = ["/auth/login", "/auth/signup", "/auth/verify-otp", "/auth/forget-password", "/auth/update-password"];
   const authRequired = !publicPages.includes(to.path);
 
   if (authRequired && !token) {

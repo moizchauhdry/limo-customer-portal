@@ -1,21 +1,23 @@
 <script setup>
-// For prevent to ESLint Error
+// For prevent to ESLint Error for google
 /* global google */
 
 import axios from "@/axios";
 import { onMounted, reactive, ref, nextTick, onBeforeUnmount } from "vue";
 import { getHoursOptions } from "@/utils";
 import Form from 'vform'
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 import { useToast } from "vue-toastification";
 import DotsLoading from "@/components/DotsLoading.vue";
 
 const router = useRouter();
+const vueRoute = useRoute();
 const toast = useToast();
 
 const appProjectUrl = (typeof process !== "undefined" && process.env && process.env.VUE_APP_PROJECT_URL) || "https://polliwog-internal-fawn.ngrok-free.app";
 const createRideDataLoading = ref(false);
 const createRideData = ref({});
+const rideId = ref(vueRoute?.params?.id);
 const placeholder = new URL('../assets/images/vehicle-placeholder.jpg', import.meta.url).href;
 
 const map = ref(null);
@@ -34,6 +36,7 @@ const scrollAmount = ref(520);
 
 const form = reactive(
   new Form({
+    booking_id: null,
     service_type: 1,
     hours: "",
 
@@ -53,9 +56,6 @@ const form = reactive(
     no_of_passengers: 0,
 
     vehicle_id: "",
-
-    flight_no: "",
-    comments: "",
   })
 );
 
@@ -67,11 +67,60 @@ const getCreateRideData = async () => {
     if (data.success == true) {
       createRideData.value = data?.data || {};
       initMap();
+
+      if (rideId.value) {
+        await fetchBookingDetails();
+      }
     }
   } catch (err) {
     console.error("Create Ride Data Fetching Error:", err);
   } finally {
     createRideDataLoading.value = false;
+  }
+};
+
+const fetchBookingDetails = async () => {
+  try {
+    const { data } = await axios.get(`/customer/bookings/${rideId.value}/view`);
+    const bookingData = data?.data;
+
+    form.booking_id = bookingData?.id || null;
+    form.service_type = bookingData?.service_type || 1;
+    form.hours = bookingData?.duration_in_hours || "";
+    form.pickup_date = bookingData?.pickup_date || "";
+    form.pickup_time = bookingData?.pickup_time || "";
+    form.pickup_location = bookingData?.pickup_location || "";
+    form.waypoints = bookingData?.waypoints || [];
+    form.drop_location = bookingData?.drop_location || "";
+    form.passenger_name = bookingData?.passenger_name || "";
+    form.passenger_email = bookingData?.passenger_email || "";
+    form.passenger_phone = bookingData?.passenger_phone || "";
+    form.service = bookingData?.service_id || "";
+    form.travel_type = bookingData?.travel_type || 1;
+    form.no_of_luggage = bookingData?.no_of_luggage || 0;
+    form.no_of_passengers = bookingData?.no_of_passengers || 0;
+    form.vehicle_id = bookingData?.vehicle_id || "";
+
+    // WAIT FOR INPUTS TO RENDER
+    await nextTick();
+
+    originPlaceId.value = await getPlaceIdFromAddress(form.pickup_location);
+    destinationPlaceId.value = await getPlaceIdFromAddress(form.drop_location);
+
+    // Waypoints
+    for (let i = 0; i < waypointInputs.value.length; i++) {
+      const input = waypointInputs.value[i];
+      const address = form.waypoints[i];
+
+      const placeId = await getPlaceIdFromAddress(address);
+      if (placeId && input) {
+        input.dataset.placeId = placeId;
+      }
+    }
+
+    route();
+  } catch (error) {
+    console.error("Failed to load booking details:", error);
   }
 };
 
@@ -207,6 +256,32 @@ const route = () => {
     }
   );
 };
+
+const getPlaceIdFromAddress = (address) => {
+  return new Promise((resolve) => {
+    if (!address) return resolve(null);
+
+    const service = new google.maps.places.PlacesService(map.value);
+
+    service.findPlaceFromQuery(
+      {
+        query: address,
+        fields: ["place_id"],
+      },
+      (results, status) => {
+        if (
+          status === google.maps.places.PlacesServiceStatus.OK &&
+          results.length
+        ) {
+          resolve(results[0].place_id);
+        } else {
+          resolve(null);
+        }
+      }
+    );
+  });
+};
+
 
 const addWaypoint = async () => {
   form.waypoints.push("");
