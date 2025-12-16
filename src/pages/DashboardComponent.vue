@@ -70,7 +70,7 @@ const fetchDashboardRideData = async () => {
   loading.value = true;
   try {
     const { data } = await axios.get("/customer/dashboard-ride-data");
-    console.log(data)
+
     if (data?.success) {
       dashboardRideData.value = data.data;
     } else {
@@ -119,33 +119,31 @@ const getStatus = (statusId) => {
   }
 };
 
-// Calendar attributes
-const attributes = ref([
+const attributes = [
   {
-    key: "scheduled",
+    key: '1',
+    highlight: 'yellow',
     dates: scheduledDates.value,
-    dot: {
-      color: "#F4B400", // yellow
-    },
-    highlight: {
-      backgroundColor: "#F4B400",
-      borderRadius: "50%",
-      padding: "6px",
-    },
+    order: 0
   },
   {
-    key: "completed",
+    key: '2',
+    highlight: 'red',
     dates: completedDates.value,
-    dot: {
-      color: "#0FB14B", // green
-    },
-    highlight: {
-      backgroundColor: "#0FB14B",
-      borderRadius: "50%",
-      padding: "6px",
-    },
-  },
-]);
+    order: 0
+  }
+];
+
+const onDayClick = (day) => {
+  console.log('Clicked date:', day.id)
+}
+
+const onPageChange = (pages) => {
+  if (pages.length > 0) {
+    console.log("🚀 ~ onPageChange ~ pages:", pages[0].id)
+  }
+}
+
 </script>
 
 <template>
@@ -432,7 +430,8 @@ const attributes = ref([
           <div class="bg-white p-4 rounded-xl border border-[#DBDBDB]">
 
             <!-- Calendar Grid -->
-            <VCalendar :attributes="attributes" margin="auto" borderless color="yellow" />
+            <VCalendar :attributes="attributes" margin="auto" borderless @dayclick="onDayClick"
+              @update:pages="onPageChange" />
             <!-- Calendar Footer Legend -->
             <div
               class="flex justify-center items-center gap-6 border-t border-[#E0E0E0] mt-4 pt-3 text-sm text-[#414141]">
