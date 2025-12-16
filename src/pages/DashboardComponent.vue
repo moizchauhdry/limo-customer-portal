@@ -10,9 +10,27 @@ const scheduledDates = ref(["2025-12-14", "2025-12-17", "2025-12-31"]);
 const completedDates = ref(["2025-12-21", "2025-12-25"]);
 
 const toast = useToast();
-const dashboardData = ref({});
+const dashboardStats = ref({
+  total_bookings_count: 0,
+  total_fare: 0,
+  cancelled_bookings_count: 0,
+});
+const dashboardRideData = ref({});
 
+const dateFilterOptions = ref([
+  { value: "", label: "All" },
+  { value: "today", label: "Today" },
+  { value: "yesterday", label: "Yesterday" },
+  { value: "this_week", label: "This Week" },
+  { value: "last_week", label: "Last Week" },
+  { value: "this_month", label: "This Month" },
+  { value: "last_month", label: "Last Month" },
+  { value: "this_year", label: "This Year" },
+  { value: "last_year", label: "Last Year" },
+]);
 const loading = ref(true);
+const statsLoading = ref(true);
+const dateFilter = ref("");
 const ratingForm = reactive(
   new Form({
     rating_label: "",
@@ -38,7 +56,7 @@ async function submitRating(label) {
 
     if (data?.success == true) {
       toast.success("Thank you for your feedback!");
-      fetchDashboard();
+      fetchDashboardRideData();
     } else {
       toast.error(data?.message || "Failed to submit rating. Please try again.");
     }
@@ -48,12 +66,12 @@ async function submitRating(label) {
   }
 }
 
-const fetchDashboard = async () => {
+const fetchDashboardRideData = async () => {
   loading.value = true;
   try {
-    const { data } = await axios.get("/customer/dashboard");
+    const { data } = await axios.get("/customer/dashboard-ride-data");
     if (data?.success) {
-      dashboardData.value = data.data;
+      dashboardRideData.value = data.data;
     } else {
       toast.error(data?.message || "Failed to load dashboard data.");
     }
@@ -64,8 +82,31 @@ const fetchDashboard = async () => {
     loading.value = false;
   }
 };
+
+const fetchDashboardStats = async () => {
+  statsLoading.value = true;
+  try {
+    const { data } = await axios.get("/customer/dashboard-stats", {
+      params: {
+        search_date_key: dateFilter.value,
+      },
+    });
+
+    if (data?.success) {
+      dashboardStats.value = data.data;
+    } else {
+      toast.error(data?.message || "Failed to load dashboard stats.");
+    }
+  } catch (err) {
+    console.error("Dashboard fetch error:", err);
+    toast.error("Failed to load dashboard stats.");
+  } finally {
+    statsLoading.value = false;
+  }
+};
 onMounted(() => {
-  fetchDashboard();
+  fetchDashboardStats();
+  fetchDashboardRideData();
 });
 // Convert status ID → text
 const getStatus = (statusId) => {
@@ -123,8 +164,9 @@ const attributes = ref([
                 <h2 class="text-md font-semibold">Total trip</h2>
                 <img src="../assets/icons/dashboard/trips.svg" class="h-5" />
               </div>
-              <p class="text-3xl font-bold mt-1">
-                {{ dashboardData?.total_bookings_count }}
+              <DotsLoading v-if="statsLoading" class="mt-4" />
+              <p v-else class="text-3xl font-bold mt-1">
+                {{ dashboardStats?.total_bookings_count }}
               </p>
               <!-- <p class="mt-2">+5% from last month</p> -->
             </div>
@@ -135,13 +177,16 @@ const attributes = ref([
                 <h2 class="text-md font-semibold">Total Fare</h2>
                 <img src="../assets/icons/dashboard/fare.svg" class="h-5" />
               </div>
-              <p class="text-3xl font-bold mt-1">
-                ${{ dashboardData?.total_fare }}
+              <DotsLoading v-if="statsLoading" class="mt-4 mb-3" />
+              <p v-else class="text-3xl font-bold mt-1">
+                ${{ dashboardStats?.total_fare }}
               </p>
-              <p class="mt-2 border w-fit px-2 rounded-md flex items-center gap-2">
-                Last 7 Days
-                <img src="../assets/icons/dashboard/arrow.svg" alt="Arrow Up" />
-              </p>
+              <select
+                class="bg-[#8AC53E] text-white border border-white rounded-md mt-2 py-0 w-36 appearance-none outline-none focus:border-white focus:outline-none focus:ring-0"
+                v-model="dateFilter" @change="fetchDashboardStats">
+                <option v-for="dateFilter in dateFilterOptions" :key="dateFilter?.value" :value="dateFilter?.value">{{
+                  dateFilter?.label }}</option>
+              </select>
             </div>
 
             <!-- Cancel Trips -->
@@ -150,8 +195,9 @@ const attributes = ref([
                 <h2 class="text-md font-semibold">Cancel Trips</h2>
                 <img src="../assets/icons/dashboard/cancel.svg" class="h-6" />
               </div>
-              <p class="text-3xl font-bold mt-1">
-                {{ dashboardData.cancelled_bookings_count }}
+              <DotsLoading v-if="statsLoading" class="mt-4" />
+              <p v-else class="text-3xl font-bold mt-1">
+                {{ dashboardStats.cancelled_bookings_count }}
               </p>
               <!-- <p class="mt-2">From last month</p> -->
             </div>
@@ -172,11 +218,11 @@ const attributes = ref([
                   class="flex items-center gap-2 border border-[#D8D8D8] text-xs text-[#17171A] px-2 py-1 rounded-lg shadow-[0_0_6px_#D8D8D8]">
                   <img src="../assets/icons/dashboard/date.svg" class="h-3" alt="date" />
                   <!-- <span> Oct 17, 2025</span> -->
-                  <span>{{ dashboardData.next_booking?.pickup_date }}</span>
+                  <span>{{ dashboardRideData.next_booking?.pickup_date }}</span>
 
                   <img src="../assets/icons/dashboard/time.svg" class="h-3" alt="date" />
                   <!-- <span> Oct 17, 2025</span> -->
-                  <span>{{ dashboardData.next_booking?.pickup_time }}</span>
+                  <span>{{ dashboardRideData.next_booking?.pickup_time }}</span>
                 </div>
               </div>
 
@@ -193,13 +239,13 @@ const attributes = ref([
                     <img src="../assets/icons/dashboard/location.svg" class="h-4" alt="Start" />
                     <!-- <span>LaGuardia Airport (LGA), East USA</span> -->
                     <span>{{
-                      dashboardData.next_booking?.pickup_location
+                      dashboardRideData.next_booking?.pickup_location
                     }}</span>
                   </div>
                   <div class="flex items-center gap-2">
                     <img src="../assets/icons/dashboard/airport.svg" class="h-4" alt="End" />
                     <!-- <span>JFK Airport</span> -->
-                    <span>{{ dashboardData.next_booking?.drop_location }}</span>
+                    <span>{{ dashboardRideData.next_booking?.drop_location }}</span>
                   </div>
                 </div>
               </div>
@@ -211,11 +257,11 @@ const attributes = ref([
                   class="flex items-center mx-auto gap-1 border border-[#D8D8D8] rounded-lg py-1 px-2 text-xs text-[#17171A]">
                   <img src="../assets/icons/dashboard/distance.svg" class="h-3" alt="Date" />
                   <!-- <span>Oct 17, 2025</span> -->
-                  <span>{{ dashboardData.next_booking?.total_distance }}</span>
+                  <span>{{ dashboardRideData.next_booking?.total_distance }}</span>
 
                   <img src="../assets/icons/dashboard/mini-clock.svg" class="h-3" alt="Time" />
                   <!-- <span>0h 17m</span> -->
-                  <span>{{ dashboardData.next_booking?.total_time }}</span>
+                  <span>{{ dashboardRideData.next_booking?.total_time }}</span>
                 </div>
 
                 <!-- Total Fare -->
@@ -225,7 +271,7 @@ const attributes = ref([
                   <!-- Icon in the middle -->
                   <img src="../assets/icons/dashboard/small-fare.svg" class="h-8 w-8" alt="Arrow" />
                   <p class="text-md font-bold text-[#000000]">
-                    ${{ dashboardData.next_booking?.payments_total }}
+                    ${{ dashboardRideData.next_booking?.payments_total }}
                   </p>
                 </div>
 
@@ -233,13 +279,13 @@ const attributes = ref([
                 <div
                   class="border w-[65%] ml-auto border-[#D8D8D8] rounded-lg py-1.5 text-xs font-semibold text-[#151515] text-center shadow-sm">
                   <!-- <p>Confirmed</p> -->
-                  <p>{{ dashboardData.next_booking?.booking_status?.name }}</p>
+                  <p>{{ dashboardRideData.next_booking?.booking_status?.name }}</p>
                 </div>
               </div>
 
               <!-- driver block -->
               <div class="border-t border-dashed border-[#B4B4B4] pt-4 grid grid-cols-1 gap-4">
-                <div v-for="driverBooking in dashboardData?.next_booking
+                <div v-for="driverBooking in dashboardRideData?.next_booking
                   ?.driver_bookings || []" :key="driverBooking?.id"
                   class="grid grid-cols-[auto_1fr_auto] items-center gap-4">
                   <!-- Driver Image -->
@@ -253,7 +299,7 @@ const attributes = ref([
                     </p>
                     <p>
                       Car:
-                      {{ dashboardData?.next_booking?.vehicle?.name }} Plate #
+                      {{ dashboardRideData?.next_booking?.vehicle?.name }} Plate #
                       00123
                     </p>
                   </div>
@@ -288,7 +334,7 @@ const attributes = ref([
                 </thead>
 
                 <tbody>
-                  <tr v-for="trip in dashboardData?.booking_history" :key="trip?.id">
+                  <tr v-for="trip in dashboardRideData?.booking_history" :key="trip?.id">
                     <!-- Trip ID -->
                     <td class="px-4 py-3">TR:{{ trip?.id }}</td>
 
@@ -370,7 +416,7 @@ const attributes = ref([
           </div>
 
           <!-- RIDE RATING -->
-          <div v-if="dashboardData.is_last_booking_reviewed == false"
+          <div v-if="dashboardRideData.is_last_booking_reviewed == false"
             class="bg-[#F8F8F8] p-6 rounded-xl border border-[#DBDBDB]">
             <p class="font-semibold text-lg text-[#626262]">
               How was your last ride?
