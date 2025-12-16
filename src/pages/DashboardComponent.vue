@@ -2,7 +2,7 @@
 import { onMounted, reactive, ref } from "vue";
 import axios from "@/axios";
 import { useToast } from "vue-toastification";
-import RideDistanceBar from "@/components/RideDistanceBar.vue";
+// import RideDistanceBar from "@/components/RideDistanceBar.vue";
 import Form from 'vform'
 import DotsLoading from "@/components/DotsLoading.vue";
 
@@ -210,10 +210,10 @@ const attributes = ref([
 
           <!-- RIDE-DETAILS CARD -->
           <div class="px-5 sm:px-0">
-            <div class="bg-white p-6 rounded-xl border border-[#DBDBDB] shadow space-y-4">
+            <div class="bg-white p-4 sm:p-6 rounded-xl border border-[#DBDBDB] shadow space-y-4">
               <!-- header -->
               <div class="flex items-center justify-between">
-                <h3 class="text-lg text-[#626262]">Ride Details</h3>
+                <h3 class="text-[14px] sm:text-lg text-[#626262]">Ride Details</h3>
                 <div
                   class="flex items-center gap-2 border border-[#D8D8D8] text-xs text-[#17171A] px-2 py-1 rounded-lg shadow-[0_0_6px_#D8D8D8]">
                   <img src="../assets/icons/dashboard/date.svg" class="h-3" alt="date" />
@@ -230,7 +230,7 @@ const attributes = ref([
               <div class="flex gap-4 items-start text-sm text-[#414141]">
                 <!-- Vertical Route Icon -->
                 <div class="pt-1">
-                  <img src="../assets/icons/dashboard/location-line.svg" class="h-14" alt="Route Icon" />
+                  <img src="../assets/icons/dashboard/location-line.svg" class="h-28 sm:h-14" alt="Route Icon" />
                 </div>
 
                 <!-- Your Original Route Text -->
@@ -251,21 +251,22 @@ const attributes = ref([
               </div>
 
               <!-- Stats Row -->
-              <div class="grid grid-cols-3 gap-4 items-center text-sm text-[#414141]">
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center text-sm text-[#414141]">
                 <!-- Date & Time -->
-                <div
-                  class="flex items-center mx-auto gap-1 border border-[#D8D8D8] rounded-lg py-1 px-2 text-xs text-[#17171A]">
-                  <img src="../assets/icons/dashboard/distance.svg" class="h-3" alt="Date" />
-                  <!-- <span>Oct 17, 2025</span> -->
+                <div class="flex items-center justify-center gap-2
+                   border border-[#D8D8D8] rounded-lg
+                   py-2 px-3 text-xs text-[#17171A]
+                   w-full sm:w-auto">
+                  <img src="../assets/icons/dashboard/distance.svg" class="h-3" />
                   <span>{{ dashboardRideData.next_booking?.total_distance }}</span>
 
-                  <img src="../assets/icons/dashboard/mini-clock.svg" class="h-3" alt="Time" />
-                  <!-- <span>0h 17m</span> -->
+                  <img src="../assets/icons/dashboard/mini-clock.svg" class="h-3" />
                   <span>{{ dashboardRideData.next_booking?.total_time }}</span>
                 </div>
 
+
                 <!-- Total Fare -->
-                <div class="text-center ml-auto flex flex-row gap-2 justify-center items-center">
+                <div class="text-center sm:ml-auto flex flex-row gap-2 sm:justify-center items-center">
                   <p class="font-medium text-md text-[#000000]">Total Fare</p>
 
                   <!-- Icon in the middle -->
@@ -277,7 +278,7 @@ const attributes = ref([
 
                 <!-- Status Badge -->
                 <div
-                  class="border w-[65%] ml-auto border-[#D8D8D8] rounded-lg py-1.5 text-xs font-semibold text-[#151515] text-center shadow-sm">
+                  class="border w-[65%] mx-auto sm:mx-0 sm:ml-auto border-[#D8D8D8] rounded-lg py-1.5 text-xs font-semibold text-[#151515] text-center shadow-sm">
                   <!-- <p>Confirmed</p> -->
                   <p>{{ dashboardRideData.next_booking?.booking_status?.name }}</p>
                 </div>
@@ -317,7 +318,7 @@ const attributes = ref([
 
           <!-- TRIP HISTORY TABLE -->
 
-          <div class="bg-white rounded-xl shadow-lg border border-[#DBDBDB]">
+          <div class="hidden sm:block bg-white rounded-xl shadow-lg border border-[#DBDBDB]">
             <h3 class="text-lg ml-2 pt-2 font-regular text-[#626262] mb-2">
               Trip History
             </h3>
@@ -365,10 +366,49 @@ const attributes = ref([
               </table>
             </div>
           </div>
+
+          <!-- TRIP HISTORY CARDS (Mobile) -->
+          <div class="block sm:hidden space-y-4 px-4">
+            <div v-for="trip in dashboardRideData?.booking_history" :key="trip?.id"
+              class="bg-white border border-[#DBDBDB] rounded-xl shadow p-4">
+              <!-- Header -->
+              <div class="flex justify-between items-center mb-2">
+                <p class="text-sm font-medium text-[#414141]">
+                  Trip ID: TR:{{ trip?.id }}
+                </p>
+
+                <span class="inline-flex items-center justify-center w-20 h-6 text-xs rounded-full text-white" :class="{
+                  'bg-[#0FB14B]': trip.booking_status_id === 2,
+                  'bg-[#FF4A54]': trip.booking_status_id === 1,
+                }">
+                  {{ getStatus(trip.booking_status_id) }}
+                </span>
+              </div>
+
+              <!-- Body -->
+              <div class="space-y-1 text-sm text-[#626262]">
+                <p>
+                  <span class="font-medium">Date:</span>
+                  {{ trip?.pickup_date }}
+                </p>
+
+                <p>
+                  <span class="font-medium">Destination:</span>
+                  {{ trip?.drop_location || "N/A" }}
+                </p>
+
+                <p>
+                  <span class="font-medium">Fare:</span>
+                  ${{ trip?.payments_total }}
+                </p>
+              </div>
+            </div>
+          </div>
+
         </div>
 
         <!-- RIGHT COLUMN -->
-        <div class="w-[132%] sm:w-full ml-2 sm:ml-0 xl:w-[325px] space-y-6">
+        <div class="w-[90%] mx-auto sm:w-full xl:w-[325px] space-y-6">
           <!-- CALENDAR -->
           <div class="bg-white p-4 rounded-xl border border-[#DBDBDB]">
             <!-- Calendar Header -->
@@ -408,12 +448,12 @@ const attributes = ref([
           </div>
 
           <!-- DISTANCE GRAPH -->
-          <div class="rounded-xl border">
-            <!-- Graph Image -->
+          <!-- <div class="rounded-xl border">
+           
             <div class="rounded-lg overflow-hidden flex items-center justify-center">
               <RideDistanceBar class="w-full h-48" />
             </div>
-          </div>
+          </div> -->
 
           <!-- RIDE RATING -->
           <div v-if="dashboardRideData.is_last_booking_reviewed == false"

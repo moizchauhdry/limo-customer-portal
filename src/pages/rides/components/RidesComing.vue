@@ -89,6 +89,10 @@ defineProps({
                   }}</span>
                 </div>
               </div>
+
+              <div class="ml-auto border border-[#329EE7] whitespace-nowrap px-2 sm:px-6  rounded-full text-[#329EE7] text-[10px] sm:text-[12px]">
+                <h1>One Way </h1>
+              </div>
             </div>
 
             <!-- ========== STATS ROW ========== -->

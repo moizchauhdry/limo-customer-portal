@@ -1,13 +1,29 @@
+<script setup>
+import axios from "@/axios";
+import { ref, onMounted } from "vue";
+
+const walletData = ref(0);
+
+const fetchWalletData = async () => {
+  try {
+    const { data } = await axios.get('/customer/wallet/data');
+    walletData.value = data.data;
+
+  } catch (err) {
+    console.log("Failed to load Wallet Data:", err);
+  }
+};
+
+onMounted(() => {
+  fetchWalletData();
+});
+
+</script>
+
 <template>
   <!-- MAIN CONTENT -->
-  <main
-    class="lg:ml-64 pt-[100px] mb-5"
-    data-aos="fade-right"
-    data-aos-duration="1200"
-    data-aos-offset="150"
-    data-aos-easing="ease-in-out"
-    data-aos-delay="100"
-  >
+  <main class="lg:ml-64 pt-[100px] mb-5" data-aos="fade-right" data-aos-duration="1200" data-aos-offset="150"
+    data-aos-easing="ease-in-out" data-aos-delay="100">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <!-- =============== wallets row =============== -->
       <!-- Heading -->
@@ -16,26 +32,20 @@
       </p>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <!-- Total Trips -->
-        <div
-          class="bg-[#369FFF] border border-[#CECECE] rounded-xl shadow p-4 flex flex-col gap-6 justify-between"
-        >
+        <div class="bg-[#369FFF] border border-[#CECECE] rounded-xl shadow p-4 flex flex-col gap-6 justify-between">
           <p class="text-[#FFFFFF] text-sm sm:text-lg font-medium">
             Available Balance
           </p>
           <div class="flex justify-between items-center">
-            <img
-              src="../assets/icons/wallet/wallet.svg"
-              alt="wallet"
-              class="h-8"
-            />
+            <img src="../assets/icons/wallet/wallet.svg" alt="wallet" class="h-8" />
             <p class="text-lg sm:text-3xl text-[#FFFFFF] font-semibold">
-              $2500.0
+              ${{ walletData.total_credit }}
             </p>
           </div>
         </div>
 
         <!-- Canceled Rides -->
-        <div>
+        <!-- <div>
           <div
             class="bg-white border border-[#CECECE] rounded-xl shadow p-4 flex flex-col"
           >
@@ -60,16 +70,16 @@
               </p>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <!-- =============== TABS =============== -->
       <!-- Heading -->
-      <p class="text-2xl sm:text-3xl text-[#414141] font-normal mt-4 mb-4">
+      <!-- <p class="text-2xl sm:text-3xl text-[#414141] font-normal mt-4 mb-4">
         My payment methods
       </p>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <!-- Canceled Rides -->
+        
         <div>
           <div
             class="bg-white border border-[#B7B7B7] rounded-xl shadow p-4 flex flex-col"
@@ -94,7 +104,7 @@
             </div>
           </div>
         </div>
-        <!-- Canceled Rides -->
+       
         <div>
           <div
             class="bg-white border border-[#B7B7B7] rounded-xl shadow p-4 flex flex-col"
@@ -118,7 +128,7 @@
             </div>
           </div>
         </div>
-        <!-- Canceled Rides -->
+      
         <div>
           <div
             class="bg-white border border-[#B7B7B7] rounded-xl shadow p-4 flex flex-col"
@@ -143,16 +153,16 @@
           </div>
         </div>
       </div>
-      <!-- Heading -->
+    
       <p class="text-2xl sm:text-3xl text-[#414141] font-normal mt-4 mb-4">
         Transaction History
-      </p>
+      </p> -->
 
       <!-- Filter Section -->
-      <div class="">
-        <!-- Filters Row -->
+      <!-- <div class="">
+   
         <div class="grid grid-cols-1 sm:grid-cols-5 gap-4">
-          <!-- Search Field (Spans 2 columns) -->
+         
           <div class="relative col-span-1 sm:col-span-2">
             <input
               type="text"
@@ -166,32 +176,32 @@
             />
           </div>
 
-          <!-- Transaction Type Button -->
+         
           <button
             class="w-full bg-[#0072EF] text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-700 transition"
           >
             Transaction Type
           </button>
 
-          <!-- Date Range Button -->
+         
           <button
             class="w-full border border-[#BDBDBD] text-[#828282] font-semibold text-sm px-4 py-2 rounded-lg hover:bg-[#EAEAEA] transition"
           >
             Date Range
           </button>
 
-          <!-- Actions Button -->
+         
           <button
             class="w-full border border-[#BDBDBD] text-[#828282] font-semibold text-sm px-4 py-2 rounded-lg hover:bg-[#EAEAEA] transition"
           >
             Actions
           </button>
         </div>
-      </div>
+      </div> -->
 
       <!-- TRIP HISTORY TABLE -->
-      <div class="bg-white rounded-xl shadow-lg border border-[#B7B7B7] mt-3">
-        <!-- Desktop Table -->
+      <!-- <div class="bg-white rounded-xl shadow-lg border border-[#B7B7B7] mt-3">
+  
         <div class="hidden sm:block">
           <table class="w-full text-sm text-left text-[#414141]">
             <thead class="text-[#3B3B3B] border-b border-[#B7B7B7]">
@@ -265,9 +275,9 @@
           </table>
         </div>
 
-        <!-- Mobile Cards -->
+   
         <div class="sm:hidden space-y-4 p-4 text-sm text-[#414141]">
-          <!-- Card 1 -->
+       
           <div class="border border-[#B7B7B7] rounded-lg p-3 space-y-2">
             <div class="flex justify-between">
               <span class="font-semibold">Ride ID:</span><span>TR 1154</span>
@@ -293,7 +303,7 @@
             </div>
           </div>
 
-          <!-- Card 2 -->
+        
           <div class="border border-[#B7B7B7] rounded-lg p-3 space-y-2">
             <div class="flex justify-between">
               <span class="font-semibold">Ride ID:</span><span>TR 1154</span>
@@ -319,7 +329,7 @@
             </div>
           </div>
 
-          <!-- Card 3 -->
+       
           <div class="border border-[#B7B7B7] rounded-lg p-3 space-y-2">
             <div class="flex justify-between">
               <span class="font-semibold">Ride ID:</span><span>TR 1154</span>
@@ -345,7 +355,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </main>
 </template>

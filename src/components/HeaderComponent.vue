@@ -1,4 +1,6 @@
 <script setup>
+import { RouterLink } from 'vue-router';
+
 const date = new Date();
 const customer = JSON.parse(localStorage.getItem("customer"));
 
@@ -28,7 +30,9 @@ if (customer) {
           <span class="text-[#565656]">{{ date.getFullYear() }}</span>
         </div>
       </div>
+      <RouterLink to="/notifications">
       <img src="../assets/icons/navbar/nav1.svg" class="h-9" />
+      </RouterLink>
 
       <RouterLink to="/settings">
         <img src="../assets/icons/navbar/setting.svg" class="h-9" />

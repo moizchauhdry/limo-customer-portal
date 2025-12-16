@@ -19,6 +19,7 @@ import VerifyOtpComponent from "./pages/VerifyOtpComponent.vue";
 import HomeComponent from "./pages/website/HomeComponent.vue";
 import ForgetPassword from "./pages/ForgetPassword.vue";
 import UpdatePassword from "./pages/UpdatePassword.vue";
+import NotificationComponent from "./pages/NotificationComponent.vue";
 
 const routes = [
   {
@@ -64,6 +65,7 @@ const routes = [
         component: ViewBookingComponent,
         props: true,
       },
+       { path: "notifications", name: "notifications", component: NotificationComponent },
     ],
   },
 ];
