@@ -28,11 +28,7 @@ defineProps({
                 <img src="../../../assets/icons/dashboard/time.svg" class="h-3" alt="time" />
                 <span>{{ ride.pickup_time }}</span>
               </div>
-
-              <h3 class="text-xl sm:text-2xl lg:text-3xl font-normal text-[#414141]">
-                Upcoming Ride
-              </h3>
-
+            
               <div class="flex items-center gap-2">
                 <RouterLink v-if="ride.booking_status_id != 2 && ride.payment_status == 0"
                   :to="`/rides/edit/${ride.id}`"

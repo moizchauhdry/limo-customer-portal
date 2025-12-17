@@ -1,13 +1,14 @@
 <script setup>
-import { onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref, watch } from "vue";
 import axios from "@/axios";
 import { useToast } from "vue-toastification";
 // import RideDistanceBar from "@/components/RideDistanceBar.vue";
+import CalenderBookingModal from "@/components/dashbaord/CalenderBookingModal.vue";
 import Form from 'vform'
 import DotsLoading from "@/components/DotsLoading.vue";
 
-const scheduledDates = ref(["2025-12-14", "2025-12-17", "2025-12-31"]);
-const completedDates = ref(["2025-12-21", "2025-12-25"]);
+// const scheduledDates = ref(["2025-12-14", "2025-12-17", "2025-12-31"]);
+// const completedDates = ref(["2025-12-21", "2025-12-25"]);
 
 const toast = useToast();
 const dashboardStats = ref({
@@ -16,6 +17,8 @@ const dashboardStats = ref({
   cancelled_bookings_count: 0,
 });
 const dashboardRideData = ref({});
+const showModal = ref(false)
+
 
 const dateFilterOptions = ref([
   { value: "", label: "All" },
@@ -30,12 +33,15 @@ const dateFilterOptions = ref([
 ]);
 const loading = ref(true);
 const statsLoading = ref(true);
+const analyticsLoading = ref(false);
 const dateFilter = ref("");
 const ratingForm = reactive(
   new Form({
     rating_label: "",
   })
 );
+
+const calenderSelectedMonth = ref(null);
 
 /*  map label → icon path  */
 const iconMap = {
@@ -48,7 +54,12 @@ const iconMap = {
 };
 const getIcon = (label) => iconMap[label];
 
-/*  submit rating  */
+watch(calenderSelectedMonth, (newMonth, oldMonth) => {
+  if (newMonth && newMonth !== oldMonth) {
+    fetchDashboardAnalytics();
+  }
+});
+
 async function submitRating(label) {
   try {
     ratingForm.rating_label = label.toLowerCase();
@@ -105,10 +116,35 @@ const fetchDashboardStats = async () => {
     statsLoading.value = false;
   }
 };
+
+const fetchDashboardAnalytics = async () => {
+  analyticsLoading.value = true;
+  try {
+    const { data } = await axios.get("/customer/dashboard-analytics", {
+      params: {
+        month: calenderSelectedMonth.value,
+      },
+    });
+
+    if (data?.success) {
+      attributes.value = data?.data?.calendar_data?.attributes || [];
+    } else {
+      toast.error(data?.message || "Failed to load dashboard stats.");
+    }
+  } catch (err) {
+    console.error("Dashboard fetch error:", err);
+    toast.error("Failed to load dashboard stats.");
+  } finally {
+    analyticsLoading.value = false;
+  }
+};
+
 onMounted(() => {
   fetchDashboardStats();
   fetchDashboardRideData();
+  fetchDashboardAnalytics();
 });
+
 // Convert status ID → text
 const getStatus = (statusId) => {
   switch (statusId) {
@@ -119,34 +155,26 @@ const getStatus = (statusId) => {
   }
 };
 
-const attributes = [
-  {
-    key: '1',
-    highlight: 'yellow',
-    dates: scheduledDates.value,
-    order: 0
-  },
-  {
-    key: '2',
-    highlight: 'red',
-    dates: completedDates.value,
-    order: 0
-  }
-];
+const attributes = ref([])
+const selectedDate = ref(null)
 
 const onDayClick = (day) => {
-  console.log('Clicked date:', day.id)
+  selectedDate.value = day.id
+  showModal.value = true
 }
+
 
 const onPageChange = (pages) => {
   if (pages.length > 0) {
-    console.log("🚀 ~ onPageChange ~ pages:", pages[0].id)
+    calenderSelectedMonth.value = pages[0]?.id;
   }
-}
-
+};
 </script>
 
 <template>
+
+  <CalenderBookingModal v-model="showModal" :selected-date="selectedDate" />
+
   <!-- MAIN CONTENT -->
   <main class="lg:ml-64 pt-[100px] mb-5" data-aos="fade-right" data-aos-duration="1200" data-aos-offset="150"
     data-aos-easing="ease-in-out" data-aos-delay="100">
@@ -302,7 +330,10 @@ const onPageChange = (pages) => {
               </div>
 
               <!-- driver block -->
-              <div class="border-t border-dashed border-[#B4B4B4] pt-4 grid grid-cols-1 gap-4">
+              <div v-if="
+                dashboardRideData?.next_booking?.driver_bookings &&
+                dashboardRideData.next_booking.driver_bookings.length
+              " class="border-t border-dashed border-[#B4B4B4] pt-4 grid grid-cols-1 gap-4">
                 <div v-for="driverBooking in dashboardRideData?.next_booking
                   ?.driver_bookings || []" :key="driverBooking?.id"
                   class="grid grid-cols-[auto_1fr_auto] items-center gap-4">
@@ -455,10 +486,12 @@ const onPageChange = (pages) => {
           </div> -->
 
           <!-- RIDE RATING -->
-          <div v-if="dashboardRideData.is_last_booking_reviewed == false"
+          <div v-if="dashboardRideData?.last_booking_review_data?.is_reviewed == false"
             class="bg-[#F8F8F8] p-6 rounded-xl border border-[#DBDBDB]">
             <p class="font-semibold text-lg text-[#626262]">
-              How was your last ride?
+              How was your last ride <span class="text-black"
+                v-if="dashboardRideData?.last_booking_review_data?.booking_id">#{{
+                  dashboardRideData?.last_booking_review_data?.booking_id }}</span>?
             </p>
             <p class="text-sm text-[#000000] mb-4">Review Rating:</p>
 
