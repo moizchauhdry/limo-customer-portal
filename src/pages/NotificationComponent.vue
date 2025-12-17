@@ -71,9 +71,16 @@ const badgeColor = (type) => {
                 </div>
 
                 <!-- Empty State -->
-                <div v-if="notifications.length === 0" class="text-center text-[#909090] py-10">
-                    No notifications available
+                <div v-if="notifications.length === 0"
+                    class="flex flex-col items-center justify-center text-center py-16 gap-4">
+                    <img src="../assets/images/logo.svg" alt="Urban Elite Limo" class="h-28 w-auto opacity-80" />
+
+                    <p class="text-[#909090] text-sm sm:text-xl">
+                        You’re all caught up <br> no notifications at the moment.
+                    </p>
+
                 </div>
+
             </div>
         </div>
     </main>
