@@ -1,6 +1,9 @@
 <script setup>
+import RecentActivitiesTable from "@/components/wallet/RecentActivitiesTable.vue";
+import TransactionHistoryTable from "@/components/wallet/TransactionHistoryTable.vue";
 import axios from "@/axios";
 import { ref, onMounted } from "vue";
+import { formatDate } from "@/utils";
 
 const walletData = ref(0);
 const activeTab = ref("recent")
@@ -9,7 +12,6 @@ const fetchWalletData = async () => {
   try {
     const { data } = await axios.get('/customer/wallet/data');
     walletData.value = data.data;
-
   } catch (err) {
     console.log("Failed to load Wallet Data:", err);
   }
@@ -55,14 +57,15 @@ onMounted(() => {
               <img src="../assets/icons/wallet/mini-wallet.svg" alt="mini" class="h-8" />
             </div>
             <div>
-              <p class="text-[#828282] text-xs sm:text-sm">
-                18 Dec, 2025 -
-                <span class="font-semibold">Wallet Top-up +$50</span>
+              <p v-for="activity in walletData.recent_activities" :key="activity.id"
+                class="text-[#828282] text-xs sm:text-sm">
+                {{ formatDate(activity.created_at) }}
+                <span class="font-semibold">
+                  Wallet {{ activity.type === 'credit' ? 'Top-up' : 'Debit' }}
+                  {{ activity.type === 'credit' ? '+' : '-' }}${{ activity.amount }}
+                </span>
               </p>
-              <p class="text-[#828282] text-xs sm:text-sm mt-2 sm:mt-0">
-                18 Dec, 2025 -
-                <span class="font-semibold">Wallet Top-up +$50</span>
-              </p>
+
             </div>
           </div>
         </div>
@@ -139,317 +142,13 @@ onMounted(() => {
           Transaction History
         </button>
 
-      </div>
-      <p class="text-2xl sm:text-3xl text-[#414141] font-normal mt-4 mb-4">
-        {{ activeTab === 'recent' ? 'Recent Activities' : 'Transaction History' }}
-      </p>
-      <!-- Filter Section -->
-      <div class="">
-
-        <div class="grid grid-cols-1 sm:grid-cols-5 gap-4">
-
-          <div class="relative col-span-1 sm:col-span-2">
-            <input type="text" placeholder="Search"
-              class="w-full pl-10 pr-4 py-2 border border-[#D8D8D8] rounded-lg text-sm text-[#414141] placeholder:text-[#A0A0A0] focus:outline-none focus:ring-2 focus:ring-[#0072EF]" />
-            <img src="../assets/icons/rides/search-icon.svg" class="absolute left-3 top-2.5 h-4" alt="Search Icon" />
-          </div>
-
-
-          <button class="w-full bg-[#0072EF] text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-700 transition">
-            Transaction Type
-          </button>
-
-
-          <button
-            class="w-full border border-[#BDBDBD] text-[#828282] font-semibold text-sm px-4 py-2 rounded-lg hover:bg-[#EAEAEA] transition">
-            Date Range
-          </button>
-
-
-          <button
-            class="w-full border border-[#BDBDBD] text-[#828282] font-semibold text-sm px-4 py-2 rounded-lg hover:bg-[#EAEAEA] transition">
-            Actions
-          </button>
-        </div>
-      </div>
+      </div>        
 
       <!-- TRIP HISTORY TABLE -->
-      <div class="bg-white rounded-xl shadow-lg border border-[#B7B7B7] mt-3">
-
-        <div v-if="activeTab === 'recent'" class="hidden sm:block">
-          <table class="w-full text-sm text-left text-[#414141]">
-            <thead class="text-[#3B3B3B] border-b border-[#B7B7B7]">
-              <tr>
-                <th class="px-4 py-3 font-semibold text-lg">Ride ID</th>
-                <th class="px-4 py-3 font-semibold text-lg">Date</th>
-                <th class="px-4 py-3 font-semibold text-lg">Pick up</th>
-                <th class="px-4 py-3 font-semibold text-lg">Drop off</th>
-                <th class="px-4 py-3 font-semibold text-lg">Fare</th>
-                <th class="px-4 py-3 font-semibold text-lg">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="border-b border-[#B7B7B7]">
-                <td class="px-4 py-3">TR 1154</td>
-                <td class="px-4 py-3">10/20/2025</td>
-                <td class="px-4 py-3">LaGuardia</td>
-                <td class="px-4 py-3">JFK</td>
-                <td class="px-4 py-3">$120</td>
-                <td class="px-4 py-3">
-                  <span class="inline-block px-3 py-1 rounded-lg bg-[#0FB14B] text-white text-xs">
-                    Complete
-                  </span>
-                </td>
-              </tr>
-              <tr class="border-b border-[#B7B7B7]">
-                <td class="px-4 py-3">TR 1154</td>
-                <td class="px-4 py-3">10/22/2025</td>
-                <td class="px-4 py-3">LaGuardia</td>
-                <td class="px-4 py-3">JFK</td>
-                <td class="px-4 py-3">$120</td>
-                <td class="px-4 py-3">
-                  <span class="inline-block px-3 py-1 rounded-lg bg-[#0FB14B] text-white text-xs">
-                    Complete
-                  </span>
-                </td>
-              </tr>
-              <tr class="border-b border-[#B7B7B7]">
-                <td class="px-4 py-3">TR 1154</td>
-                <td class="px-4 py-3">10/25/2025</td>
-                <td class="px-4 py-3">LaGuardia</td>
-                <td class="px-4 py-3">JFK</td>
-                <td class="px-4 py-3">$120</td>
-                <td class="px-4 py-3">
-                  <span class="inline-block px-3 py-1 rounded-lg bg-[#0FB14B] text-white text-xs">
-                    Complete
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-4 py-3">TR 1154</td>
-                <td class="px-4 py-3">10/25/2025</td>
-                <td class="px-4 py-3">LaGuardia</td>
-                <td class="px-4 py-3">JFK</td>
-                <td class="px-4 py-3">$120</td>
-                <td class="px-4 py-3">
-                  <span class="inline-block px-3 py-1 rounded-lg bg-[#0FB14B] text-white text-xs">
-                    Complete
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-
-        <div v-if="activeTab === 'transaction'" class="hidden sm:block">
-          <table class="w-full text-sm text-left text-[#414141]">
-            <thead class="text-[#3B3B3B] border-b border-[#B7B7B7]">
-              <tr>
-                <th class="px-4 py-3 font-semibold text-lg">transaction ID</th>
-                <th class="px-4 py-3 font-semibold text-lg">Date</th>
-                <th class="px-4 py-3 font-semibold text-lg">Pick up</th>
-                <th class="px-4 py-3 font-semibold text-lg">Drop off</th>
-                <th class="px-4 py-3 font-semibold text-lg">Fare</th>
-                <th class="px-4 py-3 font-semibold text-lg">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="border-b border-[#B7B7B7]">
-                <td class="px-4 py-3">TR 1154</td>
-                <td class="px-4 py-3">10/20/2025</td>
-                <td class="px-4 py-3">LaGuardia</td>
-                <td class="px-4 py-3">JFK</td>
-                <td class="px-4 py-3">$120</td>
-                <td class="px-4 py-3">
-                  <span class="inline-block px-3 py-1 rounded-lg bg-[#0FB14B] text-white text-xs">
-                    Complete
-                  </span>
-                </td>
-              </tr>
-              <tr class="border-b border-[#B7B7B7]">
-                <td class="px-4 py-3">TR 1154</td>
-                <td class="px-4 py-3">10/22/2025</td>
-                <td class="px-4 py-3">LaGuardia</td>
-                <td class="px-4 py-3">JFK</td>
-                <td class="px-4 py-3">$120</td>
-                <td class="px-4 py-3">
-                  <span class="inline-block px-3 py-1 rounded-lg bg-[#0FB14B] text-white text-xs">
-                    Complete
-                  </span>
-                </td>
-              </tr>
-              <tr class="border-b border-[#B7B7B7]">
-                <td class="px-4 py-3">TR 1154</td>
-                <td class="px-4 py-3">10/25/2025</td>
-                <td class="px-4 py-3">LaGuardia</td>
-                <td class="px-4 py-3">JFK</td>
-                <td class="px-4 py-3">$120</td>
-                <td class="px-4 py-3">
-                  <span class="inline-block px-3 py-1 rounded-lg bg-[#0FB14B] text-white text-xs">
-                    Complete
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-4 py-3">TR 1154</td>
-                <td class="px-4 py-3">10/25/2025</td>
-                <td class="px-4 py-3">LaGuardia</td>
-                <td class="px-4 py-3">JFK</td>
-                <td class="px-4 py-3">$120</td>
-                <td class="px-4 py-3">
-                  <span class="inline-block px-3 py-1 rounded-lg bg-[#0FB14B] text-white text-xs">
-                    Complete
-                  </span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-
-        <div v-if="activeTab === 'recent'" class="sm:hidden space-y-4 p-4 text-sm text-[#414141]">
-
-          <div class="border border-[#B7B7B7] rounded-lg p-3 space-y-2">
-            <div class="flex justify-between">
-              <span class="font-semibold">Ride ID:</span><span>TR 1154</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Date:</span><span>10/20/2025</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Pick up:</span><span>LaGuardia</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Drop off:</span><span>JFK</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Fare:</span><span>$120</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="font-semibold">Status:</span>
-              <span class="inline-block px-3 py-1 rounded-lg bg-[#0FB14B] text-white text-xs">Complete</span>
-            </div>
-          </div>
-
-
-          <div class="border border-[#B7B7B7] rounded-lg p-3 space-y-2">
-            <div class="flex justify-between">
-              <span class="font-semibold">Ride ID:</span><span>TR 1154</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Date:</span><span>10/22/2025</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Pick up:</span><span>LaGuardia</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Drop off:</span><span>JFK</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Fare:</span><span>$120</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="font-semibold">Status:</span>
-              <span class="inline-block px-3 py-1 rounded-lg bg-[#0FB14B] text-white text-xs">Complete</span>
-            </div>
-          </div>
-
-
-          <div class="border border-[#B7B7B7] rounded-lg p-3 space-y-2">
-            <div class="flex justify-between">
-              <span class="font-semibold">Ride ID:</span><span>TR 1154</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Date:</span><span>10/25/2025</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Pick up:</span><span>LaGuardia</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Drop off:</span><span>JFK</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Fare:</span><span>$120</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="font-semibold">Status:</span>
-              <span class="inline-block px-3 py-1 rounded-lg bg-[#0FB14B] text-white text-xs">Complete</span>
-            </div>
-          </div>
-        </div>
-
-        <div v-if="activeTab === 'transaction'" class="sm:hidden space-y-4 p-4 text-sm text-[#414141]">
-
-          <div class="border border-[#B7B7B7] rounded-lg p-3 space-y-2">
-            <div class="flex justify-between">
-              <span class="font-semibold">transaction ID</span><span>TR 1154</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Date:</span><span>10/20/2025</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Pick up:</span><span>LaGuardia</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Drop off:</span><span>JFK</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Fare:</span><span>$120</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="font-semibold">Status:</span>
-              <span class="inline-block px-3 py-1 rounded-lg bg-[#0FB14B] text-white text-xs">Complete</span>
-            </div>
-          </div>
-
-
-          <div class="border border-[#B7B7B7] rounded-lg p-3 space-y-2">
-            <div class="flex justify-between">
-              <span class="font-semibold">Ride ID:</span><span>TR 1154</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Date:</span><span>10/22/2025</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Pick up:</span><span>LaGuardia</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Drop off:</span><span>JFK</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Fare:</span><span>$120</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="font-semibold">Status:</span>
-              <span class="inline-block px-3 py-1 rounded-lg bg-[#0FB14B] text-white text-xs">Complete</span>
-            </div>
-          </div>
-
-
-          <div class="border border-[#B7B7B7] rounded-lg p-3 space-y-2">
-            <div class="flex justify-between">
-              <span class="font-semibold">Ride ID:</span><span>TR 1154</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Date:</span><span>10/25/2025</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Pick up:</span><span>LaGuardia</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Drop off:</span><span>JFK</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Fare:</span><span>$120</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="font-semibold">Status:</span>
-              <span class="inline-block px-3 py-1 rounded-lg bg-[#0FB14B] text-white text-xs">Complete</span>
-            </div>
-          </div>
-        </div>
-      </div>
+     
+        <RecentActivitiesTable v-if="activeTab === 'recent'" />
+        <TransactionHistoryTable v-if="activeTab === 'transaction'" />
+      
     </div>
   </main>
 </template>
