@@ -99,7 +99,7 @@ defineProps({
             </div>
 
             <!-- ========== DRIVER DETAILS ========== -->
-            <div class="border-t border-dashed border-[#B4B4B4] p-4 space-y-4">
+            <div v-if="ride.driver_bookings && ride.driver_bookings.length" class="border-t border-dashed border-[#B4B4B4] p-4 space-y-4">
               <h3 class="text-[#414141] text-lg">Driver Details</h3>
 
               <div v-for="(d, dIdx) in ride.driver_bookings" :key="dIdx" class="space-y-2">
