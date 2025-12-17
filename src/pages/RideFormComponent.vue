@@ -19,6 +19,7 @@ const createRideDataLoading = ref(false);
 const createRideData = ref({});
 const rideId = ref(vueRoute?.params?.id);
 const placeholder = new URL('../assets/images/vehicle-placeholder.jpg', import.meta.url).href;
+const authCustomer = JSON.parse(localStorage.getItem("customer") || null);
 
 const map = ref(null);
 const directionsService = ref(null);
@@ -46,9 +47,9 @@ const form = reactive(
     waypoints: [],
     drop_location: "",
 
-    passenger_name: "",
-    passenger_email: "",
-    passenger_phone: "",
+    passenger_name: authCustomer?.name || "",
+    passenger_email: authCustomer?.email || "",
+    passenger_phone: authCustomer?.phone || "",
 
     service: "",
     travel_type: 1,

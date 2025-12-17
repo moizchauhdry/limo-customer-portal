@@ -27,30 +27,32 @@ const sizeClasses = {
 }
 </script>
 <template>
-    <transition name="fade">
-        <div v-if="model" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50"
-            @click.self="emit('close')">
-            <div :class="[
-                'bg-white rounded-xl shadow-xl px-6 py-4 mx-4 animate-modal',
-                sizeClasses[size] || sizeClasses['md']
-            ]">
-                <!-- Header Slot -->
-                <div v-if="$slots.header" class="mb-4 border-b pb-3">
-                    <slot name="header" />
-                </div>
+    <Teleport to="body">
+        <transition name="fade">
+            <div v-if="model" class="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50"
+                @click.self="emit('close')">
+                <div :class="[
+                    'bg-white rounded-xl shadow-xl px-6 py-4 mx-4 animate-modal',
+                    sizeClasses[size] || sizeClasses['md']
+                ]">
+                    <!-- Header Slot -->
+                    <div v-if="$slots.header" class="mb-4 border-b pb-3">
+                        <slot name="header" />
+                    </div>
 
-                <!-- Default Body Slot -->
-                <div class="overflow-y-auto hide-scrollbar" style="max-height: calc(90vh - 160px)">
-                    <slot />
-                </div>
+                    <!-- Default Body Slot -->
+                    <div class="overflow-y-auto hide-scrollbar" style="max-height: calc(90vh - 160px)">
+                        <slot />
+                    </div>
 
-                <!-- Footer Slot -->
-                <div v-if="$slots.footer" class="mt-4 border-t pt-3">
-                    <slot name="footer" />
+                    <!-- Footer Slot -->
+                    <div v-if="$slots.footer" class="mt-4 border-t pt-3">
+                        <slot name="footer" />
+                    </div>
                 </div>
             </div>
-        </div>
-    </transition>
+        </transition>
+    </Teleport>
 </template>
 
 <style>

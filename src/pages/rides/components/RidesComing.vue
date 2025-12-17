@@ -1,15 +1,30 @@
 <script setup>
-import { defineProps } from "vue";
-//  defining the prope comes from the Rides parent component
+import { defineProps, defineEmits, ref } from "vue";
+import PaymentModal from "@/components/rides/PaymentModal.vue";
+
 defineProps({
   rides: {
     type: Array,
     default: () => [],
   },
 });
+
+const emit = defineEmits(['refresh']);
+
+const showPaymentModal = ref(false);
+const selectedRide = ref(null);
+
+const close = () => {
+  showPaymentModal.value = false;
+  selectedRide.value = null;
+  emit('refresh');
+};
 </script>
 
 <template>
+
+  <PaymentModal v-if="showPaymentModal" :ride="selectedRide" @close="close" />
+
   <!-- MAIN CONTENT -->
   <div data-aos="fade-up" data-aos-duration="1000">
     <section class="mt-6 flex flex-col xl:flex-row gap-6 items-start">
@@ -28,8 +43,14 @@ defineProps({
                 <img src="../../../assets/icons/dashboard/time.svg" class="h-3" alt="time" />
                 <span>{{ ride.pickup_time }}</span>
               </div>
-            
+
               <div class="flex items-center gap-2">
+                <button v-if="ride.payment_status == 0"
+                  class="bg-[#329EE7] px-6 sm:px-12 py-1 rounded-full text-white text-sm hover:bg-blue-700 transition"
+                  @click="showPaymentModal = true; selectedRide = ride">
+                  Pay Now
+                </button>
+
                 <RouterLink v-if="ride.booking_status_id != 2 && ride.payment_status == 0"
                   :to="`/rides/edit/${ride.id}`"
                   class="bg-[#329EE7] px-6 sm:px-12 py-1 rounded-full text-white text-sm hover:bg-blue-700 transition">
@@ -99,7 +120,8 @@ defineProps({
             </div>
 
             <!-- ========== DRIVER DETAILS ========== -->
-            <div v-if="ride.driver_bookings && ride.driver_bookings.length" class="border-t border-dashed border-[#B4B4B4] p-4 space-y-4">
+            <div v-if="ride.driver_bookings && ride.driver_bookings.length"
+              class="border-t border-dashed border-[#B4B4B4] p-4 space-y-4">
               <h3 class="text-[#414141] text-lg">Driver Details</h3>
 
               <div v-for="(d, dIdx) in ride.driver_bookings" :key="dIdx" class="space-y-2">

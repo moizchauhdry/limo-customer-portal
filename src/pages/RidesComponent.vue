@@ -129,7 +129,7 @@ onMounted(() => {
         </button>
       </div>
 
-      <RidesComing v-if="activeTab === 'upcoming'" :rides="bookings" />
+      <RidesComing v-if="activeTab === 'upcoming'" :rides="bookings" @refresh="fetchBookings" />
       <RidesCompleted v-if="activeTab === 'completed'" :rides="bookings" @search="filterRidesBySearch"
         @filterRidesByDate="filterRidesByDate" @filterRidesByDateRange="filterRidesByDateRange" />
       <RidesCancelled v-if="activeTab === 'cancelled'" :rides="bookings" />
