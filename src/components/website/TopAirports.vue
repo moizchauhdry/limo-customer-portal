@@ -83,15 +83,14 @@ const airports = [
           <div ref="carousel" class="flex overflow-x-auto snap-x snap-mandatory scroll-smooth gap-4 no-scrollbar">
             <div v-for="a in airports" :key="a.code" class="min-w-full snap-center flex flex-col items-center">
               <!-- wrapper: image + text stacked -->
-              <div class="relative w-full flex justify-center">
-                <img :src="a.icon" :alt="a.code" class="object-contain" />
-
-                <!-- centred, then shifted left -->
+              <div class=" w-full flex justify-center">
+                <img :src="a.icon" :alt="a.code" class="object-contain pb-4" />                
+              </div>
+              <!-- centred, then shifted left -->
                 <span
-                  class="absolute whitespace-nowrap inset-24 top-[85%] flex items-center justify-center text-white text-2xl z-10 translate-x-[-20%]">
+                  class="flex items-center justify-center text-white text-2xl z-10 ">
                   {{ a.code }}
                 </span>
-              </div>
             </div>
           </div>
 

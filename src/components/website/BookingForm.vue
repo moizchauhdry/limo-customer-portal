@@ -122,8 +122,10 @@ onMounted(() => {
 </script>
 
 <template>
-  <section class="bg-white shadow-2xl p-6 rounded-2xl max-w-xl sm:ml-auto sm:mt-[-25rem] z-10 relative sm:mr-[2rem] mx-4 sm:mx-0" data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150"
-    data-aos-easing="ease-in-out" data-aos-delay="100">
+  <section
+    class="bg-white shadow-2xl p-6 rounded-2xl max-w-xl sm:ml-auto sm:mt-[-25rem] z-10 relative sm:mr-[2rem] mx-4 sm:mx-0"
+    data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
+    data-aos-delay="100">
     <div v-if="storeBookingDataLoading" class="flex justify-center pb-6">
       <DotsLoading />
     </div>
@@ -137,37 +139,39 @@ onMounted(() => {
     </div>
 
     <form class="grid grid-cols-2 md:grid-cols-4 gap-3 space-y-1 sm:gap-6 ">
-      <FloatInput class="col-span-2" v-model="form.name" label="Name" placeholder="Jack" id="name" :error="form.errors.get('name')" />
+      <FloatInput class="col-span-2" v-model="form.name" label="Name" placeholder="Jack" id="name"
+        :error="form.errors.get('name')" />
       <FloatInput class="col-span-2" v-model="form.email" label="Email" placeholder="example@gmail.com" id="email"
         :error="form.errors.get('email')" />
-      <FloatInput class="sm:col-span-2" v-model="form.pickup_date" label="Date" customType="date" placeholder="Apr 19, 2025" id="pickup_date"
-        :error="form.errors.get('pickup_date')" />
-      <FloatInput class="sm:col-span-2" v-model="form.pickup_time" label="Time" customType="time" placeholder="08:00 pm" id="pickup_time"
-        :error="form.errors.get('pickup_time')" />
-      <FloatInput class="col-span-2" v-model="form.pickup_location" label="Pick Up" placeholder="From: Airport, Hotel ..."
-        id="origin-input" :error="form.errors.get('pickup_location')" />
-      <FloatInput class="col-span-2" v-model="form.drop_location" label="Destination" placeholder="To: Airport, Hotel ..."
-        id="destination-input" :error="form.errors.get('drop_location')" />
-      <FloatInput class="sm:col-span-2" v-model="form.phone" label="Number" placeholder="(XXX) XXX-XXXX" id="phone"
+      <FloatInput class="col-span-2" v-model="form.phone" label="Phone" placeholder="(XXX) XXX-XXXX" id="phone"
         :error="form.errors.get('phone')" />
-      <FloatSelect class="sm:col-span-2" v-if="form.service_type == 2" v-model="form.hours" label="Duration" placeholder="03 Hours"
-        :options="hoursOptions" id="hours" :error="form.errors.get('hours')" />
+      <FloatSelect class="col-span-2" v-model="form.travel_type" label="Travel" placeholder="One Way"
+        :options="storeBookingData?.travel_types || []" id="travel_type" :error="form.errors.get('travel_type')" />
+      <FloatInput class="sm:col-span-2" v-model="form.pickup_date" label="Date" customType="date"
+        placeholder="Apr 19,2025" id="pickup_date" :error="form.errors.get('pickup_date')" />
+      <FloatInput class="sm:col-span-2" v-model="form.pickup_time" label="Time" customType="time" placeholder="08:00 pm"
+        id="pickup_time" :error="form.errors.get('pickup_time')" />
+      <FloatInput class="col-span-2" v-model="form.pickup_location" label="Pick Up"
+        placeholder="From: Airport, Hotel ..." id="origin-input" :error="form.errors.get('pickup_location')" />
+      <FloatInput class="col-span-2" v-model="form.drop_location" label="Destination"
+        placeholder="To: Airport, Hotel ..." id="destination-input" :error="form.errors.get('drop_location')" />
+      <FloatSelect class="sm:col-span-2" v-if="form.service_type == 2" v-model="form.hours" label="Duration"
+        placeholder="03 Hours" :options="hoursOptions" id="hours" :error="form.errors.get('hours')" />
       <FloatSelect class="sm:col-span-2" v-model="form.vehicle_id" label="Fleet" placeholder="Black Sedan"
         :options="storeBookingData?.vehicles || []" id="vehicle_id" :error="form.errors.get('vehicle_id')" />
-      <FloatInput class="sm:col-span-2" v-model="form.no_of_passengers" label="Passengers" type="number" placeholder="04" id="passenger"
-        :error="form.errors.get('no_of_passengers')" />
-      <FloatInput class="sm:col-span-2" v-model="form.no_of_lugguage" label="Lugguage" type="number" placeholder="03" id="lugguage"
-        :error="form.errors.get('no_of_lugguage')" />
-      <FloatSelect class="sm:col-span-2" v-model="form.service" label="Service" placeholder="Airport pick-up"
+      <FloatInput class="sm:col-span-2" v-model="form.no_of_lugguage" label="Lugguage" type="number" placeholder="03"
+        id="lugguage" :error="form.errors.get('no_of_lugguage')" />
+      <FloatInput class="col-span-2" v-model="form.no_of_passengers" label="Passengers" type="number"
+        placeholder="04" id="passenger" :error="form.errors.get('no_of_passengers')" />
+      <FloatSelect class="col-span-2" v-model="form.service" label="Service" placeholder="Airport pick-up"
         :options="storeBookingData?.services || []" id="service" :error="form.errors.get('service')" />
 
-      <FloatSelect class="sm:col-span-2" v-model="form.travel_type" label="Travel" placeholder="One Way"
-        :options="storeBookingData?.travel_types || []" id="travel_type" :error="form.errors.get('travel_type')" />
+
       <div class="col-span-2 sm:col-span-4 w-[85%] sm:w-[50%] mx-auto mb-1">
         <button type="button"
           class="w-full mx-auto bg-[linear-gradient(93.72deg,#FAB707_2.95%,#FCDA19_100%)] px-16 text-black font-bold py-2 rounded-lg hover:opacity-90 transition disabled:opacity-50"
           :disabled="form.busy || storeBookingDataLoading" @click="storeBooking">
-          <div v-if="form.busy" class="h-6 flex items-center">
+          <div v-if="form.busy" class="h-6 flex items-center justify-center">
             <DotsLoading />
           </div>
           <span class="text-xs sm:text-sm" v-else>Get a Free Quote</span>

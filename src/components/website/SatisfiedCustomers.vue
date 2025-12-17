@@ -1,7 +1,7 @@
 <template>
   <!-- TRUSTED BY THOUSANDS -->
   <section
-    class="px-4 py-4 sm:py-12 md:px-10 lg:px-20 max-w-7xl mx-auto rounded-2xl bg-[linear-gradient(93.72deg,#3D3D3D_2.95%,#000000_100%)]"
+    class="px-4 py-4 sm:py-12 md:px-10 lg:px-20 max-w-7xl mx-auto sm:rounded-2xl bg-[linear-gradient(93.72deg,#3D3D3D_2.95%,#000000_100%)]"
      data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
     data-aos-delay="100"
   >

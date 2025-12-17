@@ -15,7 +15,7 @@
     </div>
 
     <!-- CENTER : TEXT BOX -->
-    <div class="relative z-0  bg-[#E5E5E5] rounded-xl py-6 sm:py-20 md:px-10 lg:px-20 shadow-lg" data-aos="fade-up"
+    <div class="relative z-0  bg-[#E5E5E5] sm:rounded-xl py-6 sm:py-20 md:px-10 lg:px-20 shadow-lg" data-aos="fade-up"
       data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out" data-aos-delay="100">
       <div class="text-center space-y-3 max-w-7xl mx-auto">
         <h2 class="text-[26px] md:text-[44px] lg:text-[50px] text-[#010101] leading-tight font-medium">

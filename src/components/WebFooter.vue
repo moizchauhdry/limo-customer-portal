@@ -2,7 +2,7 @@
   <!-- FOOTER : single-row grid on desktop, stacked on mobile -->
   <footer
     class="bg-[linear-gradient(93.72deg,#3D3D3D_2.95%,#000000_100%)] text-white px-4 md:px-10 lg:px-20 py-10 sm:py-16">
-    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-6 gap-4 sm:gap-10 items-start ml-4 sm:ml-0">
+    <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-6 gap-4 sm:gap-10 items-start">
       <!-- 1️⃣ LOGO + NEWSLETTER -->
       <div class="lg:col-span-2 space-y-2">
         <!-- LOGO -->

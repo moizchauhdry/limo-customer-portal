@@ -9,77 +9,77 @@ const step = 10;
 const reviews = [
   {
     id: 1,
-    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more!",
+    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more! Had a great experience traveling from Amaganstett to Islip Airport.",
     name: "Karan",
     time: "02 days ago",
     avatar: avatar1,
   },
   {
     id: 2,
-    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more!",
+    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more! Had a great experience traveling from Amaganstett to Islip Airport.",
     name: "Karan",
     time: "02 days ago",
     avatar: avatar1,
   },
   {
     id: 3,
-    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more!",
+    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more! Had a great experience traveling from Amaganstett to Islip Airport.",
     name: "Karan",
     time: "02 days ago",
     avatar: avatar1,
   },
   {
     id: 1,
-    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more!",
+    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more! Had a great experience traveling from Amaganstett to Islip Airport.",
     name: "Karan",
     time: "02 days ago",
     avatar: avatar1,
   },
   {
     id: 2,
-    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more!",
+    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more! Had a great experience traveling from Amaganstett to Islip Airport.",
     name: "Karan",
     time: "02 days ago",
     avatar: avatar1,
   },
   {
     id: 3,
-    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more!",
+    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more! Had a great experience traveling from Amaganstett to Islip Airport.",
     name: "Karan",
     time: "02 days ago",
     avatar: avatar1,
   },
   {
     id: 2,
-    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more!",
+    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more! Had a great experience traveling from Amaganstett to Islip Airport.",
     name: "Karan",
     time: "02 days ago",
     avatar: avatar1,
   },
   {
     id: 3,
-    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more!",
+    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more! Had a great experience traveling from Amaganstett to Islip Airport.",
     name: "Karan",
     time: "02 days ago",
     avatar: avatar1,
   },
   {
     id: 1,
-    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more!",
+    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more! Had a great experience traveling from Amaganstett to Islip Airport.",
     name: "Karan",
     time: "02 days ago",
     avatar: avatar1,
   },
   {
     id: 2,
-    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more!",
+    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more! Had a great experience traveling from Amaganstett to Islip Airport.",
     name: "Karan",
     time: "02 days ago",
     avatar: avatar1,
   },
   {
     id: 3,
-    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more!",
+    text: "Had a great experience traveling from Amaganstett to Islip Airport. Easy booking, reasonable rates, and the car was very well maintained. Couldn't ask for more! Had a great experience traveling from Amaganstett to Islip Airport.",
     name: "Karan",
     time: "02 days ago",
     avatar: avatar1,
@@ -176,7 +176,7 @@ const slideRight = () => {
           data-aos-delay="100">
           <div v-for="item in reviews" :key="item.id" class="relative snap-start ">
             <!-- CARD BODY -->
-            <div class="bg-white border border-gray-300 rounded-xl p-3 pb-10 relative shadow-[0_4px_20px_rgba(0,0,0,0.10)] 
+            <div class="bg-white border border-gray-300 rounded-xl p-3 sm:pb-10 relative shadow-[0_4px_20px_rgba(0,0,0,0.10)] 
              w-[86vw] sm:w-[300px] snap-start">
 
               <p class="text-[rgba(32,32,32,1)] h-[160px] text-sm">
