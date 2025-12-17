@@ -48,7 +48,7 @@
         </div>
 
         <!-- Total Trips -->
-        <div class="bg-[#369FFF] border border-[#CECECE] rounded-xl shadow p-5">
+        <!-- <div class="bg-[#369FFF] border border-[#CECECE] rounded-xl shadow p-5">
           <div class="flex items-center">
             <img
               src="../assets/icons/reports/usage-overview.svg"
@@ -61,15 +61,14 @@
               Usage overview
             </p>
           </div>
-        </div>
+        </div> -->
       </div>
 
       <!-- =============== TABS =============== -->
       <!-- Filter Section -->
       <div>
         <!-- Filters Row -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <!-- Search Field (Spans 2 columns) -->
+        <!-- <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">      
           <div class="relative col-span-1 sm:col-span-1">
             <input
               type="text"
@@ -82,16 +81,13 @@
               alt="Search Icon"
             />
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- Heading -->
-      <p class="text-2xl sm:text-3xl text-[#414141] font-bold mt-8 mb-4">
+      <!-- <p class="text-2xl sm:text-3xl text-[#414141] font-bold mt-8 mb-4">
         Your Downloaded Reports
-      </p>
-
-      <!-- Report Rows -->
-      <div class="space-y-4">
-        <!-- Row 1 -->
+      </p>   
+      <div class="space-y-4">  
         <div
           class="flex items-center justify-between border border-[#E0E0E0] rounded-lg px-4 py-3"
         >
@@ -112,7 +108,7 @@
           </div>
         </div>
 
-        <!-- Row 2 -->
+      
         <div
           class="flex items-center justify-between border border-[#E0E0E0] rounded-lg px-4 py-3"
         >
@@ -133,7 +129,7 @@
           </div>
         </div>
 
-        <!-- Row 3 -->
+     
         <div
           class="flex items-center justify-between border border-[#E0E0E0] rounded-lg px-4 py-3"
         >
@@ -154,7 +150,7 @@
           </div>
         </div>
 
-        <!-- Row 4 -->
+      
         <div
           class="flex items-center justify-between border border-[#E0E0E0] rounded-lg px-4 py-3"
         >
@@ -174,7 +170,7 @@
             </button>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </main>
 </template>

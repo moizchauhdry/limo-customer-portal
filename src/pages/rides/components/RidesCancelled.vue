@@ -21,14 +21,12 @@ defineProps({
             class="bg-white border border-[#DBDBDB] rounded-xl shadow mb-6">
             <!-- ========== HEADER ========== -->
             <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 border-b p-3">
-              <h3 class="text-xl sm:text-2xl lg:text-3xl font-normal text-[#414141]">
-                Cancelled Ride
-              </h3>
-              <!-- <img
-                    src="../../../assets/icons/rides/ride-complete.svg"
-                    alt="ride"
-                  /> -->
-
+              <div class="flex items-center gap-2">
+                <img src="../../../assets/icons/rides/cancelled.svg" alt="complete" srcset="" class="h-8" />
+                <h3 class="text-md sm:text-lg lg:text-xl font-normal text-[#414141]">
+                  Cancelled Ride
+                </h3>
+              </div>
               <button
                 class="bg-[#329EE7] px-6 sm:px-12 py-1 rounded-full text-white text-sm hover:bg-blue-700 transition">
                 View
@@ -59,7 +57,7 @@ defineProps({
                   ? "One Way"
                   : ride.travel_type === "2"
                     ? "Two Way"
-                : "N/A"
+                    : "N/A"
                 }}
               </div>
             </div>

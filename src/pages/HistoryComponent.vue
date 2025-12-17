@@ -213,7 +213,7 @@ watch(
               </div>
 
               <!-- ========== DRIVER DETAILS ========== -->
-              <div class="border-t border-dashed border-[#B4B4B4] p-4 space-y-4">
+              <div v-if="history.driver_bookings && history.driver_bookings.length" class="border-t border-dashed border-[#B4B4B4] p-4 space-y-4">
                 <div v-for="d in history.driver_bookings" :key="d.id"
                   class="grid grid-cols-[auto_1fr_auto] items-center gap-4">
                   <img src="../assets/icons/navbar/profile.svg" class="h-12 w-12 rounded-full" alt="Driver" />

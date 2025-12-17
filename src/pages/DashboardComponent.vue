@@ -366,7 +366,7 @@ const onPageChange = (pages) => {
 
           <!-- TRIP HISTORY TABLE -->
 
-          <div class="hidden sm:block bg-white rounded-xl shadow-lg border border-[#DBDBDB]">
+          <div v-if="dashboardRideData?.booking_history?.length" class="hidden sm:block bg-white rounded-xl shadow-lg border border-[#DBDBDB]">
             <h3 class="text-lg ml-2 pt-2 font-regular text-[#626262] mb-2">
               Trip History
             </h3>
@@ -416,7 +416,7 @@ const onPageChange = (pages) => {
           </div>
 
           <!-- TRIP HISTORY CARDS (Mobile) -->
-          <div class="block sm:hidden space-y-4 px-4">
+          <div v-if="dashboardRideData?.booking_history?.length" class="block sm:hidden space-y-4 px-4">
             <div v-for="trip in dashboardRideData?.booking_history" :key="trip?.id"
               class="bg-white border border-[#DBDBDB] rounded-xl shadow p-4">
               <!-- Header -->

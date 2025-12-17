@@ -63,24 +63,7 @@ watch(search, (value) => {
             v-model="search" />
           <img src="../../../assets/icons/rides/search-icon.svg" class="absolute left-3 top-2.5 h-4"
             alt="Search Icon" />
-        </div>
-
-        <!-- Status Dropdown -->
-        <!-- <div class="relative col-span-1">
-          <select
-            class="w-full appearance-none pr-10 pl-4 py-2 border border-[#D8D8D8] rounded-lg text-sm text-[#414141] focus:outline-none focus:ring-2 focus:ring-[#0072EF]"
-          >
-            <option>Status</option>
-            <option>Confirmed</option>
-            <option>Completed</option>
-            <option>Canceled</option>
-          </select>
-          <img
-            src="../../../assets/icons/dashboard/calender-arrow.svg"
-            class="absolute right-3 top-4"
-            alt="Dropdown Arrow"
-          />
-        </div> -->
+        </div>        
 
         <!-- Date Range Dropdown -->
         <div class="relative col-span-1">
@@ -116,11 +99,11 @@ watch(search, (value) => {
           <div v-for="(ride, index) in rides" :key="index"
             class="bg-white border border-[#DBDBDB] rounded-xl shadow mb-6">
             <!-- ========== HEADER ========== -->
-            <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 border-b p-3">
-              <h3 class="text-xl sm:text-2xl lg:text-3xl font-normal text-[#414141]">
+            <div class="flex flex-col lg:flex-row items-start lg:items-center gap-3 border-b p-3">
+              <img src="../../../assets/icons/rides/ride-complete.svg" alt="ride" class="h-8" />
+              <h3 class="text-md sm:text-lg lg:text-xl font-normal text-[#414141]">
                 Completed Rides
-              </h3>
-              <img src="../../../assets/icons/rides/ride-complete.svg" alt="ride" />
+              </h3>             
 
               <!-- <button
                     class="bg-[#329EE7] px-6 sm:px-12 py-1 rounded-full text-white text-sm hover:bg-blue-700 transition"
@@ -193,7 +176,7 @@ watch(search, (value) => {
             </div>
 
             <!-- ========== DRIVER DETAILS ========== -->
-            <div class="border-t border-dashed border-[#B4B4B4] p-4 space-y-4">
+            <div v-if="ride.driver_bookings && ride.driver_bookings.length" class="border-t border-dashed border-[#B4B4B4] p-4 space-y-4">
               <div class="flex justify-between items-center">
                 <h3 class="text-[#414141] text-lg">Driver Details</h3>
               </div>
