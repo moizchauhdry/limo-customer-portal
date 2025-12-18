@@ -12,9 +12,13 @@ body {
   overflow-x: hidden;
 }
 /* maaz added this for the overflow of navbar  */
-html, body {
+/* html, body {
+  overflow-x: hidden;
+} */
+ .dashboard-layout {
   overflow-x: hidden;
 }
+
 
 
 .logo_heading {
