@@ -29,6 +29,7 @@ const fetchBookingHistory = async () => {
     const { data } = await axios.get('/customer/bookings/history', {
       params: filters.value,
     });
+    console.log(data)
 
     bookingHistory.value = data.data;
   } catch (error) {
@@ -133,76 +134,89 @@ watch(
 
       <!-- =============== MAIN SECTION WRAPPER =============== -->
       <!-- ========== SKELETON LOADING ========== -->
-       <div>
-      <div v-if="loading" class="space-y-6 mt-6">
-        <div v-for="i in 3" :key="i" class="bg-white border border-[#DBDBDB] rounded-xl shadow p-4 animate-pulse">
-          <!-- Header -->
-          <div class="flex justify-between mb-4">
-            <div class="h-5 w-32 bg-gray-200 rounded"></div>
-            <div class="h-8 w-24 bg-gray-200 rounded-full"></div>
-          </div>
-
-          <!-- Ride ID + Fare -->
-          <div class="flex justify-between mb-4">
-            <div class="h-4 w-40 bg-gray-200 rounded"></div>
-            <div class="h-4 w-24 bg-gray-200 rounded"></div>
-          </div>
-
-          <!-- Route -->
-          <div class="space-y-2 mb-4">
-            <div class="h-3 w-full bg-gray-200 rounded"></div>
-            <div class="h-3 w-3/4 bg-gray-200 rounded"></div>
-          </div>
-
-          <!-- Stats -->
-          <div class="flex justify-between">
-            <div class="h-4 w-32 bg-gray-200 rounded"></div>
-            <div class="h-4 w-32 bg-gray-200 rounded"></div>
-          </div>
-
-          <!-- Driver -->
-          <div class="flex items-center gap-4 mt-6">
-            <div class="h-12 w-12 bg-gray-200 rounded-full"></div>
-            <div class="flex-1 space-y-2">
-              <div class="h-4 w-40 bg-gray-200 rounded"></div>
-              <div class="h-3 w-32 bg-gray-200 rounded"></div>
+      <div>
+        <div v-if="loading" class="space-y-6 mt-6">
+          <div v-for="i in 3" :key="i" class="bg-white border border-[#DBDBDB] rounded-xl shadow p-4 animate-pulse">
+            <!-- Header -->
+            <div class="flex justify-between mb-4">
+              <div class="h-5 w-32 bg-gray-200 rounded"></div>
+              <div class="h-8 w-24 bg-gray-200 rounded-full"></div>
             </div>
-            <div class="h-8 w-24 bg-gray-200 rounded-full"></div>
+
+            <!-- Ride ID + Fare -->
+            <div class="flex justify-between mb-4">
+              <div class="h-4 w-40 bg-gray-200 rounded"></div>
+              <div class="h-4 w-24 bg-gray-200 rounded"></div>
+            </div>
+
+            <!-- Route -->
+            <div class="space-y-2 mb-4">
+              <div class="h-3 w-full bg-gray-200 rounded"></div>
+              <div class="h-3 w-3/4 bg-gray-200 rounded"></div>
+            </div>
+
+            <!-- Stats -->
+            <div class="flex justify-between">
+              <div class="h-4 w-32 bg-gray-200 rounded"></div>
+              <div class="h-4 w-32 bg-gray-200 rounded"></div>
+            </div>
+
+            <!-- Driver -->
+            <div class="flex items-center gap-4 mt-6">
+              <div class="h-12 w-12 bg-gray-200 rounded-full"></div>
+              <div class="flex-1 space-y-2">
+                <div class="h-4 w-40 bg-gray-200 rounded"></div>
+                <div class="h-3 w-32 bg-gray-200 rounded"></div>
+              </div>
+              <div class="h-8 w-24 bg-gray-200 rounded-full"></div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <!-- first card completed status -->
-      <section v-else class="mt-6 flex flex-col xl:flex-row gap-6 items-start">
-        <div class="flex-1 space-y-6">
-          <div  class="px-2 sm:px-0 ">
-            <div v-for="history in bookingHistory" :key="history.id"
-              class="bg-white border border-[#DBDBDB] rounded-xl shadow mb-6">
-              <!-- ========== HEADER ========== -->
-              <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 border-b p-3">
-                <div class="flex items-center gap-2">
-                  <img src="../assets/icons/rides/ride-complete.svg" alt="complete" srcset="" class="h-8" />
-                  <h3 class="text-md sm:text-lg lg:text-xl font-normal text-[#414141]">
-                    Completed
-                  </h3>
+        <!-- first card completed status -->
+        <section v-else class="mt-6 flex flex-col xl:flex-row gap-6 items-start">
+          <div class="flex-1 space-y-6">
+            <div class="px-2 sm:px-0 ">
+              <div v-for="history in bookingHistory" :key="history.id"
+                class="bg-white border border-[#DBDBDB] rounded-xl shadow mb-6">
+                <!-- ========== HEADER ========== -->
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 border-b p-3">
+                  <div class="flex items-center gap-2">
+                   
+                    <img v-if="['completed', 'reservation confirmed'].includes(
+                      history.booking_status_name?.toLowerCase()
+                    )" src="../assets/icons/rides/ride-complete.svg" alt="complete" class="h-8" />
+
+                   
+                    <img v-else-if="history.booking_status_name?.toLowerCase() === 'cancelled'"
+                      src="../assets/icons/rides/cancelled.svg" alt="pending" class="h-8" />
+
+                   
+                    <img v-else src="../assets/icons/rides/ride-info.png" alt="info" class="h-8" />
+
+                   
+                    <h3 class="text-md sm:text-lg lg:text-xl font-normal text-[#414141]">
+                      {{ history.booking_status_name || 'Completed' }}
+                    </h3>
+                  </div>
+
+                  <RouterLink :to="`/view-booking/${history.id}`"
+                    class="bg-[#329EE7] px-6 sm:px-12 py-1 rounded-full text-white text-sm hover:bg-blue-700 transition">
+                    View
+                  </RouterLink>
                 </div>
-                <RouterLink :to="`/view-booking/${history.id}`"
-                  class="bg-[#329EE7] px-6 sm:px-12 py-1 rounded-full text-white text-sm hover:bg-blue-700 transition">
-                  View
-                </RouterLink>
-              </div>
-              <!-- header -->
-              <div class="flex items-center justify-between px-4 mt-2">
-                <h3 class="text-lg text-[#414141]">Ride ID: TR:{{ history.id }}</h3>
-                <div class="flex items-center gap-2">
-                  <img src="../assets/icons/rides/total-fare.svg" class="h-4" alt="Fare" />
-                  <p class="text-sm sm:text-lg text-[#000]">Final Fare:</p>
-                  <p class="text-sm sm:text-lg font-medium text-[#000]">${{ history.payments_total }}</p>
+                <!-- header -->
+                <div class="flex items-center justify-between px-4 mt-2">
+                  <h3 class="text-lg text-[#414141]">Ride ID: TR:{{ history.id }}</h3>
+                  <div class="flex items-center gap-2">
+                    <img src="../assets/icons/rides/total-fare.svg" class="h-4" alt="Fare" />
+                    <p class="text-sm sm:text-lg text-[#000]">Final Fare:</p>
+                    <p class="text-sm sm:text-lg font-medium text-[#000]">${{ history.payments_total }}</p>
+                  </div>
                 </div>
-              </div>
-              <!-- One Way / Two Way Seal -->
-              <div class="mr-4 mt-1 flex items-center">
-                <div class="ml-auto inline-flex items-center justify-center
+                <!-- One Way / Two Way Seal -->
+                <div class="mr-4 mt-1 flex items-center">
+                  <div class="ml-auto inline-flex items-center justify-center
                              border border-[#329EE7]
                              whitespace-nowrap
                              px-3 sm:px-6
@@ -210,76 +224,76 @@ watch(
                              text-[#329EE7]
                              text-[10px] sm:text-[12px]
                               font-medium">
-                  {{ history.travel_type === "1"
-                    ? "One Way"
-                    : history.travel_type === "2"
-                      ? "Two Way"
-                      : "N/A"
-                  }}
-                </div>
-              </div>
-              <!-- ========== ROUTE BLOCK ========== -->
-              <div
-                class="flex flex-col sm:flex-row justify-between mb-2 gap-3 items-start text-sm text-[#414141] px-4 pt-3">
-                <!-- Left Side Route -->
-                <div class="flex flex-col sm:flex-row gap-2 sm:items-center w-full">
-                  <!-- Start -->
-                  <div class="flex items-center gap-2">
-                    <img src="../assets/icons/dashboard/location.svg" class="h-4" alt="start" />
-                    <span class="text-xs sm:text-sm">
-                      {{ history.pickup_location }}
-                    </span>
-                  </div>
-
-                  <!-- Route Icon -->
-                  <img src="../assets/icons/dashboard/small-fare.svg" class="h-2 sm:mt-1.5 my-1 sm:my-0 mx-auto sm:mx-0"
-                    alt="route" />
-
-                  <!-- End -->
-                  <div class="flex items-center gap-2">
-                    <img src="../assets/icons/dashboard/airport.svg" class="h-4" alt="end" />
-                    <span class="text-xs sm:text-sm">{{ history.drop_location }}</span>
+                    {{ history.travel_type === "1"
+                      ? "One Way"
+                      : history.travel_type === "2"
+                        ? "Two Way"
+                        : "N/A"
+                    }}
                   </div>
                 </div>
-              </div>
+                <!-- ========== ROUTE BLOCK ========== -->
+                <div
+                  class="flex flex-col sm:flex-row justify-between mb-2 gap-3 items-start text-sm text-[#414141] px-4 pt-3">
+                  <!-- Left Side Route -->
+                  <div class="flex flex-col sm:flex-row gap-2 sm:items-center w-full">
+                    <!-- Start -->
+                    <div class="flex items-center gap-2">
+                      <img src="../assets/icons/dashboard/location.svg" class="h-4" alt="start" />
+                      <span class="text-xs sm:text-sm">
+                        {{ history.pickup_location }}
+                      </span>
+                    </div>
 
-              <!-- ========== STATS ROW ========== -->
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-[#414141] px-4 pb-3 items-start">
-                <!-- Distance -->
-                <div class="flex flex-col items-start sm:items-start gap-1 rounded-lg px-1 text-md text-[#17171A]">
-                  <span class="text-[#414141] text-lg">Distance: {{ history.total_distance }}</span>
+                    <!-- Route Icon -->
+                    <img src="../assets/icons/dashboard/small-fare.svg"
+                      class="h-2 sm:mt-1.5 my-1 sm:my-0 mx-auto sm:mx-0" alt="route" />
+
+                    <!-- End -->
+                    <div class="flex items-center gap-2">
+                      <img src="../assets/icons/dashboard/airport.svg" class="h-4" alt="end" />
+                      <span class="text-xs sm:text-sm">{{ history.drop_location }}</span>
+                    </div>
+                  </div>
                 </div>
 
-                <!-- Duration -->
-                <div class="flex flex-col items-start sm:items-end gap-1">
-                  <span class="text-[#414141] text-lg">Duration: {{ history.total_time }}</span>
-                </div>
-              </div>
-
-              <!-- ========== DRIVER DETAILS ========== -->
-              <div v-if="history.driver_bookings && history.driver_bookings.length"
-                class="border-t border-dashed border-[#B4B4B4] p-4 space-y-4">
-                <div v-for="d in history.driver_bookings" :key="d.id"
-                  class="grid grid-cols-[auto_1fr_auto] items-center gap-4">
-                  <img src="../assets/icons/navbar/profile.svg" class="h-12 w-12 rounded-full" alt="Driver" />
-
-                  <div class="text-sm text-[#414141]">
-                    <p class="font-semibold">{{ d.driver_name }}</p>
-                    <p class="text-xs sm:text-sm">
-                      Car: {{ d.vehicle_name }} Plate # ABC 123
-                    </p>
+                <!-- ========== STATS ROW ========== -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-[#414141] px-4 pb-3 items-start">
+                  <!-- Distance -->
+                  <div class="flex flex-col items-start sm:items-start gap-1 rounded-lg px-1 text-md text-[#17171A]">
+                    <span class="text-[#414141] text-lg">Distance: {{ history.total_distance }}</span>
                   </div>
 
-                  <button
-                    class="bg-[#FFFFFF] border border-[#8F8F8F] font-semibold px-6 sm:px-11 py-1 rounded-full text-[#8F8F8F] text-sm hover:bg-blue-700 transition">
-                    Driver
-                  </button>
+                  <!-- Duration -->
+                  <div class="flex flex-col items-start sm:items-end gap-1">
+                    <span class="text-[#414141] text-lg">Duration: {{ history.total_time }}</span>
+                  </div>
+                </div>
+
+                <!-- ========== DRIVER DETAILS ========== -->
+                <div v-if="history.driver_bookings && history.driver_bookings.length"
+                  class="border-t border-dashed border-[#B4B4B4] p-4 space-y-4">
+                  <div v-for="d in history.driver_bookings" :key="d.id"
+                    class="grid grid-cols-[auto_1fr_auto] items-center gap-4">
+                    <img src="../assets/icons/navbar/profile.svg" class="h-12 w-12 rounded-full" alt="Driver" />
+
+                    <div class="text-sm text-[#414141]">
+                      <p class="font-semibold">{{ d.driver_name }}</p>
+                      <p class="text-xs sm:text-sm">
+                        Car: {{ d.vehicle_name }} Plate # ABC 123
+                      </p>
+                    </div>
+
+                    <button
+                      class="bg-[#FFFFFF] border border-[#8F8F8F] font-semibold px-6 sm:px-11 py-1 rounded-full text-[#8F8F8F] text-sm hover:bg-blue-700 transition">
+                      Driver
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
       </div>
     </div>
   </main>
