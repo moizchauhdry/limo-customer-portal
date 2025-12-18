@@ -1,5 +1,23 @@
 <script setup>
-import { defineProps } from "vue";
+import { defineProps, onMounted, ref } from "vue";
+import axios from "@/axios";
+import { formatDate } from "@/utils";
+
+const recentHistory = ref([]);
+
+const fetchTransactionHistory = async () => {
+  try {
+    const { data } = await axios.get('/customer/wallet/transaction-history');
+    recentHistory.value = data.data.data;
+  } catch (err) {
+    console.log("Failed to load Transaction History:", err);
+  }
+}
+
+onMounted(() => {
+  fetchTransactionHistory();
+});
+
 
 defineProps({
   isMobile: {
@@ -37,46 +55,80 @@ defineProps({
     </div> -->
 
     <div class="rounded-xl  border border-[#B7B7B7] mt-3">
-      <div v-if="!isMobile" class="hidden sm:block">
-        <table class="w-full text-sm text-left text-[#414141]">
-          <thead class="text-[#3B3B3B] border-b border-[#B7B7B7]">
-            <tr>
-              <th class="px-4 py-3 font-semibold text-lg">Transaction ID</th>
-              <th class="px-4 py-3 font-semibold text-lg">Date</th>
-              <th class="px-4 py-3 font-semibold text-lg">Pick up</th>
-              <th class="px-4 py-3 font-semibold text-lg">Drop off</th>
-              <th class="px-4 py-3 font-semibold text-lg">Fare</th>
-              <th class="px-4 py-3 font-semibold text-lg">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="border-b border-[#B7B7B7]">
-              <td class="px-4 py-3">TR </td>
-              <td class="px-4 py-3">10/20/2025</td>
-              <td class="px-4 py-3">LaGuardia</td>
-              <td class="px-4 py-3">JFK</td>
-              <td class="px-4 py-3">$120</td>
-              <td class="px-4 py-3">
+      <div class="hidden sm:block">
+        <!-- Scrollable Table -->
+        <div class="max-h-80 overflow-y-auto no-scrollbar">
+          <table class="w-full text-sm text-left text-[#414141]">
+            <thead class="text-[#3B3B3B] border-b border-[#B7B7B7]">
+              <tr>
+                <th class="px-4 py-3 font-semibold text-sm whitespace-nowrap">Ride ID</th>
+                <th class="px-4 py-3 font-semibold text-sm whitespace-nowrap">Date</th>
+                <th class="px-4 py-3 font-semibold text-sm whitespace-nowrap">Pick up</th>
+                <th class="px-4 py-3 font-semibold text-sm whitespace-nowrap">Drop off</th>
+                <th class="px-4 py-3 font-semibold text-sm whitespace-nowrap">Payment Method</th>
+                <th class="px-4 py-3 font-semibold text-sm whitespace-nowrap">Status</th>
+                <th class="px-4 py-3 font-semibold text-sm whitespace-nowrap">Fare</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="history in recentHistory" :key="history.id" class="border-b border-[#B7B7B7]">
+                <td class="px-4 py-3">
+                  <span v-if="history.booking_id">#{{ history.booking_id }}</span>
+                  <span v-else class="text-gray-400 italic">General</span>
+                </td>
+                <td class="px-4 py-3">{{ formatDate(history.payment_at) }}</td>
+                <td class="px-4 py-3">{{ history.pickup_location }}</td>
+                <td class="px-4 py-3">{{ history.drop_location }}</td>
+                <td class="px-4 py-3 font-bold">{{ history.payment_method }}</td>
+                <!-- <td class="px-4 py-3">
                 <span class="inline-block px-3 py-1 rounded-lg bg-[#0FB14B] text-white text-xs">
                   Complete
                 </span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+              </td> -->
+                <td class="px-4 py-3">
+                  <span class="px-3 py-1 rounded-full text-xs font-medium" :class="history.payment_status === 1
+                    ? 'bg-green-100 text-green-700'
+                    : 'bg-red-100 text-red-700'">
+                    {{ history.payment_status === 1 ? 'Paid' : 'Unpaid' }}
+                  </span>
+                </td>
+
+                <td class="px-4 py-3">{{ history.payment_grand_total }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
 
       <!-- Mobile Cards -->
-      <div v-else class="sm:hidden space-y-4 p-4 text-sm text-[#414141]">
+      <div v-for="history in recentHistory" :key="history.id" class="sm:hidden space-y-4 p-4 text-sm text-[#414141]">
         <div class="border border-[#B7B7B7] rounded-lg p-3 space-y-2">
           <div class="flex justify-between">
-            <span class="font-semibold">Ride ID:</span><span>TR 1154</span>
+            <span class="font-semibold">Ride ID:</span><span>#{{ history.booking_id }}</span>
           </div>
           <div class="flex justify-between">
-            <span class="font-semibold">Date:</span><span>10/20/2025</span>
+            <span class="font-semibold">Date:</span><span>{{ formatDate(history.payment_at) }}</span>
+          </div>
+          <div class="flex justify-between gap-5">
+            <span class="font-semibold whitespace-nowrap">Pick up</span><span class="text-xs justify-end">{{
+              history.pickup_location }}</span>
+          </div>
+          <div class="flex justify-between gap-5">
+            <span class="font-semibold">Drop off</span><span class="text-xs">{{ history.drop_location }}</span>
           </div>
           <div class="flex justify-between">
-            <span class="font-semibold">Fare:</span><span>$120</span>
+            <span class="font-semibold whitespace-nowrap">Payment Method</span><span class="font-bold">{{ history.payment_method }}</span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-semibold">Status</span><span class="px-3 py-1 rounded-full text-xs font-medium" :class="history.payment_status === 1
+              ? 'bg-green-100 text-green-700'
+              : 'bg-red-100 text-red-700'">
+              {{ history.payment_status === 1 ? 'Paid' : 'Unpaid' }}
+            </span>
+          </div>
+          <div class="flex justify-between">
+            <span class="font-semibold">Fare:</span><span>{{ history.payment_grand_total }}</span>
           </div>
         </div>
       </div>

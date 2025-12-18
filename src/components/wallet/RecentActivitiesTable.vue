@@ -3,12 +3,12 @@ import { defineProps, onMounted, ref } from "vue";
 import axios from "@/axios";
 import { formatDate } from "@/utils";
 
-const RecentData = ref([]); // array instead of 0
+const RecentData = ref([]);
 
 const fetchRecentActivities = async () => {
     try {
         const { data } = await axios.get('/customer/wallet/recent-activities');
-        RecentData.value = data.data.data; // note the nested structure: data.data.data
+        RecentData.value = data.data.data;
     } catch (err) {
         console.log("Failed to load Recent Data:", err);
     }
@@ -61,10 +61,10 @@ defineProps({
                     <table class="w-full text-sm text-left text-[#414141]">
                         <thead class="text-[#3B3B3B] border-b border-[#B7B7B7]">
                             <tr>
-                                <th class="px-4 py-3 font-semibold text-lg">Ride ID</th>
-                                <th class="px-4 py-3 font-semibold text-lg">Amount</th>
-                                <th class="px-4 py-3 font-semibold text-lg">Type</th>
-                                <th class="px-4 py-3 font-semibold text-lg">Date</th>
+                                <th class="px-4 py-3 font-semibold text-sm">Ride ID</th>
+                                <th class="px-4 py-3 font-semibold text-sm">Amount</th>
+                                <th class="px-4 py-3 font-semibold text-sm">Type</th>
+                                <th class="px-4 py-3 font-semibold text-sm">Date</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,10 +75,9 @@ defineProps({
                                 </td>
                                 <td class="px-4 py-3">${{ activity.amount }}</td>
                                 <td class="px-4 py-3">
-                                    <span class="px-3 py-1 rounded-full text-xs font-medium text-white capitalize"
-                                        :class="activity.type?.toLowerCase() === 'debit'
-                                            ? 'bg-red-500'
-                                            : 'bg-green-500'">
+                                    <span class="px-3 py-1 rounded-full text-xs font-medium capitalize" :class="activity.type?.toLowerCase() === 'debit'
+                                        ? 'bg-red-100 text-red-700'
+                                        : 'bg-green-100 text-green-700'">
                                         {{ activity.type }}
                                     </span>
                                 </td>
@@ -108,9 +107,9 @@ defineProps({
 
                     <div class="flex justify-between">
                         <span class="font-semibold">Type:</span>
-                        <span class="px-2 py-0.5 rounded-full text-xs text-white" :class="activity.type?.toLowerCase() === 'debit'
-                            ? 'bg-red-500'
-                            : 'bg-green-500'">
+                        <span class="px-3 py-1 rounded-full text-xs font-medium capitalize" :class="activity.type?.toLowerCase() === 'debit'
+                            ? 'bg-red-100 text-red-700'
+                            : 'bg-green-100 text-green-700'">
                             {{ activity.type }}
                         </span>
                     </div>
