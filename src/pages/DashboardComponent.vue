@@ -536,6 +536,10 @@ const onPageChange = (pages) => {
 
   margin-left: 5px !important;
 }
+.vc-weeks{
+  margin-top: 20px;
+  height: 220px;
+}
 
 .vc-header .vc-title-wrapper {
   border: 1px solid gray;

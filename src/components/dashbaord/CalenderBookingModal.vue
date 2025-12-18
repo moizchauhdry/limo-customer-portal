@@ -48,7 +48,7 @@ const loading = ref(true)
 const fetchBookingByDate = async () => {
   try {
     loading.value = true
-   const { data } = await axios.get(
+    const { data } = await axios.get(
       `/customer/dashboard-bookings-by-date`,
       {
         params: {
@@ -81,7 +81,7 @@ onMounted(() => {
     <!-- ================= HEADER ================= -->
     <template #header>
       <h2 class="text-xl font-semibold">
-         Bookings for {{ formattedDate }}
+        Bookings for {{ formattedDate }}
       </h2>
     </template>
 
@@ -92,11 +92,8 @@ onMounted(() => {
 
           <!-- ================= SKELETON LOADER ================= -->
           <template v-if="loading">
-            <div
-              v-for="i in 2"
-              :key="i"
-              class="bg-white border border-[#DBDBDB] rounded-xl shadow mb-6 p-4 animate-pulse"
-            >
+            <div v-for="i in 2" :key="i"
+              class="bg-white border border-[#DBDBDB] rounded-xl shadow mb-6 p-4 animate-pulse">
               <div class="flex justify-between mb-4">
                 <div class="h-4 w-40 bg-gray-200 rounded"></div>
                 <div class="h-4 w-24 bg-gray-200 rounded"></div>
@@ -116,15 +113,10 @@ onMounted(() => {
 
           <!-- ================= BOOKINGS LIST ================= -->
           <template v-else>
-            <div
-              v-for="ride in bookingRideData"
-              :key="ride.id"
-              class="bg-white border border-[#DBDBDB] rounded-xl shadow mb-6"
-            >
+            <div v-for="ride in bookingRideData" :key="ride.id"
+              class="bg-white border border-[#DBDBDB] rounded-xl shadow mb-6">
               <!-- HEADER -->
-              <div
-                class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 border-b p-3"
-              >
+              <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 border-b p-3">
                 <div class="flex items-center gap-2 text-sm text-[#17171A]">
                   <img src="../../assets/icons/dashboard/date.svg" class="h-3" />
                   <span>{{ ride.pickup_date }}</span>
@@ -137,20 +129,17 @@ onMounted(() => {
                   </span>
                 </div>
 
-                <span
-                  class="px-4 py-1 rounded-full text-xs text-white"
-                  :style="{ backgroundColor: ride.booking_status_color }"
-                >
+                <span class="flex items-center gap-1 px-4 py-1 rounded-full text-xs text-black"
+                  :style="{ backgroundColor: ride.booking_status_color }">
+                  <img v-if="ride.booking_status_name === 'Completed'"
+                    src="../../assets/icons/rides/ride-complete.svg" alt="completed" class="w-4 h-4">
                   {{ ride.booking_status_name }}
                 </span>
               </div>
 
               <!-- ROUTE -->
               <div class="flex gap-3 items-start text-sm text-[#414141] px-4 pt-3 pb-2">
-                <img
-                  src="../../assets/icons/dashboard/location-line.svg"
-                  class="h-10 sm:h-12 pt-1"
-                />
+                <img src="../../assets/icons/dashboard/location-line.svg" class="h-10 sm:h-12 pt-1" />
 
                 <div class="flex flex-col space-y-3">
                   <div class="flex items-center gap-2">
@@ -169,8 +158,7 @@ onMounted(() => {
                 </div>
 
                 <div
-                  class="ml-auto border border-[#329EE7] whitespace-nowrap px-2 sm:px-6 rounded-full text-[#329EE7] text-[10px] sm:text-[12px]"
-                >
+                  class="ml-auto border border-[#329EE7] whitespace-nowrap px-2 sm:px-6 rounded-full text-[#329EE7] text-[10px] sm:text-[12px]">
                   {{ ride.travel_type === "1" ? "One Way" : "Two Way" }}
                 </div>
               </div>
@@ -178,8 +166,7 @@ onMounted(() => {
               <!-- STATS -->
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-[#414141] px-4 pb-3">
                 <div
-                  class="flex items-center sm:w-[65%] gap-3 border border-[#D8D8D8] rounded-lg py-1 px-3 text-xs text-[#17171A]"
-                >
+                  class="flex items-center sm:w-[65%] gap-3 border border-[#D8D8D8] rounded-lg py-1 px-3 text-xs text-[#17171A]">
                   <div class="flex items-center gap-1">
                     <img src="../../assets/icons/dashboard/distance.svg" class="h-3" />
                     <span>{{ ride.total_distance }}</span>
@@ -204,10 +191,7 @@ onMounted(() => {
             </div>
 
             <!-- EMPTY STATE -->
-            <div
-              v-if="!bookingRideData.length"
-              class="text-center text-sm text-[#909090] py-10"
-            >
+            <div v-if="!bookingRideData.length" class="text-center text-sm text-[#909090] py-10">
               No rides available for the selected date.
             </div>
           </template>

@@ -46,7 +46,7 @@ const close = () => {
 
               <div class="flex items-center gap-2">
                 <button v-if="ride.payment_status == 0"
-                  class="bg-[#329EE7] px-6 sm:px-12 py-1 rounded-full text-white text-sm hover:bg-blue-700 transition"
+                  class="bg-[#046e24] px-6 sm:px-12 py-1 rounded-full text-white text-sm hover:bg-blue-700 transition"
                   @click="showPaymentModal = true; selectedRide = ride">
                   Pay Now
                 </button>

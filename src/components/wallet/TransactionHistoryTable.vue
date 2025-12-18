@@ -15,7 +15,7 @@ defineProps({
       Transaction History
     </p>
     <!-- Filter Section -->
-    <div class="">
+    <!-- <div class="">
       <div class="grid grid-cols-1 sm:grid-cols-5 gap-4">
         <div class="relative col-span-1 sm:col-span-2">
           <input type="text" placeholder="Search"
@@ -34,7 +34,7 @@ defineProps({
           Date Range
         </button>
       </div>
-    </div>
+    </div> -->
 
     <div class="rounded-xl  border border-[#B7B7B7] mt-3">
       <div v-if="!isMobile" class="hidden sm:block">

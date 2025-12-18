@@ -34,7 +34,7 @@ defineProps({
         </p>
 
         <!-- Filter Section -->
-        <div class="grid grid-cols-1 sm:grid-cols-5 gap-4 mb-4">
+        <!-- <div class="grid grid-cols-1 sm:grid-cols-5 gap-4 mb-4">
             <div class="relative col-span-1 sm:col-span-2">
                 <input type="text" placeholder="Search"
                     class="w-full pl-10 pr-4 py-2 border border-[#D8D8D8] rounded-lg text-sm text-[#414141] placeholder:text-[#A0A0A0] focus:outline-none focus:ring-2 focus:ring-[#0072EF]" />
@@ -50,14 +50,14 @@ defineProps({
                 class="w-full border border-[#BDBDBD] text-[#828282] font-semibold text-sm px-4 py-2 rounded-lg hover:bg-[#EAEAEA] transition">
                 Date Range
             </button>
-        </div>
+        </div> -->
 
         <!-- Table -->
         <!-- Table Wrapper -->
         <div class="rounded-xl border border-[#B7B7B7] mt-3 overflow-hidden">
-            <div v-if="!isMobile" class="hidden sm:block">
+            <div class="hidden sm:block">
                 <!-- Scrollable Table -->
-                <div class="max-h-80 overflow-y-auto scrollbar-hide">
+                <div class="max-h-80 overflow-y-auto no-scrollbar">
                     <table class="w-full text-sm text-left text-[#414141]">
                         <thead class="text-[#3B3B3B] border-b border-[#B7B7B7]">
                             <tr>
@@ -69,28 +69,56 @@ defineProps({
                         </thead>
                         <tbody>
                             <tr v-for="activity in RecentData" :key="activity.id" class="border-b border-[#B7B7B7]">
-                                <td class="px-4 py-3">#{{ activity.booking_id }}</td>
+                                <td class="px-4 py-3">
+                                    <span v-if="activity.booking_id">#{{ activity.booking_id }}</span>
+                                    <span v-else class="text-gray-400 italic">General</span>
+                                </td>
                                 <td class="px-4 py-3">${{ activity.amount }}</td>
-                                <td class="px-4 py-3 capitalize">{{ activity.type }}</td>
+                                <td class="px-4 py-3">
+                                    <span class="px-3 py-1 rounded-full text-xs font-medium text-white capitalize"
+                                        :class="activity.type?.toLowerCase() === 'debit'
+                                            ? 'bg-red-500'
+                                            : 'bg-green-500'">
+                                        {{ activity.type }}
+                                    </span>
+                                </td>
+
                                 <td class="px-4 py-3">{{ formatDate(activity.created_at) }}</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-
-            <!-- Mobile Table -->
-            <div v-else class="sm:hidden space-y-4 p-4 text-sm text-[#414141]">
+            <!-- Mobile Cards -->
+            <div class="sm:hidden space-y-4 p-4 text-sm text-[#414141]">
                 <div v-for="activity in RecentData" :key="activity.id"
                     class="border border-[#B7B7B7] rounded-lg p-3 space-y-2">
-                    <div class="flex justify-between"><span class="font-semibold">Ride ID:</span><span>TR {{
-                            activity.booking_id }}</span></div>
-                    <div class="flex justify-between"><span class="font-semibold">Amount:</span><span>${{
-                            activity.amount }}</span></div>
-                    <div class="flex justify-between"><span class="font-semibold">Type:</span><span>{{ activity.type ===
-                            'credit' ? 'Top-up' : 'Debit' }}</span></div>
-                    <div class="flex justify-between"><span class="font-semibold">Date:</span><span>{{
-                        formatDate(activity.created_at) }}</span></div>
+                    <div class="flex justify-between">
+                        <span class="font-semibold">Ride ID:</span>
+                        <span>
+                            <span v-if="activity.booking_id">#{{ activity.booking_id }}</span>
+                            <span v-else class="text-gray-400 italic">General</span>
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <span class="font-semibold">Amount:</span>
+                        <span>${{ activity.amount }}</span>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <span class="font-semibold">Type:</span>
+                        <span class="px-2 py-0.5 rounded-full text-xs text-white" :class="activity.type?.toLowerCase() === 'debit'
+                            ? 'bg-red-500'
+                            : 'bg-green-500'">
+                            {{ activity.type }}
+                        </span>
+                    </div>
+
+                    <div class="flex justify-between">
+                        <span class="font-semibold">Date:</span>
+                        <span>{{ formatDate(activity.created_at) }}</span>
+                    </div>
                 </div>
             </div>
         </div>
