@@ -2,6 +2,7 @@
 import { onMounted, ref, watch } from "vue";
 import SkeletonLoading from "@/components/SkeletonLoading.vue";
 import axios from "@/axios";
+import PaginationComponent from "@/components/PaginationComponent.vue";
 
 const now = new Date();
 const start = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
@@ -9,6 +10,7 @@ const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
 const end = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(lastDay).padStart(2, "0")}`;
 const range = ref({ start, end });
 const bookingHistory = ref([]);
+const pagination = ref({});
 const loading = ref(false);
 
 const filters = ref({
@@ -17,7 +19,7 @@ const filters = ref({
   sort: "desc",
 });
 
-const fetchBookingHistory = async () => {
+const fetchBookingHistory = async (url = '/customer/bookings/history') => {
   try {
     loading.value = true;
     if (filters.value.search_date_key === "date_range") {
@@ -27,11 +29,12 @@ const fetchBookingHistory = async () => {
       filters.value.start_date = "";
       filters.value.end_date = "";
     }
-    const { data } = await axios.get('/customer/bookings/history', {
+    const { data } = await axios.get(url, {
       params: filters.value,
     });
 
     bookingHistory.value = data.data.data;
+    pagination.value = data.data;
   } catch (error) {
     console.error("Failed to load booking details:", error);
   } finally {
@@ -256,6 +259,8 @@ watch(
                   </div>
                 </div>
               </div>
+
+              <PaginationComponent :pagination="pagination" @change="fetchBookingHistory" />
             </div>
           </div>
         </section>
