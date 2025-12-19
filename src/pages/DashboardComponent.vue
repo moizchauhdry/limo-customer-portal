@@ -8,6 +8,7 @@ import Form from 'vform'
 import DotsLoading from "@/components/DotsLoading.vue";
 import SkeletonLoading from "@/components/SkeletonLoading.vue";
 import TripTableSkeleton from "@/components/TripTableSkeleton.vue";
+import CalendarSkeleton from "@/components/CalendarSkeleton.vue";
 
 // const scheduledDates = ref(["2025-12-14", "2025-12-17", "2025-12-31"]);
 // const completedDates = ref(["2025-12-21", "2025-12-25"]);
@@ -470,22 +471,26 @@ const onPageChange = (pages) => {
 
         <!-- RIGHT COLUMN -->
         <div class="w-[90%] mx-auto sm:w-full xl:w-[325px] space-y-6">
-          <!-- CALENDAR -->
-          <div class="bg-white p-4 rounded-xl border border-[#DBDBDB]">
+          <div>
+            <!-- Loading -->
+            <CalendarSkeleton v-if="loading" />
+            <!-- CALENDAR -->
+            <div v-else class="bg-white p-4 rounded-xl border border-[#DBDBDB]">
 
-            <!-- Calendar Grid -->
-            <VCalendar :attributes="attributes" margin="auto" borderless @dayclick="onDayClick"
-              @update:pages="onPageChange" />
-            <!-- Calendar Footer Legend -->
-            <div
-              class="flex justify-center items-center gap-6 border-t border-[#E0E0E0] mt-4 pt-3 text-sm text-[#414141]">
-              <div class="flex items-center gap-2">
-                <div class="w-4 h-4 rounded-full bg-yellow-400"></div>
-                <span class="whitespace-nowrap">Rides Scheduled</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <div class="w-4 h-4 rounded-full bg-green-500"></div>
-                <span class="whitespace-nowrap">Rides Completed</span>
+              <!-- Calendar Grid -->
+              <VCalendar :attributes="attributes" margin="auto" borderless @dayclick="onDayClick"
+                @update:pages="onPageChange" />
+              <!-- Calendar Footer Legend -->
+              <div
+                class="flex justify-center items-center gap-6 border-t border-[#E0E0E0] mt-4 pt-3 text-sm text-[#414141]">
+                <div class="flex items-center gap-2">
+                  <div class="w-4 h-4 rounded-full bg-yellow-400"></div>
+                  <span class="whitespace-nowrap">Rides Scheduled</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <div class="w-4 h-4 rounded-full bg-green-500"></div>
+                  <span class="whitespace-nowrap">Rides Completed</span>
+                </div>
               </div>
             </div>
           </div>
@@ -498,28 +503,77 @@ const onPageChange = (pages) => {
             </div>
           </div> -->
 
-          <!-- RIDE RATING -->
-          <div v-if="dashboardRideData?.last_booking_review_data?.is_reviewed == false"
-            class="bg-[#F8F8F8] p-6 rounded-xl border border-[#DBDBDB]">
-            <p class="font-semibold text-lg text-[#626262]">
-              How was your last ride <span class="text-black"
-                v-if="dashboardRideData?.last_booking_review_data?.booking_id">#{{
-                  dashboardRideData?.last_booking_review_data?.booking_id }}</span>?
-            </p>
-            <p class="text-sm text-[#000000] mb-4">Review Rating:</p>
+          <!-- ================= RIDE RATING ================= -->
+<div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <button v-for="item in ['Excellent', 'Good', 'Average', 'Bad']" :key="item" :disabled="ratingForm.busy"
-                class="group flex flex-col items-center py-4 rounded-lg outline-none transition-all duration-300 ease-out"
-                @click="submitRating(item)">
-                <img :src="getIcon(item)"
-                  class="h-10 mb-2 transition-transform duration-300 group-hover:rotate-6 group-hover:scale-110"
-                  :alt="item" />
-                <DotsLoading v-if="ratingForm.busy" />
-                <span v-else class="text-black font-medium text-sm">{{ item }}</span>
-              </button>
-            </div>
-          </div>
+  <!-- ===== Skeleton Loading ===== -->
+  <div
+    v-if="loading"
+    class="bg-[#F8F8F8] p-6 rounded-xl border border-[#DBDBDB] animate-pulse"
+  >
+    <!-- Title -->
+    <div class="h-5 w-2/3 bg-gray-300 rounded mb-3"></div>
+
+    <!-- Subtitle -->
+    <div class="h-4 w-32 bg-gray-300 rounded mb-6"></div>
+
+    <!-- Rating buttons skeleton -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div
+        v-for="n in 4"
+        :key="n"
+        class="flex flex-col items-center py-4 rounded-lg bg-gray-200"
+      >
+        <div class="h-10 w-10 rounded-full bg-gray-300 mb-2"></div>
+        <div class="h-3 w-16 bg-gray-300 rounded"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Actual Rating Card ===== -->
+  <div
+    v-else-if="dashboardRideData?.last_booking_review_data?.is_reviewed === false"
+    class="bg-[#F8F8F8] p-6 rounded-xl border border-[#DBDBDB]"
+  >
+    <p class="font-semibold text-lg text-[#626262]">
+      How was your last ride
+      <span
+        class="text-black"
+        v-if="dashboardRideData?.last_booking_review_data?.booking_id"
+      >
+        #{{ dashboardRideData?.last_booking_review_data?.booking_id }}
+      </span>
+      ?
+    </p>
+
+    <p class="text-sm text-[#000000] mb-4">Review Rating:</p>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <button
+        v-for="item in ['Excellent', 'Good', 'Average', 'Bad']"
+        :key="item"
+        :disabled="ratingForm.busy"
+        class="group flex flex-col items-center py-4 rounded-lg outline-none
+               transition-all duration-300 ease-out"
+        @click="submitRating(item)"
+      >
+        <img
+          :src="getIcon(item)"
+          class="h-10 mb-2 transition-transform duration-300
+                 group-hover:rotate-6 group-hover:scale-110"
+          :alt="item"
+        />
+
+        <DotsLoading v-if="ratingForm.busy" />
+        <span v-else class="text-black font-medium text-sm">
+          {{ item }}
+        </span>
+      </button>
+    </div>
+  </div>
+
+</div>
+
         </div>
       </section>
     </div>

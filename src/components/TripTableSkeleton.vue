@@ -11,7 +11,8 @@ defineProps({
 
 <template>
     <!-- ================= DESKTOP TABLE SKELETON ================= -->
-    <div class="hidden sm:block bg-white rounded-xl shadow-lg border border-[#DBDBDB]">
+    <div class="hidden sm:block bg-white rounded-xl shadow-lg border border-[#DBDBDB]"  data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150"
+    data-aos-easing="ease-in-out" data-aos-delay="100">
         <h3 class="text-lg ml-2 pt-2 font-regular text-[#626262] mb-2">
 
         </h3>
@@ -52,7 +53,8 @@ defineProps({
     </div>
 
     <!-- ================= MOBILE CARD SKELETON ================= -->
-    <div class="block sm:hidden space-y-4 px-4 mt-4">
+    <div class="block sm:hidden space-y-4 px-4 mt-4"  data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150"
+    data-aos-easing="ease-in-out" data-aos-delay="100">
         <div v-for="i in count" :key="`mobile-${i}`"
             class="bg-white border border-[#DBDBDB] rounded-xl shadow p-4 animate-pulse">
             <!-- Header -->

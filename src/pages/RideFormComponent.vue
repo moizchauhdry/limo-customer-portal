@@ -352,9 +352,9 @@ onBeforeUnmount(() => {
     data-aos-easing="ease-in-out" data-aos-delay="100">
     <div class="max-w-7xl mx-auto container">
       <!-- WRAPPER: Two vertical columns -->
-      <section class="flex flex-col xl:flex-row gap-6 items-start">
+      <section class="flex flex-col sm:flex-row  items-start">
         <!-- MAIN WRAPPER -->
-        <div class="w-full max-w-2xl mx-auto p-4 space-y-2">
+        <div class="w-full md:max-w-2xl 2xl:max-w-4xl mx-auto p-4 space-y-2">
 
           <!-- TRAVEL TYPE -->
           <div class="grid grid-cols-12 gap-3">
@@ -617,7 +617,7 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- RIGHT COLUMN -->
-        <div class="w-full sm:w-full xl:w-[325px] space-y-6">
+        <div class="w-full max-w-[350px] space-y-6">
           <div id="vue-map" class="w-full h-[400px] mt-4 border rounded"></div>
 
           <!-- DISTANCE & TIME -->
