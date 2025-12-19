@@ -3,6 +3,7 @@ import { ref, onMounted, watch } from "vue";
 import axios from "@/axios";
 import { formatDate } from "@/utils";
 import CreateComplaintComponent from "@/components/complaints/CreateComplaintComponent.vue";
+import TripTableSkeleton from "@/components/TripTableSkeleton.vue";
 
 const now = new Date();
 const start = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-01`;
@@ -11,6 +12,7 @@ const end = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}
 const range = ref({ start, end });
 
 const showModal = ref(false);
+const loading = ref(false);
 const complaints = ref([]);
 const filters = ref({
   search: "",
@@ -45,7 +47,7 @@ watch(
 
 const fetchComplaints = async () => {
   try {
-
+    loading.value = true;
     if (filters.value.date_type === "date_range") {
       filters.value.start_date = range.value.start;
       filters.value.end_date = range.value.end;
@@ -58,9 +60,11 @@ const fetchComplaints = async () => {
       params: filters.value,
     });
 
-    complaints.value = data.data;
+    complaints.value = data.data.data;
   } catch (err) {
     console.error("Error fetching bookings:", err);
+  } finally {
+    loading.value = false;
   }
 };
 
@@ -141,69 +145,74 @@ onMounted(() => {
           </div>
         </div>
       </div>
-
-      <div class="bg-white rounded-xl shadow-lg border border-[#B7B7B7] mt-3">
-        <div class="hidden sm:block">
-          <table class="w-full text-sm text-left text-[#414141]">
-            <thead class="text-[#3B3B3B] border-b border-[#B7B7B7]">
-              <tr>
-                <th class="px-4 py-3 font-semibold text-lg">Booking ID</th>
-                <th class="px-4 py-3 font-semibold text-lg">Date</th>
-                <th class="px-4 py-3 font-semibold text-lg">Pick up</th>
-                <th class="px-4 py-3 font-semibold text-lg">Drop off</th>
-                <th class="px-4 py-3 font-semibold text-lg">Fare</th>
-                <th class="px-4 py-3 font-semibold text-lg">Status</th>
-              </tr>
-            </thead>
-            <transition-group tag="tbody" name="fade">
-              <tr class="border-b border-[#B7B7B7] transition" v-for="complaint in complaints" :key="complaint.id">
-                <td class="px-4 py-3">#{{ complaint?.bookings[0]?.id }}</td>
-                <td class="px-4 py-3">{{ formatDate(complaint.created_at) }}</td>
-                <td class="px-4 py-3">{{ complaint?.bookings[0]?.pickup_location }}</td>
-                <td class="px-4 py-3">{{ complaint?.bookings[0]?.drop_location }}</td>
-                <td class="px-4 py-3">${{ complaint?.bookings[0]?.payments_total }}</td>
-                <td class="px-4 py-3">
-                  <span class="inline-block px-3 py-1 rounded-lg text-white text-xs capitalize" :class="{
-                    'bg-[#B1480F]': complaint.status == 'pending',
-                    'bg-[#0FB14B]': complaint.status == 'resolved',
-                    'bg-gray-500': complaint.status == 'closed',
-                  }">
-                    {{ complaint.status }}
-                  </span>
-                </td>
-              </tr>
-            </transition-group>
-          </table>
+      <!-- trip table  -->
+      <div>
+        <div v-if="loading" class="space-y-6 mt-6">
+          <TripTableSkeleton :count="4" />
         </div>
+        <div v-else class="bg-white rounded-xl shadow-lg border border-[#B7B7B7] mt-3">
+          <div class="hidden sm:block">
+            <table class="w-full text-sm text-left text-[#414141]">
+              <thead class="text-[#3B3B3B] border-b border-[#B7B7B7]">
+                <tr>
+                  <th class="px-4 py-3 font-semibold text-sm whitespace-nowrap">Booking ID</th>
+                  <th class="px-4 py-3 font-semibold text-sm whitespace-nowrap">Date</th>
+                  <th class="px-4 py-3 font-semibold text-sm whitespace-nowrap">Pick up</th>
+                  <th class="px-4 py-3 font-semibold text-sm whitespace-nowrap">Drop off</th>
+                  <th class="px-4 py-3 font-semibold text-sm whitespace-nowrap">Fare</th>
+                  <th class="px-4 py-3 font-semibold text-sm whitespace-nowrap">Status</th>
+                </tr>
+              </thead>
+              <transition-group tag="tbody" name="fade">
+                <tr class="border-b border-[#B7B7B7] transition" v-for="complaint in complaints" :key="complaint.id">
+                  <td class="px-4 py-3">#{{ complaint?.bookings[0]?.id }}</td>
+                  <td class="px-4 py-3">{{ formatDate(complaint.created_at) }}</td>
+                  <td class="px-4 py-3">{{ complaint?.bookings[0]?.pickup_location }}</td>
+                  <td class="px-4 py-3">{{ complaint?.bookings[0]?.drop_location }}</td>
+                  <td class="px-4 py-3">${{ complaint?.bookings[0]?.payments_total }}</td>
+                  <td class="px-4 py-3">
+                    <span class="inline-block px-3 py-1 rounded-lg text-white text-xs capitalize" :class="{
+                      'bg-[#B1480F]': complaint.status == 'pending',
+                      'bg-[#0FB14B]': complaint.status == 'resolved',
+                      'bg-gray-500': complaint.status == 'closed',
+                    }">
+                      {{ complaint.status }}
+                    </span>
+                  </td>
+                </tr>
+              </transition-group>
+            </table>
+          </div>
 
-        <!-- Mobile Cards -->
-        <div class="sm:hidden space-y-4 p-4 text-sm text-[#414141]">
-          <div class="border border-[#B7B7B7] rounded-lg p-3 space-y-2" v-for="complaint in complaints"
-            :key="complaint.id">
-            <div class="flex justify-between">
-              <span class="font-semibold">Booking ID:</span><span>#{{ complaint?.bookings[0]?.id }}</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Date:</span><span>{{ formatDate(complaint.created_at) }}</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Pick up:</span><span>{{ complaint?.bookings[0]?.pickup_location }}</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Drop off:</span><span>{{ complaint?.bookings[0]?.drop_location }}</span>
-            </div>
-            <div class="flex justify-between">
-              <span class="font-semibold">Fare:</span><span>${{ complaint?.bookings[0]?.payments_total }}</span>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="font-semibold">Status:</span>
-              <span class="inline-block px-3 py-1 rounded-lg text-white text-xs capitalize" :class="{
-                'bg-[#B1480F]': complaint.status == 'pending',
-                'bg-[#0FB14B]': complaint.status == 'resolved',
-                'bg-gray-500': complaint.status == 'closed',
-              }">
-                {{ complaint.status }}
-              </span>
+          <!-- Mobile Cards -->
+          <div class="sm:hidden space-y-4 p-4 text-sm text-[#414141]">
+            <div class="border border-[#B7B7B7] rounded-lg p-3 space-y-2" v-for="complaint in complaints"
+              :key="complaint.id">
+              <div class="flex justify-between">
+                <span class="font-semibold">Booking ID:</span><span>#{{ complaint?.bookings[0]?.id }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="font-semibold">Date:</span><span>{{ formatDate(complaint.created_at) }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="font-semibold">Pick up:</span><span>{{ complaint?.bookings[0]?.pickup_location }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="font-semibold">Drop off:</span><span>{{ complaint?.bookings[0]?.drop_location }}</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="font-semibold">Fare:</span><span>${{ complaint?.bookings[0]?.payments_total }}</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="font-semibold">Status:</span>
+                <span class="inline-block px-3 py-1 rounded-lg text-white text-xs capitalize" :class="{
+                  'bg-[#B1480F]': complaint.status == 'pending',
+                  'bg-[#0FB14B]': complaint.status == 'resolved',
+                  'bg-gray-500': complaint.status == 'closed',
+                }">
+                  {{ complaint.status }}
+                </span>
+              </div>
             </div>
           </div>
         </div>

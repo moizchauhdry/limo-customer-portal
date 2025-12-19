@@ -7,6 +7,7 @@ import CalenderBookingModal from "@/components/dashbaord/CalenderBookingModal.vu
 import Form from 'vform'
 import DotsLoading from "@/components/DotsLoading.vue";
 import SkeletonLoading from "@/components/SkeletonLoading.vue";
+import TripTableSkeleton from "@/components/TripTableSkeleton.vue";
 
 // const scheduledDates = ref(["2025-12-14", "2025-12-17", "2025-12-31"]);
 // const completedDates = ref(["2025-12-21", "2025-12-25"]);
@@ -238,7 +239,7 @@ const onPageChange = (pages) => {
 
           <!-- RIDE-DETAILS CARD -->
           <div>
-            <div v-if="loading"  class="space-y-6 mt-6">
+            <div v-if="loading" class="space-y-6 mt-6">
               <SkeletonLoading :count="1" />
             </div>
             <div v-else class="px-5 sm:px-0">
@@ -371,91 +372,96 @@ const onPageChange = (pages) => {
           </div>
 
           <!-- TRIP HISTORY TABLE -->
-
-          <div v-if="dashboardRideData?.booking_history?.length"
-            class="hidden sm:block bg-white rounded-xl shadow-lg border border-[#DBDBDB]">
-            <h3 class="text-lg ml-2 pt-2 font-regular text-[#626262] mb-2">
-              Trip History
-            </h3>
-            <div class="overflow-x-auto w-full">
-              <table class="w-full text-sm text-left text-[#414141]">
-                <thead class="text-[#3B3B3B] border-b border-t border-[#E0E0E0]">
-                  <tr>
-                    <th class="px-4 py-3 font-normal">Trip ID</th>
-                    <th class="px-4 py-3 font-normal">Date</th>
-                    <th class="px-4 py-3 font-normal">Destination</th>
-                    <th class="px-4 py-3 font-normal">Fare</th>
-                    <th class="px-4 py-3 font-normal">Status</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  <tr v-for="trip in dashboardRideData?.booking_history" :key="trip?.id">
-                    <!-- Trip ID -->
-                    <td class="px-4 py-3">TR:{{ trip?.id }}</td>
-
-                    <!-- Date -->
-                    <td class="px-4 py-3">
-                      {{ trip?.pickup_date }}
-                    </td>
-
-                    <!-- Destination -->
-                    <td class="px-4 py-3">
-                      {{ trip?.drop_location || "N/A" }}
-                    </td>
-
-                    <!-- Fare -->
-                    <td class="px-4 py-3">${{ trip?.payments_total }}</td>
-
-                    <!-- Status -->
-                    <td class="px-4 py-3">
-                      <span class="inline-block px-3 py-1 rounded-lg text-white text-xs" :class="{
-                        'bg-[#0FB14B]': trip.booking_status_id === 2, // Complete
-                        'bg-[#FF4A54] px-5': trip.booking_status_id === 1, //Pending
-                      }">
-                        {{ getStatus(trip.booking_status_id) }}
-                      </span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+          <div>
+            <div v-if="loading" class="space-y-6 mt-6">
+              <TripTableSkeleton :count="4" />
             </div>
-          </div>
 
-          <!-- TRIP HISTORY CARDS (Mobile) -->
-          <div v-if="dashboardRideData?.booking_history?.length" class="block sm:hidden space-y-4 px-4">
-            <div v-for="trip in dashboardRideData?.booking_history" :key="trip?.id"
-              class="bg-white border border-[#DBDBDB] rounded-xl shadow p-4">
-              <!-- Header -->
-              <div class="flex justify-between items-center mb-2">
-                <p class="text-sm font-medium text-[#414141]">
-                  Trip ID: TR:{{ trip?.id }}
-                </p>
+            <div v-if="dashboardRideData?.booking_history?.length"
+              class="hidden sm:block bg-white rounded-xl shadow-lg border border-[#DBDBDB]">
+              <h3 class="text-lg ml-2 pt-2 font-regular text-[#626262] mb-2">
+                Trip History
+              </h3>
+              <div class="overflow-x-auto w-full">
+                <table class="w-full text-sm text-left text-[#414141]">
+                  <thead class="text-[#3B3B3B] border-b border-t border-[#E0E0E0]">
+                    <tr>
+                      <th class="px-4 py-3 font-normal">Trip ID</th>
+                      <th class="px-4 py-3 font-normal">Date</th>
+                      <th class="px-4 py-3 font-normal">Destination</th>
+                      <th class="px-4 py-3 font-normal">Fare</th>
+                      <th class="px-4 py-3 font-normal">Status</th>
+                    </tr>
+                  </thead>
 
-                <span class="inline-flex items-center justify-center w-20 h-6 text-xs rounded-full text-white" :class="{
-                  'bg-[#0FB14B]': trip.booking_status_id === 2,
-                  'bg-[#FF4A54]': trip.booking_status_id === 1,
-                }">
-                  {{ getStatus(trip.booking_status_id) }}
-                </span>
+                  <tbody>
+                    <tr v-for="trip in dashboardRideData?.booking_history" :key="trip?.id">
+                      <!-- Trip ID -->
+                      <td class="px-4 py-3">TR:{{ trip?.id }}</td>
+
+                      <!-- Date -->
+                      <td class="px-4 py-3">
+                        {{ trip?.pickup_date }}
+                      </td>
+
+                      <!-- Destination -->
+                      <td class="px-4 py-3">
+                        {{ trip?.drop_location || "N/A" }}
+                      </td>
+
+                      <!-- Fare -->
+                      <td class="px-4 py-3">${{ trip?.payments_total }}</td>
+
+                      <!-- Status -->
+                      <td class="px-4 py-3">
+                        <span class="inline-block px-3 py-1 rounded-lg text-white text-xs" :class="{
+                          'bg-[#0FB14B]': trip.booking_status_id === 2, // Complete
+                          'bg-[#FF4A54] px-5': trip.booking_status_id === 1, //Pending
+                        }">
+                          {{ getStatus(trip.booking_status_id) }}
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
+            </div>
 
-              <!-- Body -->
-              <div class="space-y-1 text-sm text-[#626262]">
-                <p>
-                  <span class="font-medium">Date:</span>
-                  {{ trip?.pickup_date }}
-                </p>
+            <!-- TRIP HISTORY CARDS (Mobile) -->
+            <div v-if="dashboardRideData?.booking_history?.length" class="block sm:hidden space-y-4 px-4">
+              <div v-for="trip in dashboardRideData?.booking_history" :key="trip?.id"
+                class="bg-white border border-[#DBDBDB] rounded-xl shadow p-4">
+                <!-- Header -->
+                <div class="flex justify-between items-center mb-2">
+                  <p class="text-sm font-medium text-[#414141]">
+                    Trip ID: TR:{{ trip?.id }}
+                  </p>
 
-                <p>
-                  <span class="font-medium">Destination:</span>
-                  {{ trip?.drop_location || "N/A" }}
-                </p>
+                  <span class="inline-flex items-center justify-center w-20 h-6 text-xs rounded-full text-white" :class="{
+                    'bg-[#0FB14B]': trip.booking_status_id === 2,
+                    'bg-[#FF4A54]': trip.booking_status_id === 1,
+                  }">
+                    {{ getStatus(trip.booking_status_id) }}
+                  </span>
+                </div>
 
-                <p>
-                  <span class="font-medium">Fare:</span>
-                  ${{ trip?.payments_total }}
-                </p>
+                <!-- Body -->
+                <div class="space-y-1 text-sm text-[#626262]">
+                  <p>
+                    <span class="font-medium">Date:</span>
+                    {{ trip?.pickup_date }}
+                  </p>
+
+                  <p>
+                    <span class="font-medium">Destination:</span>
+                    {{ trip?.drop_location || "N/A" }}
+                  </p>
+
+                  <p>
+                    <span class="font-medium">Fare:</span>
+                    ${{ trip?.payments_total }}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
