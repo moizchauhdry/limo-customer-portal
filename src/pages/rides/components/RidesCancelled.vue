@@ -27,10 +27,10 @@ defineProps({
                   Cancelled Ride
                 </h3>
               </div>
-              <button
+              <RouterLink :to="`/view-booking/${ride.id}`"
                 class="bg-[#329EE7] px-6 sm:px-12 py-1 rounded-full text-white text-sm hover:bg-blue-700 transition">
                 View
-              </button>
+              </RouterLink>
             </div>
             <!-- header -->
             <div class="flex items-center justify-between px-4 mt-2">

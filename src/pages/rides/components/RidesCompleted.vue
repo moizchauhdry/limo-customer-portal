@@ -63,7 +63,7 @@ watch(search, (value) => {
             v-model="search" />
           <img src="../../../assets/icons/rides/search-icon.svg" class="absolute left-3 top-2.5 h-4"
             alt="Search Icon" />
-        </div>        
+        </div>
 
         <!-- Date Range Dropdown -->
         <div class="relative col-span-1">
@@ -103,7 +103,7 @@ watch(search, (value) => {
               <img src="../../../assets/icons/rides/ride-complete.svg" alt="ride" class="h-8" />
               <h3 class="text-md sm:text-lg lg:text-xl font-normal text-[#414141]">
                 Completed Rides
-              </h3>             
+              </h3>
 
               <!-- <button
                     class="bg-[#329EE7] px-6 sm:px-12 py-1 rounded-full text-white text-sm hover:bg-blue-700 transition"
@@ -141,7 +141,8 @@ watch(search, (value) => {
                   }}</span>
                 </div>
               </div>
-              <div class="ml-auto border border-[#329EE7] whitespace-nowrap px-2 sm:px-6  rounded-full text-[#329EE7] text-[10px] sm:text-[12px]">
+              <div
+                class="ml-auto border border-[#329EE7] whitespace-nowrap px-2 sm:px-6  rounded-full text-[#329EE7] text-[10px] sm:text-[12px]">
                 <h1>{{ ride.travel_type === "1" ? "One Way" : ride.travel_type === "2" ? "Two Way" : "N/A" }}</h1>
               </div>
             </div>
@@ -168,15 +169,16 @@ watch(search, (value) => {
                   </p>
                 </div>
 
-                <button
+                <RouterLink :to="`/view-booking/${ride.id}`"
                   class="bg-[#329EE7] px-6 sm:px-12 py-1 rounded-full text-white text-sm hover:bg-blue-700 transition">
                   View
-                </button>
+                </RouterLink>
               </div>
             </div>
 
             <!-- ========== DRIVER DETAILS ========== -->
-            <div v-if="ride.driver_bookings && ride.driver_bookings.length" class="border-t border-dashed border-[#B4B4B4] p-4 space-y-4">
+            <div v-if="ride.driver_bookings && ride.driver_bookings.length"
+              class="border-t border-dashed border-[#B4B4B4] p-4 space-y-4">
               <div class="flex justify-between items-center">
                 <h3 class="text-[#414141] text-lg">Driver Details</h3>
               </div>

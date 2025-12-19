@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref, watch } from "vue";
+import SkeletonLoading from "@/components/SkeletonLoading.vue";
 import axios from "@/axios";
 
 const now = new Date();
@@ -29,9 +30,8 @@ const fetchBookingHistory = async () => {
     const { data } = await axios.get('/customer/bookings/history', {
       params: filters.value,
     });
-    console.log(data)
 
-    bookingHistory.value = data.data;
+    bookingHistory.value = data.data.data;
   } catch (error) {
     console.error("Failed to load booking details:", error);
   } finally {
@@ -136,43 +136,8 @@ watch(
       <!-- ========== SKELETON LOADING ========== -->
       <div>
         <div v-if="loading" class="space-y-6 mt-6">
-          <div v-for="i in 3" :key="i" class="bg-white border border-[#DBDBDB] rounded-xl shadow p-4 animate-pulse">
-            <!-- Header -->
-            <div class="flex justify-between mb-4">
-              <div class="h-5 w-32 bg-gray-200 rounded"></div>
-              <div class="h-8 w-24 bg-gray-200 rounded-full"></div>
-            </div>
-
-            <!-- Ride ID + Fare -->
-            <div class="flex justify-between mb-4">
-              <div class="h-4 w-40 bg-gray-200 rounded"></div>
-              <div class="h-4 w-24 bg-gray-200 rounded"></div>
-            </div>
-
-            <!-- Route -->
-            <div class="space-y-2 mb-4">
-              <div class="h-3 w-full bg-gray-200 rounded"></div>
-              <div class="h-3 w-3/4 bg-gray-200 rounded"></div>
-            </div>
-
-            <!-- Stats -->
-            <div class="flex justify-between">
-              <div class="h-4 w-32 bg-gray-200 rounded"></div>
-              <div class="h-4 w-32 bg-gray-200 rounded"></div>
-            </div>
-
-            <!-- Driver -->
-            <div class="flex items-center gap-4 mt-6">
-              <div class="h-12 w-12 bg-gray-200 rounded-full"></div>
-              <div class="flex-1 space-y-2">
-                <div class="h-4 w-40 bg-gray-200 rounded"></div>
-                <div class="h-3 w-32 bg-gray-200 rounded"></div>
-              </div>
-              <div class="h-8 w-24 bg-gray-200 rounded-full"></div>
-            </div>
-          </div>
+         <SkeletonLoading/>
         </div>
-
         <!-- first card completed status -->
         <section v-else class="mt-6 flex flex-col xl:flex-row gap-6 items-start">
           <div class="flex-1 space-y-6">

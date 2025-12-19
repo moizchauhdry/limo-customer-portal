@@ -6,6 +6,7 @@ import { useToast } from "vue-toastification";
 import CalenderBookingModal from "@/components/dashbaord/CalenderBookingModal.vue";
 import Form from 'vform'
 import DotsLoading from "@/components/DotsLoading.vue";
+import SkeletonLoading from "@/components/SkeletonLoading.vue";
 
 // const scheduledDates = ref(["2025-12-14", "2025-12-17", "2025-12-31"]);
 // const completedDates = ref(["2025-12-21", "2025-12-25"]);
@@ -31,7 +32,7 @@ const dateFilterOptions = ref([
   { value: "this_year", label: "This Year" },
   { value: "last_year", label: "Last Year" },
 ]);
-const loading = ref(true);
+const loading = ref(false);
 const statsLoading = ref(true);
 const analyticsLoading = ref(false);
 const dateFilter = ref("");
@@ -236,48 +237,52 @@ const onPageChange = (pages) => {
           </p>
 
           <!-- RIDE-DETAILS CARD -->
-          <div class="px-5 sm:px-0">
-            <div class="bg-white p-4 sm:p-6 rounded-xl border border-[#DBDBDB] shadow space-y-4">
-              <!-- header -->
-              <div class="flex items-center justify-between">
-                <h3 class="text-[14px] sm:text-lg text-[#626262]">Ride Details</h3>
-                <div
-                  class="flex items-center gap-2 border border-[#D8D8D8] text-xs text-[#17171A] px-2 py-1 rounded-lg shadow-[0_0_6px_#D8D8D8]">
-                  <img src="../assets/icons/dashboard/date.svg" class="h-3" alt="date" />
-                  <!-- <span> Oct 17, 2025</span> -->
-                  <span>{{ dashboardRideData.next_booking?.pickup_date }}</span>
+          <div>
+            <div v-if="loading"  class="space-y-6 mt-6">
+              <SkeletonLoading :count="1" />
+            </div>
+            <div v-else class="px-5 sm:px-0">
+              <div class="bg-white p-4 sm:p-6 rounded-xl border border-[#DBDBDB] shadow space-y-4">
+                <!-- header -->
+                <div class="flex items-center justify-between">
+                  <h3 class="text-[14px] sm:text-lg text-[#626262]">Ride Details</h3>
+                  <div
+                    class="flex items-center gap-2 border border-[#D8D8D8] text-xs text-[#17171A] px-2 py-1 rounded-lg shadow-[0_0_6px_#D8D8D8]">
+                    <img src="../assets/icons/dashboard/date.svg" class="h-3" alt="date" />
+                    <!-- <span> Oct 17, 2025</span> -->
+                    <span>{{ dashboardRideData.next_booking?.pickup_date }}</span>
 
-                  <img src="../assets/icons/dashboard/time.svg" class="h-3" alt="date" />
-                  <!-- <span> Oct 17, 2025</span> -->
-                  <span>{{ dashboardRideData.next_booking?.pickup_time }}</span>
-                </div>
-              </div>
-
-              <!-- top row (route + date) -->
-              <div class="flex gap-4 items-start text-sm text-[#414141]">
-                <!-- Vertical Route Icon -->
-                <div class="pt-1">
-                  <img src="../assets/icons/dashboard/location-line.svg" class="h-28 sm:h-14" alt="Route Icon" />
-                </div>
-
-                <!-- Your Original Route Text -->
-                <div class="flex flex-col space-y-6 justify-between">
-                  <div class="flex items-center gap-2">
-                    <img src="../assets/icons/dashboard/location.svg" class="h-4" alt="Start" />
-                    <!-- <span>LaGuardia Airport (LGA), East USA</span> -->
-                    <span>{{
-                      dashboardRideData.next_booking?.pickup_location
-                    }}</span>
-                  </div>
-                  <div class="flex items-center gap-2">
-                    <img src="../assets/icons/dashboard/airport.svg" class="h-4" alt="End" />
-                    <!-- <span>JFK Airport</span> -->
-                    <span>{{ dashboardRideData.next_booking?.drop_location }}</span>
+                    <img src="../assets/icons/dashboard/time.svg" class="h-3" alt="date" />
+                    <!-- <span> Oct 17, 2025</span> -->
+                    <span>{{ dashboardRideData.next_booking?.pickup_time }}</span>
                   </div>
                 </div>
-                <!-- One Way / Two Way Seal -->
-                <div class="mr-4 ml-auto mt-1 flex items-center">
-                  <div class="ml-auto inline-flex items-center justify-center
+
+                <!-- top row (route + date) -->
+                <div class="flex gap-4 items-start text-sm text-[#414141]">
+                  <!-- Vertical Route Icon -->
+                  <div class="pt-1">
+                    <img src="../assets/icons/dashboard/location-line.svg" class="h-28 sm:h-14" alt="Route Icon" />
+                  </div>
+
+                  <!-- Your Original Route Text -->
+                  <div class="flex flex-col space-y-6 justify-between">
+                    <div class="flex items-center gap-2">
+                      <img src="../assets/icons/dashboard/location.svg" class="h-4" alt="Start" />
+                      <!-- <span>LaGuardia Airport (LGA), East USA</span> -->
+                      <span>{{
+                        dashboardRideData.next_booking?.pickup_location
+                      }}</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                      <img src="../assets/icons/dashboard/airport.svg" class="h-4" alt="End" />
+                      <!-- <span>JFK Airport</span> -->
+                      <span>{{ dashboardRideData.next_booking?.drop_location }}</span>
+                    </div>
+                  </div>
+                  <!-- One Way / Two Way Seal -->
+                  <div class="mr-4 ml-auto mt-1 flex items-center">
+                    <div class="ml-auto inline-flex items-center justify-center
            border border-[#329EE7]
            whitespace-nowrap
            px-3 sm:px-6
@@ -285,80 +290,81 @@ const onPageChange = (pages) => {
            text-[#329EE7]
            text-[10px] sm:text-[12px]
            font-medium">
-                    {{ dashboardRideData.next_booking?.travel_type === "1"
-                      ? "One Way"
-                      : dashboardRideData.next_booking?.travel_type === "2"
-                        ? "Two Way"
-                        : "N/A"
-                    }}
+                      {{ dashboardRideData.next_booking?.travel_type === "1"
+                        ? "One Way"
+                        : dashboardRideData.next_booking?.travel_type === "2"
+                          ? "Two Way"
+                          : "N/A"
+                      }}
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <!-- Stats Row -->
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center text-sm text-[#414141]">
-                <!-- Date & Time -->
-                <div class="flex items-center justify-center gap-2
+                <!-- Stats Row -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center text-sm text-[#414141]">
+                  <!-- Date & Time -->
+                  <div class="flex items-center justify-center gap-2
                    border border-[#D8D8D8] rounded-lg
                    py-2 px-3 text-xs text-[#17171A]
                    w-full sm:w-auto">
-                  <img src="../assets/icons/dashboard/distance.svg" class="h-3" />
-                  <span>{{ dashboardRideData.next_booking?.total_distance }}</span>
+                    <img src="../assets/icons/dashboard/distance.svg" class="h-3" />
+                    <span>{{ dashboardRideData.next_booking?.total_distance }}</span>
 
-                  <img src="../assets/icons/dashboard/mini-clock.svg" class="h-3" />
-                  <span>{{ dashboardRideData.next_booking?.total_time }}</span>
-                </div>
+                    <img src="../assets/icons/dashboard/mini-clock.svg" class="h-3" />
+                    <span>{{ dashboardRideData.next_booking?.total_time }}</span>
+                  </div>
 
 
-                <!-- Total Fare -->
-                <div class="text-center sm:ml-auto flex flex-row gap-2 sm:justify-center items-center">
-                  <p class="font-medium text-md text-[#000000]">Total Fare</p>
+                  <!-- Total Fare -->
+                  <div class="text-center sm:ml-auto flex flex-row gap-2 sm:justify-center items-center">
+                    <p class="font-medium text-md text-[#000000]">Total Fare</p>
 
-                  <!-- Icon in the middle -->
-                  <img src="../assets/icons/dashboard/small-fare.svg" class="h-8 w-8" alt="Arrow" />
-                  <p class="text-md font-bold text-[#000000]">
-                    ${{ dashboardRideData.next_booking?.payments_total }}
-                  </p>
-                </div>
-
-                <!-- Status Badge -->
-                <div
-                  class="border w-[65%] mx-auto sm:mx-0 sm:ml-auto border-[#D8D8D8] rounded-lg py-1.5 text-xs font-semibold text-[#151515] text-center shadow-sm">
-                  <!-- <p>Confirmed</p> -->
-                  <p>{{ dashboardRideData.next_booking?.booking_status?.name }}</p>
-                </div>
-              </div>
-
-              <!-- driver block -->
-              <div v-if="
-                dashboardRideData?.next_booking?.driver_bookings &&
-                dashboardRideData.next_booking.driver_bookings.length
-              " class="border-t border-dashed border-[#B4B4B4] pt-4 grid grid-cols-1 gap-4">
-                <div v-for="driverBooking in dashboardRideData?.next_booking
-                  ?.driver_bookings || []" :key="driverBooking?.id"
-                  class="grid grid-cols-[auto_1fr_auto] items-center gap-4">
-                  <!-- Driver Image -->
-                  <img src="../assets/icons/navbar/profile.svg" class="h-12 w-12 rounded-full object-cover"
-                    alt="driver" />
-
-                  <!-- Driver Info -->
-                  <div class="text-sm text-[#414141]">
-                    <p class="font-semibold">
-                      {{ driverBooking?.driver?.name || "No Driver Assigned" }}
-                    </p>
-                    <p>
-                      Car:
-                      {{ dashboardRideData?.next_booking?.vehicle?.name }} Plate #
-                      00123
+                    <!-- Icon in the middle -->
+                    <img src="../assets/icons/dashboard/small-fare.svg" class="h-8 w-8" alt="Arrow" />
+                    <p class="text-md font-bold text-[#000000]">
+                      ${{ dashboardRideData.next_booking?.payments_total }}
                     </p>
                   </div>
 
-                  <!-- Call Button -->
-                  <button
-                    class="bg-[#0072EF] text-sm text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition flex items-center gap-2">
-                    <img src="../assets/icons/dashboard/call.svg" class="h-4" alt="phone" />
-                    Call Driver
-                  </button>
+                  <!-- Status Badge -->
+                  <div
+                    class="border w-[65%] mx-auto sm:mx-0 sm:ml-auto border-[#D8D8D8] rounded-lg py-1.5 text-xs font-semibold text-[#151515] text-center shadow-sm">
+                    <!-- <p>Confirmed</p> -->
+                    <p>{{ dashboardRideData.next_booking?.booking_status?.name }}</p>
+                  </div>
+                </div>
+
+                <!-- driver block -->
+                <div v-if="
+                  dashboardRideData?.next_booking?.driver_bookings &&
+                  dashboardRideData.next_booking.driver_bookings.length
+                " class="border-t border-dashed border-[#B4B4B4] pt-4 grid grid-cols-1 gap-4">
+                  <div v-for="driverBooking in dashboardRideData?.next_booking
+                    ?.driver_bookings || []" :key="driverBooking?.id"
+                    class="grid grid-cols-[auto_1fr_auto] items-center gap-4">
+                    <!-- Driver Image -->
+                    <img src="../assets/icons/navbar/profile.svg" class="h-12 w-12 rounded-full object-cover"
+                      alt="driver" />
+
+                    <!-- Driver Info -->
+                    <div class="text-sm text-[#414141]">
+                      <p class="font-semibold">
+                        {{ driverBooking?.driver?.name || "No Driver Assigned" }}
+                      </p>
+                      <p>
+                        Car:
+                        {{ dashboardRideData?.next_booking?.vehicle?.name }} Plate #
+                        00123
+                      </p>
+                    </div>
+
+                    <!-- Call Button -->
+                    <button
+                      class="bg-[#0072EF] text-sm text-white px-3 py-1 rounded-lg hover:bg-blue-700 transition flex items-center gap-2">
+                      <img src="../assets/icons/dashboard/call.svg" class="h-4" alt="phone" />
+                      Call Driver
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -366,7 +372,8 @@ const onPageChange = (pages) => {
 
           <!-- TRIP HISTORY TABLE -->
 
-          <div v-if="dashboardRideData?.booking_history?.length" class="hidden sm:block bg-white rounded-xl shadow-lg border border-[#DBDBDB]">
+          <div v-if="dashboardRideData?.booking_history?.length"
+            class="hidden sm:block bg-white rounded-xl shadow-lg border border-[#DBDBDB]">
             <h3 class="text-lg ml-2 pt-2 font-regular text-[#626262] mb-2">
               Trip History
             </h3>
@@ -536,7 +543,8 @@ const onPageChange = (pages) => {
 
   margin-left: 5px !important;
 }
-.vc-weeks{
+
+.vc-weeks {
   margin-top: 20px;
   height: 220px;
 }

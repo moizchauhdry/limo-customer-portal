@@ -5,6 +5,7 @@ import axios from "@/axios";
 import RidesComing from "./rides/components/RidesComing.vue";
 import RidesCompleted from "./rides/components/RidesCompleted.vue";
 import RidesCancelled from "./rides/components/RidesCancelled.vue";
+import SkeletonLoading from "@/components/SkeletonLoading.vue";
 
 const activeTab = ref("upcoming");
 
@@ -15,6 +16,7 @@ const cancelledBookings = ref(0);
 const search = ref("");
 const dateType = ref("");
 const dateRange = ref(null);
+const loading = ref(false)
 
 // Watch for tab changes to refetch data
 watch(activeTab, () => {
@@ -47,6 +49,7 @@ const filterRidesByDateRange = (value) => {
 // API call function
 const fetchBookings = async () => {
   try {
+    loading.value = true;
     let filters = {
       tab: activeTab.value,
       search: activeTab.value === "completed" ? search.value : "",
@@ -60,11 +63,13 @@ const fetchBookings = async () => {
     });
 
     const data = res.data.data;
-    bookings.value = data.bookings;
+    bookings.value = data.bookings.data;
     totalBookings.value = data.total_bookings_count;
     cancelledBookings.value = data.cancelled_bookings_count;
   } catch (err) {
     console.error("Error fetching bookings:", err);
+  } finally {
+    loading.value = false;
   }
 };
 // Call API on mount
@@ -128,11 +133,23 @@ onMounted(() => {
           Canceled Rides
         </button>
       </div>
+      <div>
+        <!-- Loading -->
+        <div v-if="loading" class="space-y-6 mt-6">
+          <SkeletonLoading />
+        </div>
 
-      <RidesComing v-if="activeTab === 'upcoming'" :rides="bookings" @refresh="fetchBookings" />
-      <RidesCompleted v-if="activeTab === 'completed'" :rides="bookings" @search="filterRidesBySearch"
-        @filterRidesByDate="filterRidesByDate" @filterRidesByDateRange="filterRidesByDateRange" />
-      <RidesCancelled v-if="activeTab === 'cancelled'" :rides="bookings" />
+        <!-- Content -->
+        <div v-else>
+          <RidesComing v-if="activeTab === 'upcoming'" :rides="bookings" @refresh="fetchBookings" />
+
+          <RidesCompleted v-if="activeTab === 'completed'" :rides="bookings" @search="filterRidesBySearch"
+            @filterRidesByDate="filterRidesByDate" @filterRidesByDateRange="filterRidesByDateRange" />
+
+          <RidesCancelled v-if="activeTab === 'cancelled'" :rides="bookings" />
+        </div>
+      </div>
+
     </div>
   </main>
 </template>
