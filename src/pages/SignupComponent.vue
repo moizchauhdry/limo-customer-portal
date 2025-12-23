@@ -49,10 +49,10 @@ const signupHandler = async () => {
 
       <!-- Form -->
       <form class="p-8 space-y-5" @submit.prevent="signupHandler">
-        <h2 class="font-poppins font-semibold text-4xl text-[#4B4B4B] text-center">
+        <h2 class="font-poppins font-semibold text-3xl sm:text-4xl text-[#4B4B4B] text-center">
           Welcome Back
         </h2>
-        <p class="text-lg text-[#414141] font-poppins font-normal text-center mb-6">
+        <p class="text:md sm:text-lg text-[#414141] font-poppins font-normal text-center mb-6">
           Sign up to your account!
         </p>
 
@@ -107,7 +107,7 @@ const signupHandler = async () => {
         <!-- Link to Login -->
         <p class="text-center text-md text-[#414141] font-poppins mt-4">
           Do you have an account?
-          <router-link to="/auth/login" class="text-blue-600 hover:text-black underline">Sign in</router-link>
+          <router-link to="/auth/login" class="text-blue-600 hover:text-black ml-1 underline">sign in</router-link>
         </p>
       </form>
     </div>

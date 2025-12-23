@@ -66,9 +66,9 @@ const close = () => {
 
             <!-- ========== ROUTE BLOCK ========== -->
             <div class="flex gap-3 items-start text-sm text-[#414141] px-4 pt-3 pb-2">
-              <img src="../../../assets/icons/dashboard/location-line.svg" class="h-10 sm:h-12 pt-1" alt="route" />
+              <img src="../../../assets/icons/dashboard/location-line.svg" class="h-16 sm:h-12 pt-1Com" alt="route" />
 
-              <div class="flex flex-col space-y-3">
+              <div class="flex flex-col space-y-3 text-[#17171A]">
                 <div class="flex items-center gap-2">
                   <img src="../../../assets/icons/dashboard/location.svg" class="h-4" alt="start" />
                   <span class="text-xs sm:text-sm">{{
@@ -91,9 +91,10 @@ const close = () => {
             </div>
 
             <!-- ========== STATS ROW ========== -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-[#414141] px-4 pb-3">
+            <div class="flex flex-row sm:flex-row gap-3 justify-between text-sm text-[#414141] px-4 pb-3">
+              
               <div
-                class="flex items-center sm:w-[50%] gap-3 border border-[#D8D8D8] rounded-lg py-1 px-3 text-xs text-[#17171A]">
+                class="flex items-center h-[26px] mt-4 gap-3 border border-[#D8D8D8] rounded-lg py-1 px-3 text-xs whitespace-nowrap text-[#17171A]">
                 <div class="flex items-center gap-1">
                   <img src="../../../assets/icons/dashboard/distance.svg" class="h-3" alt="Distance" />
                   <span>{{ ride.total_distance }}</span>
@@ -107,7 +108,7 @@ const close = () => {
               <div class="flex flex-col items-end gap-2">
                 <div class="flex items-center gap-2">
                   <img src="../../../assets/icons/rides/total-fare.svg" class="h-4" alt="Fare" />
-                  <p class="text-sm text-[#000]">Total Fare:</p>
+                  <p class="text-xs whitespace-nowrap sm:text-sm text-[#000]">Total Fare:</p>
                   <p class="text-sm font-medium text-[#000]">
                     ${{ ride.payments_total }}
                   </p>

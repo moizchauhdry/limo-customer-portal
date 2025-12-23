@@ -101,7 +101,7 @@ watch(search, (value) => {
             <!-- ========== HEADER ========== -->
             <div class="flex flex-col lg:flex-row items-start lg:items-center gap-3 border-b p-3">
               <img src="../../../assets/icons/rides/ride-complete.svg" alt="ride" class="h-8" />
-              <h3 class="text-md sm:text-lg lg:text-xl font-normal text-[#414141]">
+              <h3 class="text-md sm:text-lg lg:text-xl font-normal text-[#414141] font-poppins">
                 Completed Rides
               </h3>
 
@@ -125,7 +125,7 @@ watch(search, (value) => {
             <!-- ========== ROUTE BLOCK ========== -->
             <div class="flex flex-col sm:flex-row gap-3 items-start text-sm text-[#414141] px-4 pt-3 pb-2">
               <div class="flex flex-row gap-2">
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 text-[#17171A]">
                   <img src="../../../assets/icons/dashboard/location.svg" class="h-4" alt="start" />
                   <span class="text-xs sm:text-sm">{{
                     ride.pickup_location
@@ -134,7 +134,7 @@ watch(search, (value) => {
                 <!-- Vertical Route Icon -->
                 <img src="../../../assets/icons/dashboard/small-fare.svg" class="h-2 mt-1.5" alt="route" />
 
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 text-[#17171A]">
                   <img src="../../../assets/icons/dashboard/airport.svg" class="h-4" alt="end" />
                   <span class="text-xs sm:text-sm">{{
                     ride.drop_location

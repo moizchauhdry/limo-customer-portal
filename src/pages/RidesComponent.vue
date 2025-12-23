@@ -130,7 +130,7 @@ onMounted(() => {
           ? 'bg-[#0FB14B] text-white'
           : 'border border-[#878787] text-[#878787] bg-white'
           " class="text-sm py-2 px-8 sm:px-16 rounded-md shadow">
-          Canceled Rides
+          Cancelled Rides
         </button>
       </div>
       <div>

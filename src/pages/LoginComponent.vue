@@ -62,30 +62,30 @@ const loginHandler = async () => {
       <!-- Form -->
       <form class="p-8 space-y-5" @submit.prevent="loginHandler">
         <!-- Apply Tailwind font + size -->
-        <h2 class="font-poppins font-semibold text-4xl text-[#4B4B4B] text-center">
+        <h2 class="font-poppins font-semibold text-3xl sm:text-4xl text-[#4B4B4B] text-center">
           Welcome Back
         </h2>
-        <p class="text-lg text-[#414141] font-poppins font-normal text-center mb-6">
+        <p class="text:md sm:text-lg text-[#414141] font-poppins font-normal text-center mb-6">
           Sign in to your account!
         </p>
 
         <!-- Email -->
         <div>
           <label class="block text-[#414141] ml-3 text-md mb-1">Email</label>
-          <input v-model="form.email" type="email" placeholder="Enter your email ;"
+          <input v-model="form.email" type="email" placeholder="Email address"
             class="font-poppins text-sm justify-center w-full px-4 py-2 border border-[#AAAAAA] rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-[#B9B9B9]" />
         </div>
 
         <!-- Password -->
         <div>
           <label class="block text-[#414141] ml-3 text-md mb-1">Password</label>
-          <input v-model="form.password" type="password" placeholder="Enter your password ;"
+          <input v-model="form.password" type="password" placeholder="password"
             class="font-poppins text-sm w-full px-4 py-2 border rounded-lg border-[#AAAAAA] focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-[#B9B9B9]" />
         </div>
 
         <!-- Remember me + Forgot -->
         <div class="flex items-center justify-between text-sm">
-          <label class="flex items-center gap-2 text-[#414141] font-poppins">
+          <label class="flex items-center gap-2 ml-4 text-[#414141] font-poppins">
             <input type="checkbox" class="rounded text-blue-600" v-model="form.remember" />
             <span>Remember me</span>
           </label>
@@ -103,16 +103,16 @@ const loginHandler = async () => {
         </button>
 
         <!-- Google Sign In -->
-        <button type="button"
+        <!-- <button type="button"
           class="w-full flex items-center justify-center gap-2 bg-white border border-[#AAAAAA] py-2 rounded-lg hover:bg-gray-50 transition font-medium">
           <img src="https://img.icons8.com/color/20/000000/google-logo.png" alt="Google" />
           <span class="text-[#7E7E7E] font-poppins">Continue With Google</span>
-        </button>
+        </button> -->
 
         <!-- Sign Up -->
         <p class="text-center text-md text-[#414141] font-poppins">
           Don’t have account?
-          <router-link class="text-blue-600 hover:text-black underline" to="/auth/signup">sign up</router-link>
+          <router-link class="text-blue-600 hover:text-black ml-1 underline" to="/auth/signup">sign up</router-link>
         </p>
       </form>
     </div>

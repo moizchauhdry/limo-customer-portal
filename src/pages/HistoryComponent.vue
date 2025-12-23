@@ -148,12 +148,12 @@ watch(
               <div v-for="history in bookingHistory" :key="history.id"
                 class="bg-white border border-[#DBDBDB] rounded-xl shadow mb-6">
                 <!-- ========== HEADER ========== -->
-                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-3 border-b p-3">
-                  <div class="flex items-center gap-2">
+                <div class="flex flex-row lg:flex-row items-center lg:items-center justify-between gap-3 border-b p-3">
+                  <div class="flex items-center gap-2 font-poppins">
                    
                     <img v-if="['completed', 'reservation confirmed'].includes(
                       history.booking_status_name?.toLowerCase()
-                    )" src="../assets/icons/rides/ride-complete.svg" alt="complete" class="h-8" />
+                    )" src="../assets/icons/rides/ride-complete.svg" alt="complete" class="h-6 sm:h-8" />
 
                    
                     <img v-else-if="history.booking_status_name?.toLowerCase() === 'cancelled'"
@@ -169,7 +169,7 @@ watch(
                   </div>
 
                   <RouterLink :to="`/view-booking/${history.id}`"
-                    class="bg-[#329EE7] px-6 sm:px-12 py-1 rounded-full text-white text-sm hover:bg-blue-700 transition">
+                    class="bg-[#329EE7] px-4 sm:px-12 py-1 rounded-full text-white text-xs sm:text-sm hover:bg-blue-700 transition">
                     View
                   </RouterLink>
                 </div>
@@ -206,7 +206,7 @@ watch(
                   <!-- Left Side Route -->
                   <div class="flex flex-col sm:flex-row gap-2 sm:items-center w-full">
                     <!-- Start -->
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2 text-[#17171A]">
                       <img src="../assets/icons/dashboard/location.svg" class="h-4" alt="start" />
                       <span class="text-xs sm:text-sm">
                         {{ history.pickup_location }}
@@ -218,7 +218,7 @@ watch(
                       class="h-2 sm:mt-1.5 my-1 sm:my-0 mx-auto sm:mx-0" alt="route" />
 
                     <!-- End -->
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2 text-[#17171A]">
                       <img src="../assets/icons/dashboard/airport.svg" class="h-4" alt="end" />
                       <span class="text-xs sm:text-sm">{{ history.drop_location }}</span>
                     </div>
@@ -226,15 +226,15 @@ watch(
                 </div>
 
                 <!-- ========== STATS ROW ========== -->
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-[#414141] px-4 pb-3 items-start">
+                <div class="grid grid-cols-2 sm:grid-cols-2 gap-3 text-sm text-[#414141] px-4 pb-3 items-start  mt-4 sm:mt-0">
                   <!-- Distance -->
                   <div class="flex flex-col items-start sm:items-start gap-1 rounded-lg px-1 text-md text-[#17171A]">
-                    <span class="text-[#414141] text-lg">Distance: {{ history.total_distance }}</span>
+                    <span class="text-[#414141] text-xs sm:text-lg">Distance: {{ history.total_distance }}</span>
                   </div>
 
                   <!-- Duration -->
                   <div class="flex flex-col items-start sm:items-end gap-1">
-                    <span class="text-[#414141] text-lg">Duration: {{ history.total_time }}</span>
+                    <span class="text-[#414141] text-xs sm:text-lg">Duration: {{ history.total_time }}</span>
                   </div>
                 </div>
 

@@ -272,14 +272,14 @@ const onPageChange = (pages) => {
                     <div class="flex items-center gap-2">
                       <img src="../assets/icons/dashboard/location.svg" class="h-4" alt="Start" />
                       <!-- <span>LaGuardia Airport (LGA), East USA</span> -->
-                      <span>{{
+                      <span class="text-[#17171a]">{{
                         dashboardRideData.next_booking?.pickup_location
                       }}</span>
                     </div>
                     <div class="flex items-center gap-2">
                       <img src="../assets/icons/dashboard/airport.svg" class="h-4" alt="End" />
                       <!-- <span>JFK Airport</span> -->
-                      <span>{{ dashboardRideData.next_booking?.drop_location }}</span>
+                      <span class="text-[#17171a]">{{ dashboardRideData.next_booking?.drop_location }}</span>
                     </div>
                   </div>
                   <!-- One Way / Two Way Seal -->
@@ -415,7 +415,7 @@ const onPageChange = (pages) => {
 
                       <!-- Status -->
                       <td class="px-4 py-3">
-                        <span class="inline-block px-3 py-1 rounded-lg text-white text-xs" :class="{
+                        <span class="inline-block px-3 py-1 rounded text-white text-xs" :class="{
                           'bg-[#0FB14B]': trip.booking_status_id === 2, // Complete
                           'bg-[#FF4A54] px-5': trip.booking_status_id === 1, //Pending
                         }">
@@ -434,7 +434,7 @@ const onPageChange = (pages) => {
                 class="bg-white border border-[#DBDBDB] rounded-xl shadow p-4">
                 <!-- Header -->
                 <div class="flex justify-between items-center mb-2">
-                  <p class="text-sm font-medium text-[#414141]">
+                  <p class="text-sm font-bold text-[#414141]">
                     Trip ID: TR:{{ trip?.id }}
                   </p>
 
@@ -449,17 +449,17 @@ const onPageChange = (pages) => {
                 <!-- Body -->
                 <div class="space-y-1 text-sm text-[#626262]">
                   <p>
-                    <span class="font-medium">Date:</span>
+                    <span class="font-bold">Date:</span>
                     {{ trip?.pickup_date }}
                   </p>
 
                   <p>
-                    <span class="font-medium">Destination:</span>
+                    <span class="font-bold">Destination:</span>
                     {{ trip?.drop_location || "N/A" }}
                   </p>
 
                   <p>
-                    <span class="font-medium">Fare:</span>
+                    <span class="font-bold">Fare:</span>
                     ${{ trip?.payments_total }}
                   </p>
                 </div>
@@ -504,75 +504,54 @@ const onPageChange = (pages) => {
           </div> -->
 
           <!-- ================= RIDE RATING ================= -->
-<div>
+          <div>
 
-  <!-- ===== Skeleton Loading ===== -->
-  <div
-    v-if="loading"
-    class="bg-[#F8F8F8] p-6 rounded-xl border border-[#DBDBDB] animate-pulse"
-  >
-    <!-- Title -->
-    <div class="h-5 w-2/3 bg-gray-300 rounded mb-3"></div>
+            <!-- ===== Skeleton Loading ===== -->
+            <div v-if="loading" class="bg-[#F8F8F8] p-6 rounded-xl border border-[#DBDBDB] animate-pulse">
+              <!-- Title -->
+              <div class="h-5 w-2/3 bg-gray-300 rounded mb-3"></div>
 
-    <!-- Subtitle -->
-    <div class="h-4 w-32 bg-gray-300 rounded mb-6"></div>
+              <!-- Subtitle -->
+              <div class="h-4 w-32 bg-gray-300 rounded mb-6"></div>
 
-    <!-- Rating buttons skeleton -->
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div
-        v-for="n in 4"
-        :key="n"
-        class="flex flex-col items-center py-4 rounded-lg bg-gray-200"
-      >
-        <div class="h-10 w-10 rounded-full bg-gray-300 mb-2"></div>
-        <div class="h-3 w-16 bg-gray-300 rounded"></div>
-      </div>
-    </div>
-  </div>
+              <!-- Rating buttons skeleton -->
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div v-for="n in 4" :key="n" class="flex flex-col items-center py-4 rounded-lg bg-gray-200">
+                  <div class="h-10 w-10 rounded-full bg-gray-300 mb-2"></div>
+                  <div class="h-3 w-16 bg-gray-300 rounded"></div>
+                </div>
+              </div>
+            </div>
 
-  <!-- ===== Actual Rating Card ===== -->
-  <div
-    v-else-if="dashboardRideData?.last_booking_review_data?.is_reviewed === false"
-    class="bg-[#F8F8F8] p-6 rounded-xl border border-[#DBDBDB]"
-  >
-    <p class="font-semibold text-lg text-[#626262]">
-      How was your last ride
-      <span
-        class="text-black"
-        v-if="dashboardRideData?.last_booking_review_data?.booking_id"
-      >
-        #{{ dashboardRideData?.last_booking_review_data?.booking_id }}
-      </span>
-      ?
-    </p>
+            <!-- ===== Actual Rating Card ===== -->
+            <div v-else-if="dashboardRideData?.last_booking_review_data?.is_reviewed === false"
+              class="bg-[#F8F8F8] p-6 rounded-xl border border-[#DBDBDB]">
+              <p class="font-semibold text-md sm:text-lg text-[#626262]">
+                How was your last ride
+                <span class="text-black" v-if="dashboardRideData?.last_booking_review_data?.booking_id">
+                  #{{ dashboardRideData?.last_booking_review_data?.booking_id }}
+                </span>
+                ?
+              </p>
 
-    <p class="text-sm text-[#000000] mb-4">Review Rating:</p>
+              <p class="text-sm text-[#000000] font-poppins mb-4">Review Rating:</p>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <button
-        v-for="item in ['Excellent', 'Good', 'Average', 'Bad']"
-        :key="item"
-        :disabled="ratingForm.busy"
-        class="group flex flex-col items-center py-4 rounded-lg outline-none
-               transition-all duration-300 ease-out"
-        @click="submitRating(item)"
-      >
-        <img
-          :src="getIcon(item)"
-          class="h-10 mb-2 transition-transform duration-300
-                 group-hover:rotate-6 group-hover:scale-110"
-          :alt="item"
-        />
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <button v-for="item in ['Excellent', 'Good', 'Average', 'Bad']" :key="item" :disabled="ratingForm.busy"
+                  class="group flex flex-col items-center py-4 rounded-lg outline-none
+               transition-all duration-300 ease-out" @click="submitRating(item)">
+                  <img :src="getIcon(item)" class="h-10 mb-2 transition-transform duration-300
+                 group-hover:rotate-6 group-hover:scale-110" :alt="item" />
 
-        <DotsLoading v-if="ratingForm.busy" />
-        <span v-else class="text-black font-medium text-sm">
-          {{ item }}
-        </span>
-      </button>
-    </div>
-  </div>
+                  <DotsLoading v-if="ratingForm.busy" />
+                  <span v-else class="text-black font-medium text-sm">
+                    {{ item }}
+                  </span>
+                </button>
+              </div>
+            </div>
 
-</div>
+          </div>
 
         </div>
       </section>
