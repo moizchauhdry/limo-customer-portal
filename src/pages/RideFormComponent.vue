@@ -9,6 +9,9 @@ import Form from 'vform'
 import { useRouter, useRoute } from "vue-router";
 import { useToast } from "vue-toastification";
 import DotsLoading from "@/components/DotsLoading.vue";
+import FleetSkeleton from "@/components/FleetSkeleton.vue";
+import TravelServiceSkeleton from "@/components/TravelServiceSkeleton.vue";
+import PassengerInfoSkeleton from "@/components/PassengerInfoSkeleton.vue";
 
 const router = useRouter();
 const vueRoute = useRoute();
@@ -356,36 +359,45 @@ onBeforeUnmount(() => {
         <!-- MAIN WRAPPER -->
         <div class="w-full md:max-w-2xl 2xl:max-w-4xl mx-auto p-4 space-y-2">
 
-          <!-- TRAVEL TYPE -->
-          <div class="grid grid-cols-12 gap-3">
-            <button v-for="(travelType, index) in createRideData?.travel_types || []" :key="travelType?.id"
-              class="flex items-center justify-center gap-2 w-full px-4 p-3 rounded-xl border border-[#369FFF] text-sm capitalize"
-              :class="[
-                form.travel_type == travelType?.id
-                  ? 'bg-[#369FFF] text-white'
-                  : 'text-[#369FFF]',
-                index === 0 ? 'col-span-12 sm:col-span-7' : 'col-span-12 sm:col-span-5'
-              ]" @click="form.travel_type = travelType?.id">
-              {{ travelType?.name }}
-            </button>
-          </div>
+          <div>
+            <div v-if="createRideDataLoading">
+              <TravelServiceSkeleton />
+            </div>
+            <div v-else class="space-y-4">
+              <!-- TRAVEL TYPE -->
+              <div class="grid grid-cols-12 gap-3">
+                <button v-for="(travelType, index) in createRideData?.travel_types || []" :key="travelType?.id"
+                  class="flex items-center justify-center gap-2 w-full px-4 p-3 rounded-xl border border-[#369FFF] text-sm capitalize"
+                  :class="[
+                    form.travel_type == travelType?.id
+                      ? 'bg-[#369FFF] text-white'
+                      : 'text-[#369FFF]',
+                    index === 0 ? 'col-span-12 sm:col-span-7' : 'col-span-12 sm:col-span-5'
+                  ]" @click="form.travel_type = travelType?.id">
+                  {{ travelType?.name }}
+                </button>
+              </div>
 
-          <!-- SERVICE TYPE -->
-          <div class="grid grid-cols-12 gap-3">
-            <label :for="`service-type-${serviceType?.id}`"
-              class="border border-[#CECECE] p-3 rounded-xl flex justify-between items-center cursor-pointer" :class="[
-                form.service_type == serviceType?.id
-                  ? 'text-[#369FFF]'
-                  : 'text-[#369FFF]',
-                index === 0 ? 'col-span-12 sm:col-span-5' : 'col-span-12 sm:col-span-7'
-              ]" v-for="(serviceType, index) in createRideData?.service_types || []" :key="serviceType?.id">
-              <h2 class="text-md font-semibold first-letter:uppercase"
-                :class="form.service_type == serviceType?.id ? 'text-[#369FFF]' : 'text-[#838383]'">{{ serviceType?.name
-                }}</h2>
-              <input :id="`service-type-${serviceType?.id}`" type="radio"
-                class="w-5 h-5 text-blue-500 border border-[#369FFF] rounded-full cursor-pointer"
-                v-model="form.service_type" :value="serviceType?.id" />
-            </label>
+              <!-- SERVICE TYPE -->
+              <div class="grid grid-cols-12 gap-3">
+                <label :for="`service-type-${serviceType?.id}`"
+                  class="border border-[#CECECE] p-3 rounded-xl flex justify-between items-center cursor-pointer"
+                  :class="[
+                    form.service_type == serviceType?.id
+                      ? 'text-[#369FFF]'
+                      : 'text-[#369FFF]',
+                    index === 0 ? 'col-span-12 sm:col-span-5' : 'col-span-12 sm:col-span-7'
+                  ]" v-for="(serviceType, index) in createRideData?.service_types || []" :key="serviceType?.id">
+                  <h2 class="text-md font-semibold first-letter:uppercase"
+                    :class="form.service_type == serviceType?.id ? 'text-[#369FFF]' : 'text-[#838383]'">{{
+                      serviceType?.name
+                    }}</h2>
+                  <input :id="`service-type-${serviceType?.id}`" type="radio"
+                    class="w-5 h-5 text-blue-500 border border-[#369FFF] rounded-full cursor-pointer"
+                    v-model="form.service_type" :value="serviceType?.id" />
+                </label>
+              </div>
+            </div>
           </div>
 
           <!-- ===================== PICK UP & DROP OFF ===================== -->
@@ -459,35 +471,40 @@ onBeforeUnmount(() => {
           </div>
 
           <!-- ===================== PASSENGER INFO ===================== -->
-          <div class="space-y-5 pt-4">
-            <h3 class="text-lg border-b-[3px] border-b-[#369FFF] pb-2 text-[#414141] font-semibold">
-              Passenger Info
-            </h3>
+          <div>
+            <div v-if="createRideDataLoading">
+              <PassengerInfoSkeleton />
+            </div>
+            <div v-else class="space-y-5 pt-4">
+              <h3 class="text-lg border-b-[3px] border-b-[#369FFF] pb-2 text-[#414141] font-semibold">
+                Passenger Info
+              </h3>
 
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div class="flex flex-col gap-1">
-                <label> Name </label>
-                <input type="text" placeholder="Enter passenger name"
-                  class="border border-[#DBDBDB] shadow-sm rounded-md px-4 py-2 text-sm text-[#5A5A5A]"
-                  v-model="form.passenger_name" />
-                <p v-if="form.errors.has('passenger_name')" class="text-red-500 text-xs">{{
-                  form.errors.get('passenger_name') }}</p>
-              </div>
-              <div class="flex flex-col gap-1">
-                <label> Email </label>
-                <input type="Email" placeholder="Enter passenger email"
-                  class="border border-[#DBDBDB] shadow-sm rounded-md px-4 py-2 text-sm text-[#5A5A5A]"
-                  v-model="form.passenger_email" />
-                <p v-if="form.errors.has('passenger_email')" class="text-red-500 text-xs">{{
-                  form.errors.get('passenger_email') }}</p>
-              </div>
-              <div class="flex flex-col gap-1">
-                <label> Phone </label>
-                <input type="text" placeholder="Enter passenger phone"
-                  class="border border-[#DBDBDB] shadow-sm rounded-md px-4 py-2 text-sm text-[#5A5A5A]"
-                  v-model="form.passenger_phone" />
-                <p v-if="form.errors.has('passenger_phone')" class="text-red-500 text-xs">{{
-                  form.errors.get('passenger_phone') }}</p>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="flex flex-col gap-1">
+                  <label> Name </label>
+                  <input type="text" placeholder="Enter passenger name"
+                    class="border border-[#DBDBDB] shadow-sm rounded-md px-4 py-2 text-sm text-[#5A5A5A]"
+                    v-model="form.passenger_name" />
+                  <p v-if="form.errors.has('passenger_name')" class="text-red-500 text-xs">{{
+                    form.errors.get('passenger_name') }}</p>
+                </div>
+                <div class="flex flex-col gap-1">
+                  <label> Email </label>
+                  <input type="Email" placeholder="Enter passenger email"
+                    class="border border-[#DBDBDB] shadow-sm rounded-md px-4 py-2 text-sm text-[#5A5A5A]"
+                    v-model="form.passenger_email" />
+                  <p v-if="form.errors.has('passenger_email')" class="text-red-500 text-xs">{{
+                    form.errors.get('passenger_email') }}</p>
+                </div>
+                <div class="flex flex-col gap-1">
+                  <label> Phone </label>
+                  <input type="text" placeholder="Enter passenger phone"
+                    class="border border-[#DBDBDB] shadow-sm rounded-md px-4 py-2 text-sm text-[#5A5A5A]"
+                    v-model="form.passenger_phone" />
+                  <p v-if="form.errors.has('passenger_phone')" class="text-red-500 text-xs">{{
+                    form.errors.get('passenger_phone') }}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -570,8 +587,12 @@ onBeforeUnmount(() => {
 
               <!-- cards container -->
               <div class="flex gap-4 overflow-x-hidden scroll-smooth" ref="carousel">
+                <!-- Skeleton -->
+                <div v-if="createRideDataLoading">
+                  <FleetSkeleton />
+                </div>
                 <!-- CAR 1 -->
-                <div class="border rounded-xl p-2 shadow flex flex-col min-w-[250px] cursor-pointer"
+                <div v-else class="border rounded-xl p-2 shadow flex flex-col min-w-[250px] cursor-pointer"
                   :class="form.vehicle_id == vehicle?.id ? 'bg-[#d3ebff] border-[#369FFF]' : 'bg-white border-[#E0E0E0]'"
                   v-for="vehicle in createRideData?.vehicles || []" :key="vehicle?.id"
                   @click="form.vehicle_id = vehicle?.id">
@@ -617,13 +638,23 @@ onBeforeUnmount(() => {
         </div>
 
         <!-- RIGHT COLUMN -->
-        <div class="w-full max-w-[350px] space-y-6">
-          <div id="vue-map" class="w-full h-[400px] mt-4 border rounded"></div>
+        <div class="w-full max-w-[350px] space-y-6 px-6 sm:px-0">
+          <div v-if="createRideDataLoading" class="w-full h-[400px] mt-4 border rounded bg-gray-200 animate-pulse"
+            data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
+            data-aos-delay="100">
+          </div>
+          <div v-else id="vue-map" class="w-full h-[400px] mt-4 border rounded"></div>
 
           <!-- DISTANCE & TIME -->
           <div class="grid grid-cols-2 gap-4 mt-4">
-            <input class="border p-2 rounded outline-none" readonly :value="distance" placeholder="Total Distance" />
-            <input class="border p-2 rounded outline-none" readonly :value="duration" placeholder="Total Time" />
+            <div v-if="createRideDataLoading" class="h-10 rounded bg-gray-200 animate-pulse" data-aos="fade-up"
+              data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out" data-aos-delay="100"></div>
+            <input v-else class="border p-2 rounded outline-none" readonly :value="distance"
+              placeholder="Total Distance" />
+
+            <div v-if="createRideDataLoading" class="h-10 rounded bg-gray-200 animate-pulse" data-aos="fade-up"
+              data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out" data-aos-delay="100"></div>
+            <input v-else class="border p-2 rounded outline-none" readonly :value="duration" placeholder="Total Time" />
           </div>
 
           <!-- <div class="border h-[850px] relative">

@@ -10,13 +10,14 @@ if (customer) {
 }
 </script>
 <template>
-  <header class="w-full bg-white shadow flex items-center justify-between px-6 py-4 fixed top-0 left-0 z-50">
+  <header class="w-full bg-white shadow flex items-center justify-between px-2 sm:px-6 py-4 fixed top-0 left-0 z-50">
     <div class="flex items-center justify-between sm:w-[30%] ml-auto sm:ml-6 gap-3">
-      <img src="../assets/images/logo.svg" class="h-10 cursor-pointer" alt="Logo" @click="$router.push('/')" />
-      <div class="text-xl">
+      <div class="order-1 sm:order-2 text-sm sm:text-xl">
         <h1 class="text-[#595959]">Hi! {{ name }},</h1>
         <span class="text-[#000000] font-semibold">Good Morning</span>
       </div>
+      <img src="../assets/images/logo.svg" class="order-2 sm:order-1 h-8 sm:h-10 cursor-pointer" alt="Logo"
+        @click="$router.push('/')" />
     </div>
 
     <div class="hidden sm:flex items-center gap-5">
@@ -31,7 +32,7 @@ if (customer) {
         </div>
       </div>
       <RouterLink to="/notifications">
-      <img src="../assets/icons/navbar/nav1.svg" class="h-9" />
+        <img src="../assets/icons/navbar/nav1.svg" class="h-9" />
       </RouterLink>
 
       <RouterLink to="/settings">

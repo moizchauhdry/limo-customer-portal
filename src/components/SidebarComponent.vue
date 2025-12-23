@@ -85,11 +85,18 @@ const iconSettingsActive = new URL(
 </script>
 
 <template>
-  <label for="menu-toggle" class="lg:hidden fixed top-8 left-5 z-[70] cursor-pointer">
-    <div class="space-y-1">
-      <span class="block w-7 h-1 bg-black"></span>
-      <span class="block w-7 h-1 bg-black"></span>
-      <span class="block w-7 h-1 bg-black"></span>
+  <label for="menu-toggle" class="lg:hidden fixed top-4 left-3 z-[70] cursor-pointer group">
+    <div class="w-10 h-10 rounded-xl flex items-center justify-center
+           bg-white shadow-md border border-gray-200
+           transition-all duration-300 hover:shadow-lg">
+      <div class="flex flex-col justify-between w-5 h-4">
+        <span class="block h-[2.5px]  w-full bg-gray-800 rounded-full
+               transition-all duration-300 group-hover:w-4"></span>
+        <span class="block h-[2.5px]  w-full bg-gray-800 rounded-full
+               transition-all duration-300"></span>
+        <span class="block h-[2.5px]  w-full bg-gray-800 rounded-full
+               transition-all duration-300 group-hover:w-4"></span>
+      </div>
     </div>
   </label>
 
