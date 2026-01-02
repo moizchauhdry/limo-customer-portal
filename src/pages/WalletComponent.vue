@@ -16,7 +16,7 @@ const fetchWalletData = async () => {
     walletData.value = data.data;
   } catch (err) {
     console.log("Failed to load Wallet Data:", err);
-  }finally{
+  } finally {
     loading.value = false;
   }
 };
@@ -34,7 +34,7 @@ onMounted(() => {
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <!-- =============== wallets row =============== -->
       <!-- Heading -->
-      <p class="text-2xl sm:text-3xl text-[#414141] font-normal mt-4 mb-4">
+      <p class="text-2xl sm:text-3xl text-[#414141] font-light mt-4 mb-4 font-poppins">
         My Wallet
       </p>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -69,12 +69,12 @@ onMounted(() => {
         <template v-else>
           <!-- Available Balance -->
           <div class="bg-[#369FFF] border border-[#CECECE] rounded-xl shadow p-4 flex flex-col gap-6 justify-between">
-            <p class="text-[#FFFFFF] text-sm sm:text-lg font-medium">
+            <p class="text-[#FFFFFF] text-sm sm:text-lg font-semibold font-poppins">
               Available Balance
             </p>
             <div class="flex justify-between items-center">
               <img src="../assets/icons/wallet/wallet.svg" alt="wallet" class="h-8" />
-              <p class="text-lg sm:text-3xl text-[#FFFFFF] font-semibold">
+              <p class="text-lg sm:text-3xl text-[#FFFFFF] font-semibold font-poppins">
                 ${{ walletData.total_credit }}
               </p>
             </div>
@@ -82,8 +82,8 @@ onMounted(() => {
 
           <!-- Recent Activity -->
           <div class="bg-white border border-[#CECECE] rounded-xl shadow p-4 flex flex-col">
-            <div class="flex flex-row justify-between items-center mb-4">
-              <p class="text-[#515151] text-sm sm:text-lg font-medium">
+            <div class="flex flex-row justify-between items-center mb-2">
+              <p class="text-[#515151] text-sm sm:text-lg font-semibold font-poppins">
                 Recent Activity
               </p>
               <img src="../assets/icons/wallet/mini-wallet.svg" alt="mini" class="h-8" />
@@ -91,9 +91,9 @@ onMounted(() => {
 
             <div class="space-y-1">
               <p v-for="activity in walletData.recent_activities" :key="activity.id"
-                class="text-[#828282] text-xs sm:text-sm">
+                class="text-[#828282] font-poppins text-xs sm:text-lg">
                 {{ formatDate(activity.created_at) }}
-                <span class="font-semibold">
+                <span class="font-semibold ">
                   Wallet {{ activity.type === 'credit' ? 'Top-up' : 'Debit' }}
                   {{ activity.type === 'credit' ? '+' : '-' }}${{ activity.amount }}
                 </span>
@@ -106,7 +106,7 @@ onMounted(() => {
 
       <!-- =============== TABS =============== -->
       <!-- Heading -->
-      <p class="text-2xl sm:text-3xl text-[#414141] font-normal mt-4 mb-4">
+      <p class="text-2xl sm:text-3xl text-[#414141] font-light font-poppins mt-4 pb-4">
         My payment methods
       </p>
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -117,11 +117,9 @@ onMounted(() => {
               <img src="../assets/icons/wallet/visa.svg" alt="mini" class="h-5" />
               <img src="../assets/icons/wallet/default.svg" alt="default" srcset="" />
             </div>
-            <div>
+            <div class="space-y-1 font-poppins mb-6">
               <p class="text-[#828282] text-xs sm:text-sm">Card ending: 1234</p>
-              <p class="text-[#828282] text-xs sm:text-sm mt-2 sm:mt-3">
-                Exp: 08/2027
-              </p>
+              <p class="text-[#828282] text-xs sm:text-sm">Exp: 08/2027</p>
             </div>
           </div>
         </div>
@@ -132,9 +130,9 @@ onMounted(() => {
               <img src="../assets/icons/wallet/master.svg" alt="mini" class="h-5" />
               <img src="../assets/icons/wallet/setaspayment.svg" alt="setaspayment" />
             </div>
-            <div>
+            <div class="space-y-1 font-poppins mb-6">
               <p class="text-[#828282] text-xs sm:text-sm">Card ending: 1234</p>
-              <p class="text-[#828282] text-xs sm:text-sm mt-2 sm:mt-3">
+              <p class="text-[#828282] text-xs sm:text-sm">
                 Exp: 08/2027
               </p>
             </div>
@@ -147,9 +145,9 @@ onMounted(() => {
               <img src="../assets/icons/wallet/discover.svg" alt="mini" class="h-5" />
               <img src="../assets/icons/wallet/setaspayment.svg" alt="setaspayment" />
             </div>
-            <div>
+            <div class="space-y-1 font-poppins mb-6">
               <p class="text-[#828282] text-xs sm:text-sm">Card ending: 1234</p>
-              <p class="text-[#828282] text-xs sm:text-sm mt-2 sm:mt-3">
+              <p class="text-[#828282] text-xs sm:text-sm">
                 Exp: 08/2027
               </p>
             </div>
@@ -163,7 +161,7 @@ onMounted(() => {
         <button @click="activeTab = 'recent'" :class="activeTab === 'recent'
           ? 'bg-[#329EE7] text-white'
           : 'border border-[#878787] text-[#878787] bg-white'"
-          class="w-full text-sm py-3 rounded-md shadow transition">
+          class="w-full text-sm py-3 rounded-md shadow transition font-light">
           Recent Activities
         </button>
 

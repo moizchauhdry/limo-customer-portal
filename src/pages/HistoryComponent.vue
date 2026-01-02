@@ -78,10 +78,10 @@ watch(
     data-aos-easing="ease-in-out" data-aos-delay="100">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <!-- Heading -->
-      <p class="text-2xl sm:text-3xl text-[#414141] font-normal mt-4 mb-3">
+      <p class="text-2xl sm:text-3xl text-[#414141] font-light font-poppins mt-4 mb-3">
         Your Rides History
       </p>
-      <p class="mb-2 text-[#606060]">
+      <p class="mb-2 text-[#606060] font-poppins text-sm sm:text-md">
         Review your completed journeys and rides
       </p>
       <!-- Select by Date Section -->
@@ -91,15 +91,16 @@ watch(
           <!-- Search by Trips (Wider: spans 2 columns) -->
           <div class="w-full sm:flex-[2] relative">
             <input type="text" placeholder="Search by trip ID & destination"
-              class="w-full pl-10 pr-4 py-2 border border-[#D8D8D8] rounded-lg text-sm text-[#414141] placeholder:text-[#A0A0A0] focus:outline-none focus:ring-2 focus:ring-[#0072EF]"
+              class="w-full pl-10 pr-4 py-3 border border-[#D8D8D8] rounded-lg text-sm text-[#414141] placeholder:font-light placeholder:font-poppins placeholder:text-[#A0A0A0] focus:outline-none focus:ring-2 focus:ring-[#0072EF]"
               v-model="filters.search" />
-            <img src="../assets/icons/rides/search-icon.svg" class="absolute left-3 top-2.5 h-4" alt="Search Icon" />
+            <img src="../assets/icons/rides/search-icon.svg" class="absolute left-3 top-[0.8rem] h-5"
+              alt="Search Icon" />
           </div>
 
           <!-- Date Range Dropdown -->
           <div class="w-full sm:flex-1">
             <select
-              class="w-full appearance-none pr-10 pl-4 py-2 border border-[#D8D8D8] rounded-lg text-sm text-[#414141] focus:outline-none focus:ring-2 focus:ring-[#0072EF]"
+              class="w-full appearance-none pr-10 pl-4 py-3 border border-[#D8D8D8] rounded-lg text-sm text-[#414141] focus:outline-none focus:ring-2 focus:ring-[#0072EF]"
               v-model="filters.sort" @change="fetchBookingHistory()">
               <option value="desc">Sort by newest first</option>
               <option value="asc">Sort by oldest first</option>
@@ -111,7 +112,7 @@ watch(
           <!-- Date Range Dropdown -->
           <div class="w-full sm:flex-1">
             <select v-model="filters.search_date_key"
-              class="w-full appearance-none pr-10 pl-4 py-2 border border-[#D8D8D8] rounded-lg text-sm text-[#414141] focus:outline-none focus:ring-2 focus:ring-[#0072EF]"
+              class="w-full appearance-none pr-10 pl-4 py-3 border border-[#D8D8D8] rounded-lg text-sm text-[#414141] focus:outline-none focus:ring-2 focus:ring-[#0072EF]"
               @change="fetchBookingHistory()">
               <option v-for="option in dateFilterOptions" :key="option.value" :value="option.value">
                 {{ option.label }}
@@ -139,7 +140,7 @@ watch(
       <!-- ========== SKELETON LOADING ========== -->
       <div>
         <div v-if="loading" class="space-y-6 mt-6">
-         <SkeletonLoading/>
+          <SkeletonLoading />
         </div>
         <!-- first card completed status -->
         <section v-else class="mt-6 flex flex-col xl:flex-row gap-6 items-start">
@@ -150,35 +151,35 @@ watch(
                 <!-- ========== HEADER ========== -->
                 <div class="flex flex-row lg:flex-row items-center lg:items-center justify-between gap-3 border-b p-3">
                   <div class="flex items-center gap-2 font-poppins">
-                   
+
                     <img v-if="['completed', 'reservation confirmed'].includes(
                       history.booking_status_name?.toLowerCase()
                     )" src="../assets/icons/rides/ride-complete.svg" alt="complete" class="h-6 sm:h-8" />
 
-                   
+
                     <img v-else-if="history.booking_status_name?.toLowerCase() === 'cancelled'"
                       src="../assets/icons/rides/cancelled.svg" alt="pending" class="h-8" />
 
-                   
+
                     <img v-else src="../assets/icons/rides/ride-info.png" alt="info" class="h-8" />
 
-                   
-                    <h3 class="text-md sm:text-lg lg:text-xl font-normal text-[#414141]">
+
+                    <h3 class="text-md sm:text-lg lg:text-xl text-[#414141] font-poppins font-light">
                       {{ history.booking_status_name || 'Completed' }}
                     </h3>
                   </div>
 
                   <RouterLink :to="`/view-booking/${history.id}`"
-                    class="bg-[#329EE7] px-4 sm:px-12 py-1 rounded-full text-white text-xs sm:text-sm hover:bg-blue-700 transition">
+                    class="bg-[#329EE7] px-4 sm:px-12 py-1.5 font-poppins font-light rounded-full text-white text-xs hover:bg-blue-700 transition">
                     View
                   </RouterLink>
                 </div>
                 <!-- header -->
                 <div class="flex items-center justify-between px-4 mt-2">
-                  <h3 class="text-lg text-[#414141]">Ride ID: TR:{{ history.id }}</h3>
+                  <h3 class="text-lg text-[#414141] font-regular font-poppins">Ride ID: TR:{{ history.id }}</h3>
                   <div class="flex items-center gap-2">
                     <img src="../assets/icons/rides/total-fare.svg" class="h-4" alt="Fare" />
-                    <p class="text-sm sm:text-lg text-[#000]">Final Fare:</p>
+                    <p class="text-sm sm:text-lg text-[#212121]">Final Fare:</p>
                     <p class="text-sm sm:text-lg font-medium text-[#000]">${{ history.payments_total }}</p>
                   </div>
                 </div>
@@ -208,7 +209,7 @@ watch(
                     <!-- Start -->
                     <div class="flex items-center gap-2 text-[#17171A]">
                       <img src="../assets/icons/dashboard/location.svg" class="h-4" alt="start" />
-                      <span class="text-xs sm:text-sm">
+                      <span class="text-xs sm:text-sm font-poppins">
                         {{ history.pickup_location }}
                       </span>
                     </div>
@@ -220,20 +221,22 @@ watch(
                     <!-- End -->
                     <div class="flex items-center gap-2 text-[#17171A]">
                       <img src="../assets/icons/dashboard/airport.svg" class="h-4" alt="end" />
-                      <span class="text-xs sm:text-sm">{{ history.drop_location }}</span>
+                      <span class="text-xs sm:text-sm font-poppins">{{ history.drop_location }}</span>
                     </div>
                   </div>
                 </div>
 
                 <!-- ========== STATS ROW ========== -->
-                <div class="grid grid-cols-2 sm:grid-cols-2 gap-3 text-sm text-[#414141] px-4 pb-3 items-start  mt-4 sm:mt-0">
+                <div
+                  class="grid grid-cols-2 sm:grid-cols-2 gap-3 text-sm text-[#414141] px-4 pb-3 items-start  mt-4 sm:mt-0">
                   <!-- Distance -->
-                  <div class="flex flex-col items-start sm:items-start gap-1 rounded-lg px-1 text-md text-[#17171A]">
+                  <div
+                    class="flex flex-col font-poppins items-start sm:items-start gap-1 rounded-lg px-1 text-md text-[#17171A]">
                     <span class="text-[#414141] text-xs sm:text-lg">Distance: {{ history.total_distance }}</span>
                   </div>
 
                   <!-- Duration -->
-                  <div class="flex flex-col items-start sm:items-end gap-1">
+                  <div class="flex flex-col font-poppins items-start sm:items-end gap-1">
                     <span class="text-[#414141] text-xs sm:text-lg">Duration: {{ history.total_time }}</span>
                   </div>
                 </div>
@@ -245,9 +248,9 @@ watch(
                     class="grid grid-cols-[auto_1fr_auto] items-center gap-4">
                     <img src="../assets/icons/navbar/profile.svg" class="h-12 w-12 rounded-full" alt="Driver" />
 
-                    <div class="text-sm text-[#414141]">
-                      <p class="font-semibold">{{ d.driver_name }}</p>
-                      <p class="text-xs sm:text-sm">
+                    <div class="text-sm text-#000000 font-poppins">
+                      <p class="font-regular">{{ d.driver_name }}</p>
+                      <p class="text-xs sm:text-sm font-medium">
                         Car: {{ d.vehicle_name }} Plate # ABC 123
                       </p>
                     </div>
