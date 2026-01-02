@@ -99,9 +99,9 @@ watch(search, (value) => {
           <div v-for="(ride, index) in rides" :key="index"
             class="bg-white border border-[#DBDBDB] rounded-xl shadow mb-6">
             <!-- ========== HEADER ========== -->
-            <div class="flex flex-col lg:flex-row items-start lg:items-center gap-3 border-b p-3">
+            <div class="flex flex-row  items-center gap-3 border-b p-3">
               <img src="../../../assets/icons/rides/ride-complete.svg" alt="ride" class="h-8" />
-              <h3 class="text-md sm:text-lg lg:text-xl font-normal text-[#414141] font-poppins">
+              <h3 class="text-md sm:text-lg lg:text-xl font-poppins font-light text-[#414141]">
                 Completed Rides
               </h3>
 
@@ -113,11 +113,11 @@ watch(search, (value) => {
             </div>
             <!-- header -->
             <div class="flex items-center justify-between px-4 mt-2">
-              <h3 class="text-lg text-[#414141]">Ride ID: TR{{ ride.id }}</h3>
+              <h3 class="text-xs sm:text-lg text-[#414141]">Ride ID: TR{{ ride.id }}</h3>
               <div
                 class="flex items-center gap-2 border border-[#D8D8D8] text-xs text-[#17171A] px-2 py-1 rounded-lg shadow-[0_0_6px_#D8D8D8]">
                 <img src="../../../assets/icons/dashboard/distance.svg" class="h-3" alt="date" />
-                <span>{{ ride.pickup_date }}</span>
+                <span class="whitespace-nowrap">{{ ride.pickup_date }}</span>
                 <img src="../../../assets/icons/dashboard/mini-clock.svg" class="h-4" alt="date" />
                 <span>{{ ride.pickup_time }}</span>
               </div>
@@ -187,9 +187,9 @@ watch(search, (value) => {
                 class="grid grid-cols-[auto_1fr_auto] items-center gap-4">
                 <img src="../../../assets/icons/navbar/profile.svg" class="h-12 w-12 rounded-full" alt="Driver" />
 
-                <div class="text-sm text-[#414141]">
-                  <p class="font-semibold">{{ d.driver_name }}</p>
-                  <p class="text-xs sm:text-sm">
+                <div class="text-sm font-poppins">
+                  <p class="font-regular">{{ d.driver_name }}</p>
+                  <p class="text-xs sm:text-sm font-medium [text-#000000]">
                     Car: {{ d.vehicle_name }} Plate # ABC 123
                   </p>
                 </div>

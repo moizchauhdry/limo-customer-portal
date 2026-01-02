@@ -23,7 +23,7 @@ defineProps({
             <div class="flex flex-row lg:flex-row items-center lg:items-center justify-between gap-3 border-b p-3">
               <div class="flex items-center gap-2">
                 <img src="../../../assets/icons/rides/cancelled.svg" alt="complete" srcset="" class="h-6 sm:h-8" />
-                <h3 class="text-md sm:text-lg lg:text-xl font-normal text-[#414141]">
+                <h3 class="text-md sm:text-lg lg:text-xl text-[#414141] font-poppins font-light">
                   Cancelled Ride
                 </h3>
               </div>
