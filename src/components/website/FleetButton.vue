@@ -1,3 +1,14 @@
+<script setup>
+import { defineProps } from 'vue';
+defineProps({
+  title: {
+    type: String,
+    require: true,
+    default: 'Our Fleet'
+  }
+});
+</script>
+
 <template>
   <!-- wrapper gets the exact tint you asked for -->
   <div
@@ -5,8 +16,8 @@
     data-aos="zoom-out-up" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
     data-aos-delay="100">
     <img src="@/assets/icons/wesbsite/hero/fleet-car.svg" alt="car icon" class="w-6 h-6 object-contain" />
-    <p class="text-lg font-bold text-black">
-      Our Fleet
+    <p class="text-lg font-bold text-black whitespace-nowrap">
+      {{ title }}
     </p>
   </div>
 </template>

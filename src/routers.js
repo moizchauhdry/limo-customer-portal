@@ -20,6 +20,10 @@ import HomeComponent from "./pages/website/HomeComponent.vue";
 import ForgetPassword from "./pages/ForgetPassword.vue";
 import UpdatePassword from "./pages/UpdatePassword.vue";
 import NotificationComponent from "./pages/NotificationComponent.vue";
+import FleetComponent from "./pages/website/FleetComponent.vue";
+import AboutComponent from "./pages/website/AboutComponent.vue";
+import ContactComponent from "./pages/website/ContactComponent.vue";
+import PrivacyPolicyComponent from "./pages/website/PrivacyPolicyComponent.vue";
 
 const routes = [
   {
@@ -29,9 +33,16 @@ const routes = [
       { path: "login", name: "login", component: LoginComponent },
       { path: "signup", name: "signup", component: SignupComponent },
       { path: "verify-otp", name: "verify-otp", component: VerifyOtpComponent },
-      { path: "forget-password", name: "forget-password", component: ForgetPassword },
-      { path: "update-password", name: "update-password", component: UpdatePassword },
-
+      {
+        path: "forget-password",
+        name: "forget-password",
+        component: ForgetPassword,
+      },
+      {
+        path: "update-password",
+        name: "update-password",
+        component: UpdatePassword,
+      },
     ],
   },
   {
@@ -39,6 +50,10 @@ const routes = [
     component: WebLayout,
     children: [
       { path: "", name: "home", component: HomeComponent },
+      { path: "/fleet", name: "fleet", component: FleetComponent },
+      { path: "/about-us", name: "about-us", component: AboutComponent },
+      { path: "/contact-us", name: "contact-us", component: ContactComponent },
+       { path: "/privacy-policy", name: "privacy-policy", component: PrivacyPolicyComponent },
     ],
   },
 
@@ -49,8 +64,16 @@ const routes = [
       { path: "", redirect: "/dashboard" },
       { path: "dashboard", name: "dashboard", component: DashboardComponent },
       { path: "rides", name: "rides", component: RidesComponent },
-      { path: "rides/create", name: "rides-create", component: RideFormComponent },
-      { path: "rides/edit/:id", name: "rides-edit", component: RideFormComponent },
+      {
+        path: "rides/create",
+        name: "rides-create",
+        component: RideFormComponent,
+      },
+      {
+        path: "rides/edit/:id",
+        name: "rides-edit",
+        component: RideFormComponent,
+      },
       { path: "history", name: "history", component: HistoryComponent },
       { path: "wallet", name: "wallet", component: WalletComponent },
       { path: "reports", name: "reports", component: ReportsComponent },
@@ -66,7 +89,11 @@ const routes = [
         component: ViewBookingComponent,
         props: true,
       },
-      { path: "notifications", name: "notifications", component: NotificationComponent },
+      {
+        path: "notifications",
+        name: "notifications",
+        component: NotificationComponent,
+      },
     ],
   },
 ];
@@ -82,7 +109,13 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
 
-  const publicPages = ["/auth/login", "/auth/signup", "/auth/verify-otp", "/auth/forget-password", "/auth/update-password"];
+  const publicPages = [
+    "/auth/login",
+    "/auth/signup",
+    "/auth/verify-otp",
+    "/auth/forget-password",
+    "/auth/update-password",
+  ];
   const authRequired = !publicPages.includes(to.path);
 
   if (authRequired && !token) {
