@@ -5,9 +5,6 @@ import card1 from "@/assets/icons/wesbsite/hero/card1.svg";
 import card2 from "@/assets/icons/wesbsite/hero/card2.svg";
 import card3 from "@/assets/icons/wesbsite/hero/card3.svg";
 
-import leftArrow from "@/assets/icons/wesbsite/hero/service5.svg";
-import rightArrow from "@/assets/icons/wesbsite/hero/service6.svg";
-
 
 const carousel = ref(null);
 const imageIndex = ref({});
@@ -136,19 +133,7 @@ const prevImage = (cardId, total) => {
             </h2>
             <p class="mt-3 md:mt-4 text-sm md:text-base lg:text-lg max-w-5xl mx-auto text-[#626262] font-medium">
                 Experience the future of mobility with our cutting edge fleet. premium vehicles & seamless experience
-            </p>
-            <!-- ARROW BUTTONS -->
-            <div class="hidden md:flex items-center justify-end gap-2 mr-6">
-                <button @click="slideLeft"
-                    class="w-8 h-8 flex items-center justify-center rounded-full border bg-gray-500 border-gray-300 hover:bg-black transition">
-                    <img :src="leftArrow" class="w-3 h-3" />
-                </button>
-
-                <button @click="slideRight"
-                    class="w-8 h-8 flex items-center justify-center rounded-full border bg-black border-gray-300 hover:bg-gray-500 transition">
-                    <img :src="rightArrow" class="w-3 h-3 rounded" />
-                </button>
-            </div>
+            </p>          
         </div>
 
         <!-- Carousel wrapper -->

@@ -6,7 +6,9 @@
       <!-- 1️⃣ LOGO + NEWSLETTER -->
       <div class="lg:col-span-2 space-y-2">
         <!-- LOGO -->
-        <img src="@/assets/icons/footer/footer-logo.svg" alt="Elite Limo" class="h-14 sm:h-10 mb-2 sm:mb-0" />
+        <img src="@/assets/icons/footer/footer-logo.svg" alt="Elite Limo" class="h-14 sm:h-10 mb-2 sm:mb-0 cursor-pointer" 
+         @click="$router.push('/')"
+        />
         <div class="hidden sm:flex flex-col sm:pt-2 sm:space-y-1">
           <h3 class="text-md">Subscribe To Our Newsletter</h3>
           <p class="text-gray-300 text-xs sm:pb-2">
@@ -46,8 +48,10 @@
         <ul class="space-y-2 sm:space-y-5 text-xs text-gray-300">
           <li><a href="#" class="hover:text-white">CAR RENTAL</a></li>
           <li><a href="#" class="hover:text-white">CLASSIC CAR RENTAL</a></li>
-          <li><a href="#" class="hover:text-white">VAN RENTAL</a></li>
-          <li><a href="#" class="hover:text-white">LUXURY CAR RENTAL</a></li>
+          <li><a href="/terms-condition" class="hover:text-white">TERMS & CONDITIONS</a></li>
+          <li>
+            <a href="/privacy-policy" class="hover:text-white whitespace-nowrap">PRIVACY POLICY</a>
+          </li>
         </ul>
       </div>
       <!-- 2️⃣ VEHICLE TYPES -->
@@ -56,9 +60,9 @@
         <ul class="space-y-2 sm:space-y-5 text-xs text-gray-300 mt-[2.75rem]">
           <li><a href="#" class="hover:text-white">SUV RENTAL</a></li>
           <li><a href="#" class="hover:text-white">SPORTS CAR RENTAL</a></li>
-          <li><a href="#" class="hover:text-white">TRUCK RENTAL</a></li>
+          <li><a href="/terms-condition" class="hover:text-white">TERMS & CONDITIONS</a></li>
           <li>
-            <a href="#" class="hover:text-white whitespace-nowrap">ELECTRIC VEHICLE RENTAL</a>
+            <a href="/privacy-policy" class="hover:text-white whitespace-nowrap">PRIVACY POLICY</a>
           </li>
         </ul>
       </div>
@@ -69,7 +73,7 @@
         <ul class="space-y-3 sm:space-y-5 text-sm text-gray-300">
           <li class="flex items-center gap-2">
             <img src="@/assets/icons/footer/footer2.svg" class="w-2 h-2" alt="arrow" />
-            <a href="#" class="hover:text-white text-xs">ABOUT</a>
+            <router-link to="/about-us" class="hover:text-white text-xs">ABOUT</router-link>
           </li>
           <li class="flex items-center gap-2">
             <img src="@/assets/icons/footer/footer2.svg" class="w-2 h-2" alt="arrow" />
@@ -81,7 +85,7 @@
           </li>
           <li class="flex items-center gap-2">
             <img src="@/assets/icons/footer/footer2.svg" class="w-2 h-2" alt="arrow" />
-            <a href="#" class="hover:text-white text-xs">CONTACTS</a>
+            <router-link to="/contact-us" class="hover:text-white text-xs">CONTACTS</router-link>
           </li>
         </ul>
       </div>

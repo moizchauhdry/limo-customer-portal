@@ -2,7 +2,7 @@
   <section class="max-w-7xl mx-auto px-3 lg:px-8 py-8 sm:py-16 bg-white">
     <!-- Heading -->
     <div class="text-center mb-10 sm:mb-14" data-aos="fade-up" data-aos-duration="1200">
-      <h2 class="text-[40px] lg:text-[60px] font-bold text-[#010101]">
+      <h2 class="text-[25px] lg:text-[60px] font-bold text-[#010101]">
         Privacy Policy
       </h2>
       <p class="sm:mt-4 max-w-5xl mx-auto text-[#626262] text-base text-center lg:text-lg leading-relaxed">

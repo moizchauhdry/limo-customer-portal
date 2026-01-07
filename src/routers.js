@@ -24,6 +24,8 @@ import FleetComponent from "./pages/website/FleetComponent.vue";
 import AboutComponent from "./pages/website/AboutComponent.vue";
 import ContactComponent from "./pages/website/ContactComponent.vue";
 import PrivacyPolicyComponent from "./pages/website/PrivacyPolicyComponent.vue";
+import ServicesComponentNavbar from "./pages/website/ServicesComponentNavbar.vue";
+import TermsConditionComponent from "./pages/website/TermsConditionComponent.vue";
 
 const routes = [
   {
@@ -53,7 +55,21 @@ const routes = [
       { path: "/fleet", name: "fleet", component: FleetComponent },
       { path: "/about-us", name: "about-us", component: AboutComponent },
       { path: "/contact-us", name: "contact-us", component: ContactComponent },
-       { path: "/privacy-policy", name: "privacy-policy", component: PrivacyPolicyComponent },
+      {
+        path: "/privacy-policy",
+        name: "privacy-policy",
+        component: PrivacyPolicyComponent,
+      },
+      {
+        path: "/services",
+        name: "services",
+        component: ServicesComponentNavbar,
+      },
+      {
+        path: "/terms-condition",
+        name: "/terms-condition",
+        component: TermsConditionComponent,
+      },
     ],
   },
 
