@@ -82,7 +82,7 @@ onMounted(() => {
 
       <!-- Heading -->
       <div class="flex flex-wrap sm:flex-nowrap items-center justify-between">
-        <p class="text-xl sm:text-3xl text-[#414141] font-bold mt-4 mb-4">
+        <p class="text-xl sm:text-3xl text-[#414141] font-bold sm:mt-4 mb-4">
           Your submitted complaints
         </p>
         <button

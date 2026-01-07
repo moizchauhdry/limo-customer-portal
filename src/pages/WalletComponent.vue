@@ -34,7 +34,7 @@ onMounted(() => {
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <!-- =============== wallets row =============== -->
       <!-- Heading -->
-      <p class="text-2xl sm:text-3xl text-[#414141] font-light mt-4 mb-4 font-poppins">
+      <p class="text-2xl sm:text-3xl text-[#414141] font-light sm:mt-4 mb-4 font-poppins">
         My Wallet
       </p>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">

@@ -413,15 +413,17 @@ const onPageChange = (pages) => {
                       <!-- Fare -->
                       <td class="px-4 py-3">${{ trip?.payments_total }}</td>
 
-                      <!-- Status -->
+                      <!-- status -->
                       <td class="px-4 py-3">
-                        <span class="inline-block px-3 py-1 rounded text-white text-xs" :class="{
-                          'bg-[#0FB14B]': trip.booking_status_id === 2, // Complete
-                          'bg-[#FF4A54] px-5': trip.booking_status_id === 1, //Pending
-                        }">
+                        <span class="inline-flex items-center justify-center w-24 h-6 rounded text-white text-xs"
+                          :class="{
+                            'bg-[#0FB14B]': trip.booking_status_id === 2, // Complete
+                            'bg-[#FF4A54]': trip.booking_status_id === 1, // Pending
+                          }">
                           {{ getStatus(trip.booking_status_id) }}
                         </span>
                       </td>
+
                     </tr>
                   </tbody>
                 </table>
