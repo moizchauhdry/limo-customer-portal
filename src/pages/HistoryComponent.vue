@@ -78,7 +78,7 @@ watch(
     data-aos-easing="ease-in-out" data-aos-delay="100">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <!-- Heading -->
-      <p class="text-2xl sm:text-3xl text-[#414141] font-light font-poppins mt-4 mb-3">
+      <p class="text-2xl sm:text-3xl text-[#414141] font-light font-poppins sm:mt-4 mb-3">
         Your Rides History
       </p>
       <p class="mb-2 text-[#606060] font-poppins text-sm sm:text-md">

@@ -80,7 +80,7 @@ onMounted(() => {
     data-aos-offset="150" data-aos-easing="ease-in-out" data-aos-delay="100">
     <div class="mx-auto max-w-4xl">
       <!-- Heading -->
-      <p class="text-2xl sm:text-3xl text-[#414141] font-normal mt-4 mb-6">
+      <p class="text-2xl sm:text-3xl text-[#414141] font-normal sm:mt-4 mb-6">
         Settings & Profile
       </p>
 
