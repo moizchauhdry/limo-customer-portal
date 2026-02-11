@@ -76,6 +76,7 @@ const routes = [
   {
     path: "/",
     component: AuthLayout,
+    meta: { requiresAuth: true },
     children: [
       { path: "", redirect: "/dashboard" },
       { path: "dashboard", name: "dashboard", component: DashboardComponent },
@@ -120,27 +121,14 @@ const router = createRouter({
 });
 
 // ------------------------------
-// 🔐 GLOBAL AUTH GUARD
+// 🔐 GLOBAL AUTH GUARD (applies only to routes under AuthLayout)
 // ------------------------------
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
 
-  const publicPages = [
-    "/auth/login",
-    "/auth/signup",
-    "/auth/verify-otp",
-    "/auth/forget-password",
-    "/auth/update-password",
-    
-    "/",
-    "/fleet",
-    "/about-us",
-    "/contact-us",
-    "/privacy-policy",
-    "/services",
-    "/terms-condition",
-  ];
-  const authRequired = !publicPages.includes(to.path);
+  const authRequired = to.matched.some(
+    (record) => record.meta && record.meta.requiresAuth
+  );
 
   if (authRequired && !token) {
     return next("/auth/login");
