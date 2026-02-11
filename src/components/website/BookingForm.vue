@@ -138,7 +138,7 @@ onMounted(() => {
       </button>
     </div>
 
-    <form class="grid grid-cols-2 md:grid-cols-4 gap-3 space-y-1 sm:gap-6 ">
+    <form class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 ">
       <FloatInput class="col-span-2" v-model="form.name" label="Name" placeholder="Jack" id="name"
         :error="form.errors.get('name')" />
       <FloatInput class="col-span-2" v-model="form.email" label="Email" placeholder="example@gmail.com" id="email"
