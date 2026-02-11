@@ -131,6 +131,14 @@ router.beforeEach((to, from, next) => {
     "/auth/verify-otp",
     "/auth/forget-password",
     "/auth/update-password",
+    
+    "/",
+    "/fleet",
+    "/about-us",
+    "/contact-us",
+    "/privacy-policy",
+    "/services",
+    "/terms-condition",
   ];
   const authRequired = !publicPages.includes(to.path);
 
