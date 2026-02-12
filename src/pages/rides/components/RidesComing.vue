@@ -26,7 +26,7 @@ const close = () => {
   <PaymentModal v-if="showPaymentModal" :ride="selectedRide" @close="close" />
 
   <!-- MAIN CONTENT -->
-  <div data-aos="fade-up" data-aos-duration="1000">
+  <div>
     <section class="mt-6 flex flex-col xl:flex-row gap-6 items-start">
       <!-- LEFT COLUMN -->
       <div class="flex-1 space-y-6">

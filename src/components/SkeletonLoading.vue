@@ -10,8 +10,7 @@ defineProps({
 </script>
 <!-- ================= SKELETON LOADER ================= -->
 <template>
-    <div class="space-y-6 mt-6"  data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150"
-    data-aos-easing="ease-in-out" data-aos-delay="100">
+    <div class="space-y-6 mt-6" >
         <div v-for="i in count" :key="i" class="bg-white border border-[#DBDBDB] rounded-xl shadow p-4 animate-pulse">
             <!-- Header -->
             <div class="flex justify-between mb-4">

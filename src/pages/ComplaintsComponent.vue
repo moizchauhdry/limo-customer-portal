@@ -76,8 +76,7 @@ onMounted(() => {
 
   <CreateComplaintComponent v-model="showModal" @refresh="fetchComplaints()" />
 
-  <main class="lg:ml-64 pt-[100px] mb-5" data-aos="fade-right" data-aos-duration="1200" data-aos-offset="150"
-    data-aos-easing="ease-in-out" data-aos-delay="100">
+  <main class="lg:ml-64 pt-[100px] mb-5">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
       <!-- Heading -->

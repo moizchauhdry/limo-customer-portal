@@ -11,8 +11,7 @@ defineProps({
 
 <template>
     <!-- ================= DESKTOP TABLE SKELETON ================= -->
-    <div class="hidden sm:block bg-white rounded-xl shadow-lg border border-[#DBDBDB]"  data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150"
-    data-aos-easing="ease-in-out" data-aos-delay="100">
+    <div class="hidden sm:block bg-white rounded-xl shadow-lg border border-[#DBDBDB]">
         <h3 class="text-lg ml-2 pt-2 font-regular text-[#626262] mb-2">
 
         </h3>

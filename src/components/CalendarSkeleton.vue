@@ -2,8 +2,7 @@
 </script>
 
 <template>
-  <div class="bg-white p-4 rounded-xl border border-[#DBDBDB] animate-pulse"  data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150"
-    data-aos-easing="ease-in-out" data-aos-delay="100">
+  <div class="bg-white p-4 rounded-xl border border-[#DBDBDB] animate-pulse">
     <!-- Header (Month / Nav) -->
     <div class="flex justify-between items-center mb-4">
       <div class="h-5 w-32 bg-gray-200 rounded"></div>

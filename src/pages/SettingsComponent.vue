@@ -4,11 +4,11 @@ import Form from 'vform'
 import { onMounted, reactive, ref } from "vue";
 import DotsLoading from "@/components/DotsLoading.vue";
 import { useToast } from "vue-toastification";
+import SettingSkeletonLoading from "@/components/website/SettingSkeletonLoading.vue";
 
 const toast = useToast();
 
 const loading = ref(false);
-
 const form = reactive(
   new Form({
     name: "",
@@ -76,9 +76,15 @@ onMounted(() => {
 </script>
 <template>
   <!-- MAIN CONTENT -->
-  <main class="lg:ml-64 pt-[100px] mb-10 px-4 sm:px-0" data-aos="fade-right" data-aos-duration="1200"
-    data-aos-offset="150" data-aos-easing="ease-in-out" data-aos-delay="100">
-    <div class="mx-auto max-w-4xl">
+  <main class="lg:ml-64 pt-[100px] mb-10 px-4 sm:px-0">
+    <!-- Skeleton while loading -->
+    <div v-if="loading" class="mt-4 mx-auto max-w-4xl">
+      <SettingSkeletonLoading />
+    </div>
+
+    <div v-else class="mx-auto max-w-4xl">
+
+
       <!-- Heading -->
       <p class="text-2xl sm:text-3xl text-[#414141] font-normal sm:mt-4 mb-6">
         Settings & Profile

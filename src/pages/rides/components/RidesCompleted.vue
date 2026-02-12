@@ -47,7 +47,7 @@ watch(search, (value) => {
 
 <template>
   <!-- MAIN CONTENT -->
-  <div data-aos="fade-up" data-aos-duration="1000">
+  <div>
     <!-- Heading -->
     <p class="text-2xl sm:text-3xl text-[#414141] mt-4 mb-4 font-poppins">
       Select by date

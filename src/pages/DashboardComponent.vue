@@ -179,8 +179,7 @@ const onPageChange = (pages) => {
   <CalenderBookingModal v-model="showModal" :selected-date="selectedDate" />
 
   <!-- MAIN CONTENT -->
-  <main class="lg:ml-64 pt-[100px] mb-5" data-aos="fade-right" data-aos-duration="1200" data-aos-offset="150"
-    data-aos-easing="ease-in-out" data-aos-delay="100">
+  <main class="lg:ml-64 pt-[100px] mb-5">
     <div class="max-w-7xl mx-auto container">
       <!-- WRAPPER: Two vertical columns -->
       <section class="flex flex-col xl:flex-row gap-6 items-start">
@@ -189,7 +188,7 @@ const onPageChange = (pages) => {
           <!-- STAT CARDS -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 px-5 sm:px-0">
             <!-- Total Trips -->
-            <div class="bg-[#369FFF] p-4 rounded-xl shadow-lg text-white">
+            <div class="bg-[#369FFF] p-4 rounded-xl shadow-lg text-white cursor-pointer hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
               <div class="flex justify-between items-center">
                 <h2 class="text-md font-semibold">Total trip</h2>
                 <img src="../assets/icons/dashboard/trips.svg" class="h-5" />
@@ -202,7 +201,7 @@ const onPageChange = (pages) => {
             </div>
 
             <!-- Total Fare -->
-            <div class="bg-[#8AC53E] p-4 rounded-xl shadow-lg text-white">
+            <div class="bg-[#8AC53E] p-4 rounded-xl shadow-lg text-white cursor-pointer hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
               <div class="flex justify-between items-center">
                 <h2 class="text-md font-semibold">Total Fare</h2>
                 <img src="../assets/icons/dashboard/fare.svg" class="h-5" />
@@ -220,7 +219,7 @@ const onPageChange = (pages) => {
             </div>
 
             <!-- Cancel Trips -->
-            <div class="bg-[#FF933A] p-4 rounded-xl shadow-lg text-white">
+            <div class="bg-[#FF933A] p-4 rounded-xl shadow-lg text-white cursor-pointer hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
               <div class="flex justify-between items-center">
                 <h2 class="text-md font-semibold">Cancel Trips</h2>
                 <img src="../assets/icons/dashboard/cancel.svg" class="h-6" />
@@ -232,18 +231,16 @@ const onPageChange = (pages) => {
               <!-- <p class="mt-2">From last month</p> -->
             </div>
           </div>
-
-          <!-- NEXT RIDE PANEL -->
-          <p class="text-[#414141] font-poppins text-2xl px-5 sm:px-0">
-            Your next ride
-          </p>
-
           <!-- RIDE-DETAILS CARD -->
           <div>
             <div v-if="loading" class="space-y-6 mt-6">
               <SkeletonLoading :count="1" />
             </div>
-            <div v-else class="px-5 sm:px-0">
+            <div v-else-if="dashboardRideData.next_booking" class="px-5 sm:px-0">
+              <!-- NEXT RIDE PANEL -->
+              <p class="text-[#414141] font-poppins text-2xl sm:px-5 sm:px-0 mb-2">
+                Your next ride
+              </p>
               <div class="bg-white p-4 sm:p-6 rounded-xl border border-[#DBDBDB] shadow space-y-4">
                 <!-- header -->
                 <div class="flex items-center justify-between">
