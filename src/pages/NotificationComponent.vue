@@ -34,8 +34,7 @@ const badgeColor = (type) => {
 
 <template>
     <!-- MAIN CONTENT -->
-    <main class="lg:ml-64 pt-[100px] mb-10 px-4 sm:px-0 min-h-screen overflow-y-auto" data-aos="fade-right"
-        data-aos-duration="1200">
+    <main class="lg:ml-64 pt-[100px] mb-10 px-4 sm:px-0 min-h-screen overflow-y-auto">
         <div class="mx-auto max-w-4xl">
             <template v-if="!showEmptyState">
                 <!-- Heading -->

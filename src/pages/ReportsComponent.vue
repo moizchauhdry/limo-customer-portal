@@ -119,7 +119,7 @@ const downloadReport = async () => {
               <div @click="
                 reportType = 'trip_summary';
               togglePopover();
-              " class="bg-[#369FFF] border border-[#CECECE] rounded-xl shadow p-5 cursor-pointer">
+              " class="bg-[#369FFF] border border-[#CECECE] rounded-xl shadow p-5 cursor-pointer hover:scale-[1.02] transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
                 <div class="flex items-center">
                   <img src="../assets/icons/navbar/booking2.svg" alt="wallet" class="h-6" />
                   <p class="text-lg sm:text-2xl mx-auto text-white font-semibold">
@@ -169,7 +169,7 @@ const downloadReport = async () => {
               <div @click="
                 reportType = 'expense';
               togglePopover();
-              " class="bg-[#369FFF] border border-[#CECECE] rounded-xl shadow p-5 cursor-pointer">
+              " class="bg-[#369FFF] border border-[#CECECE] rounded-xl shadow p-5 cursor-pointer hover:scale-[1.02] transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
                 <div class="flex justify-between items-center">
                   <img src="../assets/icons/reports/dollar.svg" alt="dollar" class="h-6" />
                   <p class="text-lg sm:text-2xl mx-auto text-[#FFFFFF] font-semibold">

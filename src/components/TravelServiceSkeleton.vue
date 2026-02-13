@@ -1,6 +1,5 @@
 <template>
-  <div class="space-y-6" data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150"
-    data-aos-easing="ease-in-out" data-aos-delay="100">
+  <div class="space-y-6">
     <!-- TRAVEL TYPE SKELETON -->
     <div class="grid grid-cols-12 gap-3">
       <!-- Large button -->

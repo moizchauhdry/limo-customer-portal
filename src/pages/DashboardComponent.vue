@@ -188,7 +188,7 @@ const onPageChange = (pages) => {
           <!-- STAT CARDS -->
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3 px-5 sm:px-0">
             <!-- Total Trips -->
-            <div class="bg-[#369FFF] p-4 rounded-xl shadow-lg text-white cursor-pointer hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
+            <div class="bg-[#369FFF] p-4 rounded-xl shadow-lg text-white cursor-pointer  hover:scale-[1.02] transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
               <div class="flex justify-between items-center">
                 <h2 class="text-md font-semibold">Total trip</h2>
                 <img src="../assets/icons/dashboard/trips.svg" class="h-5" />
@@ -201,7 +201,7 @@ const onPageChange = (pages) => {
             </div>
 
             <!-- Total Fare -->
-            <div class="bg-[#8AC53E] p-4 rounded-xl shadow-lg text-white cursor-pointer hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
+            <div class="bg-[#8AC53E] p-4 rounded-xl shadow-lg text-white cursor-pointer  hover:scale-[1.02] transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
               <div class="flex justify-between items-center">
                 <h2 class="text-md font-semibold">Total Fare</h2>
                 <img src="../assets/icons/dashboard/fare.svg" class="h-5" />
@@ -219,7 +219,7 @@ const onPageChange = (pages) => {
             </div>
 
             <!-- Cancel Trips -->
-            <div class="bg-[#FF933A] p-4 rounded-xl shadow-lg text-white cursor-pointer hover:scale-105 transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
+            <div class="bg-[#FF933A] p-4 rounded-xl shadow-lg text-white cursor-pointer hover:scale-[1.02]  transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
               <div class="flex justify-between items-center">
                 <h2 class="text-md font-semibold">Cancel Trips</h2>
                 <img src="../assets/icons/dashboard/cancel.svg" class="h-6" />

@@ -1,7 +1,6 @@
 <template>
     <!-- Fleet Cards Skeleton -->
-    <div class="flex gap-4 overflow-x-hidden no-scrollbar" data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150"
-    data-aos-easing="ease-in-out" data-aos-delay="100">
+    <div class="flex gap-4 overflow-x-hidden no-scrollbar">
         <div v-for="i in 3" :key="i"
             class="border border-[#E0E0E0] rounded-xl p-2 shadow flex flex-col min-w-[250px] animate-pulse">
             <!-- Title -->

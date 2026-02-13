@@ -351,8 +351,7 @@ onBeforeUnmount(() => {
 
 <template>
   <!-- MAIN CONTENT -->
-  <main class="lg:ml-64 pt-[100px] mb-5" data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150"
-    data-aos-easing="ease-in-out" data-aos-delay="100">
+  <main class="lg:ml-64 pt-[100px] mb-5">
     <div class="max-w-7xl mx-auto container">
       <!-- WRAPPER: Two vertical columns -->
       <section class="flex flex-col sm:flex-row  items-start">
@@ -640,20 +639,17 @@ onBeforeUnmount(() => {
         <!-- RIGHT COLUMN -->
         <div class="w-full max-w-[350px] space-y-6 px-6 sm:px-0">
           <div v-if="createRideDataLoading" class="w-full h-[400px] mt-4 border rounded bg-gray-200 animate-pulse"
-            data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out"
-            data-aos-delay="100">
+          >
           </div>
           <div v-else id="vue-map" class="w-full h-[400px] mt-4 border rounded"></div>
 
           <!-- DISTANCE & TIME -->
           <div class="grid grid-cols-2 gap-4 mt-4">
-            <div v-if="createRideDataLoading" class="h-10 rounded bg-gray-200 animate-pulse" data-aos="fade-up"
-              data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out" data-aos-delay="100"></div>
+            <div v-if="createRideDataLoading" class="h-10 rounded bg-gray-200 animate-pulse"></div>
             <input v-else class="border p-2 rounded outline-none" readonly :value="distance"
               placeholder="Total Distance" />
 
-            <div v-if="createRideDataLoading" class="h-10 rounded bg-gray-200 animate-pulse" data-aos="fade-up"
-              data-aos-duration="1200" data-aos-offset="150" data-aos-easing="ease-in-out" data-aos-delay="100"></div>
+            <div v-if="createRideDataLoading" class="h-10 rounded bg-gray-200 animate-pulse"></div>
             <input v-else class="border p-2 rounded outline-none" readonly :value="duration" placeholder="Total Time" />
           </div>
 

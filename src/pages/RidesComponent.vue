@@ -112,7 +112,7 @@ onMounted(() => {
         <button @click="activeTab = 'upcoming'" :class="activeTab === 'upcoming'
           ? 'bg-[#329EE7] text-white'
           : 'border border-[#878787] text-[#878787] bg-white'
-          " class="text-sm py-1 px-8 sm:px-20 rounded-md shadow font-inter hover:bg-blue-600 transition">
+          " class="text-sm py-1 px-8 sm:px-20 rounded-md shadow font-inter hover:bg-blue-600 hover:text-white transition">
           Up-coming Rides
         </button>
 
@@ -120,7 +120,7 @@ onMounted(() => {
         <button @click="handleCompleted" :class="activeTab === 'completed'
           ? 'bg-[#0FB14B] text-white'
           : 'border border-[#878787] text-[#878787] bg-white'
-          " class="text-sm py-1 px-8 sm:px-20 rounded-md shadow font-inter">
+          " class="text-sm py-1 px-8 sm:px-20 rounded-md shadow font-inter hover:bg-[#329EE7] hover:text-white">
           Completed Rides
         </button>
 
@@ -128,7 +128,7 @@ onMounted(() => {
         <button @click="activeTab = 'cancelled'" :class="activeTab === 'cancelled'
           ? 'bg-[#0FB14B] text-white'
           : 'border border-[#878787] text-[#878787] bg-white'
-          " class="text-sm py-1 px-8 sm:px-20 rounded-md shadow font-inter">
+          " class="text-sm py-1 px-8 sm:px-20 rounded-md shadow font-inter hover:bg-[#329EE7] hover:text-white">
           Cancelled Rides
         </button>
       </div>

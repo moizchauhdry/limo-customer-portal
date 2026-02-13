@@ -1,6 +1,5 @@
 <template>
-    <div class="space-y-5 pt-4" data-aos="fade-up" data-aos-duration="1200" data-aos-offset="150"
-        data-aos-easing="ease-in-out" data-aos-delay="100">
+    <div class="space-y-5 pt-4">
         <!-- Heading -->
         <div class="h-6 w-40 rounded bg-gray-200 animate-pulse"></div>
 

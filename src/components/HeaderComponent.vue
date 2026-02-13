@@ -1,8 +1,11 @@
 <script setup>
 import { RouterLink } from 'vue-router';
+import { ref } from 'vue';
 
 const date = new Date();
 const customer = JSON.parse(localStorage.getItem("customer"));
+
+const hasNotifications = ref(false);
 
 let name = "there";
 if (customer) {
@@ -31,12 +34,14 @@ if (customer) {
           <span class="text-[#565656]">{{ date.getFullYear() }}</span>
         </div>
       </div>
-      <RouterLink to="/notifications">
-        <img src="../assets/icons/navbar/nav1.svg" class="h-9" />
+      <RouterLink to="/notifications" class="relative inline-block">
+        <img src="../assets/icons/navbar/notification-new.png" class="h-10 hover:scale-[1.1] transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]" />
+        <span v-if="hasNotifications"
+          class="absolute top-1 right-0 h-3 w-3 bg-red-500 rounded-full border-2 border-white"></span>
       </RouterLink>
 
       <RouterLink to="/settings">
-        <img src="../assets/icons/navbar/setting.svg" class="h-9" />
+        <img src="../assets/icons/navbar/setting.svg" class="h-9 hover:scale-[1.1] transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]" />
       </RouterLink>
 
       <RouterLink to="/settings">

@@ -111,7 +111,7 @@ onMounted(() => {
       <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
 
         <div>
-          <div class="bg-white border border-[#B7B7B7] rounded-xl shadow p-4 flex flex-col">
+          <div class="bg-white border border-[#B7B7B7] rounded-xl shadow p-4 flex flex-col cursor-pointer hover:scale-[1.02] transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
             <div class="flex flex-row justify-between items-center mb-4 gap-4">
               <img src="../assets/icons/wallet/visa.svg" alt="mini" class="h-5" />
               <img src="../assets/icons/wallet/default.svg" alt="default" srcset="" />
@@ -124,7 +124,7 @@ onMounted(() => {
         </div>
 
         <div>
-          <div class="bg-white border border-[#B7B7B7] rounded-xl shadow p-4 flex flex-col">
+          <div class="bg-white border border-[#B7B7B7] rounded-xl shadow p-4 flex flex-col cursor-pointer hover:scale-[1.02] transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
             <div class="flex flex-row justify-between items-center mb-4">
               <img src="../assets/icons/wallet/master.svg" alt="mini" class="h-5" />
               <img src="../assets/icons/wallet/setaspayment.svg" alt="setaspayment" />
@@ -139,7 +139,7 @@ onMounted(() => {
         </div>
 
         <div>
-          <div class="bg-white border border-[#B7B7B7] rounded-xl shadow p-4 flex flex-col">
+          <div class="bg-white border border-[#B7B7B7] rounded-xl shadow p-4 flex flex-col cursor-pointer hover:scale-[1.02] transition-transform duration-300 ease-[cubic-bezier(0.34,1.56,0.64,1)]">
             <div class="flex flex-row justify-between items-center mb-4">
               <img src="../assets/icons/wallet/discover.svg" alt="mini" class="h-5" />
               <img src="../assets/icons/wallet/setaspayment.svg" alt="setaspayment" />
@@ -160,7 +160,7 @@ onMounted(() => {
         <button @click="activeTab = 'recent'" :class="activeTab === 'recent'
           ? 'bg-[#329EE7] text-white'
           : 'border border-[#878787] text-[#878787] bg-white'"
-          class="w-full text-sm py-3 rounded-md shadow transition font-light">
+          class="w-full text-sm py-3 rounded-md shadow transition font-light hover:bg-[#329EE7] hover:text-white">
           Recent Activities
         </button>
 
@@ -168,7 +168,7 @@ onMounted(() => {
         <button @click="activeTab = 'transaction'" :class="activeTab === 'transaction'
           ? 'bg-[#329EE7] text-white'
           : 'border border-[#878787] text-[#878787] bg-white'"
-          class="w-full text-sm py-3 rounded-md shadow transition">
+          class="w-full text-sm py-3 rounded-md shadow transition hover:bg-[#329EE7] hover:text-white">
           Transaction History
         </button>
 
